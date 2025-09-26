@@ -1,0 +1,15 @@
+                                                     CLASS HEIRARCHY CHART
+
+                                                            StoreItem
+                                                            |  |  |  |
+                |-------------------------------------------|  |  |  |--------------------------------------------|
+                |                                              |  |                                               |
+                |                                 |-------------  --------------|                                 |
+                |                                 |                             |                                 |
+        FoodItem                        HouseHoldItem               ElectronicsItem                     ClothingItem
+        |      |                        |           |               |       |     |                     |     |    |
+        |      |                        |           |               |       |     |                     |     |    |
+        |      |                        |           |               |       |     |                     |     |    |
+(shelfStable) (!shelfStable)      (Furniture)(CleaningSupply)   (Phone)   (TV) (Laptop)         (Outerwear)(Shirt)(Shoes)
+              |           | 
+          {Vegetable}  {Fruit}
