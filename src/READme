@@ -1,0 +1,26 @@
+Box Store Group Lab
+
+Form Teams of 3 for this Assignment. Work together to complete the following tasks as a team.
+Given the following classes, create an inheritance hierarchy chart showing their relationships.
+              FoodItem, StoreItem, ShelfStable, Fruit, Laptop, Outerwear, Shoe, Shirt, HouseholdItem, TV, Vegetable, ElectronicsItem, CleaningSupply, ClothingItem, Phone, Furniture
+
+Determine instance variables for each class. Create a UML for each class showing the instance variables, constructors, accessors and mutators. Include a hierarchy chart
+Write the code for each class.
+Create a driver file, WQSLastName1LastName2LastName3.java, with at least one instance of each class from the bottom level of your hierarchy and implement a solution to the following problem. Your solution must use polymorphism and you should identify where it is being used in the program. Your code implementations should also include proper documentation.
+The Wilmington Quick Shop needs a program to do the following:
+
+Ask the user if they want to sell an item or add an item to inventory.
+If adding to inventory:
+Asks what type of item (Food, Electronics, Clothing, or Household).
+Displays items currently available in inventory for the selected category.
+Provides the option to add more of an existing item or create a new item.
+Continue looping until the user confirms they are done adding items.
+Displays the updated inventory for the item(s) added.
+If selling an item:
+Ask the user what type of item category they want to shop for (Food, Electronics, Clothing, or Household).
+Displays available options in a table format for the selected category, including details such as the item name, price, brand (if applicable), description, and return policy.
+Allow the user to add multiple items to the order until prompted to check out.
+Displays an order summary (group item types together in output) and asks the user to confirm checkout.
+Calculates the total, including tax (note: tax should be different for food items vs non-food items).
+Displays the updated inventory for the item(s) sold.
+Displays return policy for item categories sold.
