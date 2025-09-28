@@ -7,10 +7,10 @@
 
 public class StoreItem {
    // Properties / Attributes
-        protected int skuNumber;
-        protected double price;
-        protected String name;
-        protected String itemType;
+        private int skuNumber;
+        private double price;
+        private String name;
+        private String itemType;
 
     // Constructor
 
