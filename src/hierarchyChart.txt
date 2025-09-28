@@ -1,4 +1,4 @@
-                                                     CLASS HEIRARCHY CHART
+                                                     CLASS HIERARCHY CHART
 
                                                             StoreItem
                                                             |  |  |  |
