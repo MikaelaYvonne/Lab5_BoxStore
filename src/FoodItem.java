@@ -20,8 +20,8 @@ class FoodItem extends StoreItem{
      * @param foodCategory
      * @param isShelfStable
      */
-    FoodItem(int skuNumber, double price, String name, String foodCategory, boolean isShelfStable){
-        super(skuNumber, price, name);
+    FoodItem(int skuNumber, double price, String name, String itemType, String foodCategory, boolean isShelfStable){
+        super(skuNumber, price, name, itemType);
         this.foodCategory = foodCategory;
         this.isShelfStable = isShelfStable;
     }
@@ -67,5 +67,11 @@ class FoodItem extends StoreItem{
 
 
     // Other Methods
-
+    /**
+     * @override
+     */
+    public void printItem(){
+        System.out.printf("Sku Number: %d, Price: $%.2f, Name: %s, Item Type: %s", this.getSkuNumber(), this.getPrice(), this.getName(), this.getItemType());
+        System.out.printf("%nFood Category: %s, Shelf Stable: %b. %n",this.getItemType(), this.getIsShelfStable());
+    }
 }

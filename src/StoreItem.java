@@ -21,10 +21,11 @@ public class StoreItem {
      * @param price
      * @param name
      */
-    StoreItem(int skuNumber, double price, String name){
+    StoreItem(int skuNumber, double price, String name, String itemType){
         this.skuNumber = skuNumber;
         this.price = price;
         this.name = name;
+        this.itemType = itemType;
     }
 
 // Behaviors / Methods
@@ -100,7 +101,9 @@ public class StoreItem {
 
 
     // Other Methods
-
+    public void printItem(){
+        System.out.printf("Sku Number: %d, Price: $%.2f, Name: %s, Item Type: %s. %n", this.getSkuNumber(), this.getPrice(), this.getName(), this.getItemType());
+    }
 
 
 }
