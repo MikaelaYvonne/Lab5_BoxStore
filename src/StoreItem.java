@@ -7,9 +7,10 @@
 
 public class StoreItem {
    // Properties / Attributes
-        private int skuNumber;
-        private double price;
-        private String name;
+        protected int skuNumber;
+        protected double price;
+        protected String name;
+        protected String itemType;
 
     // Constructor
 
@@ -20,7 +21,7 @@ public class StoreItem {
      * @param price
      * @param name
      */
-    public void StoreItem(int skuNumber, double price, String name){
+    StoreItem(int skuNumber, double price, String name){
         this.skuNumber = skuNumber;
         this.price = price;
         this.name = name;
@@ -54,6 +55,14 @@ public class StoreItem {
         return this.name;
     }
 
+    /**
+     *
+     * @return String itemType
+     */
+    public String getItemType(){
+        return this.itemType;
+    }
+
 
     // Setters / Modifiers
 
@@ -80,4 +89,18 @@ public class StoreItem {
     public void setName(String name){
         this.name = name;
     }
+
+    /**
+     *
+     * @param itemType
+     */
+    public void setItemType(String itemType){
+        this.itemType = itemType;
+    }
+
+
+    // Other Methods
+
+
+
 }
