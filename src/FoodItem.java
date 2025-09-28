@@ -7,12 +7,14 @@
 class FoodItem extends StoreItem{
     // Properties / Attributes
     protected String foodCategory;
-    protected
+    protected boolean isShelfStable;
 
 
     // Constructor
-    FoodItem(int skuNumber, double price, String name){
+    FoodItem(int skuNumber, double price, String name, String foodCategory, boolean isShelfStable){
         super(skuNumber, price, name);
+        this.foodCategory = foodCategory;
+        this.isShelfStable = isShelfStable;
     }
 
 // Behaviors / Methods
