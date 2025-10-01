@@ -1,29 +1,36 @@
 /**
- * @author  Gregory McNutt
+ * @author  Mikaela Yvonne Dacanat; Gregory McNutt;
  *          Section 001-003
  *          Date 9/27/25
  *          Purpose: Create super class for the store items.
  */
 
-public class StoreItem {
+public abstract class StoreItem {
    // Properties / Attributes
-        private int skuNumber;
-        private double price;
-        private String name;
+   private int skuNumber;
+   private double price;
+   private String itemName;
+   private int itemCount;
+
+    // Constants - tax rates
+    protected static final double FOOD_TAX = 0.03; // food
+    protected static final double GENERAL_TAX = 0.07; // everything else
 
     // Constructor
 
     /**
      * Constructor for StoreItem class
      *
-     * @param skuNumber
-     * @param price
-     * @param name
+     * @param skuNumber unique identifier of items
+     * @param price     price of the item
+     * @param itemName  name of the item
+     * @param itemCount quantity left of the stock item
      */
-    public void StoreItem(int skuNumber, double price, String name){
+    public StoreItem(int skuNumber, String itemName, double price, int itemCount){
         this.skuNumber = skuNumber;
         this.price = price;
-        this.name = name;
+        this.itemName = itemName;
+        this.itemCount = itemCount;
     }
 
 // Behaviors / Methods
@@ -50,10 +57,15 @@ public class StoreItem {
      *
      * @return String Name
      */
-    public String getName(){
-        return this.name;
+    public String getItemName(){
+        return this.itemName;
     }
 
+    /**
+     *
+     * @return int itemCount
+     */
+    public int getItemCount() { return this.itemCount; }
 
     // Setters / Modifiers
 
@@ -75,9 +87,42 @@ public class StoreItem {
 
     /**
      *
-     * @param name
+     * @param itemName
      */
-    public void setName(String name){
-        this.name = name;
+    public void setItemName(String itemName){
+        this.itemName = itemName;
+    }
+
+    /**
+     *
+     * @param itemCount
+     */
+    public void setItemCount(int itemCount) { this.itemCount = itemCount; }
+
+    /**
+     * adds quantity to the item's inventory count
+     *
+     * @param qty the number of items to be added
+     */
+    public void addInventory(int qty){
+        if (qty > 0) {
+            this.itemCount += qty;
+        }
+    }
+
+
+    /**
+     * sells an item and removes/subtracts it from item's inventory count
+     *
+     * @param qty the number of items to sell/sold
+     * @return true if sale was done; false if stock is not enough
+     */
+    public boolean sellInventory(int qty) {
+        if (qty > 0 && this.itemCount >= qty) {
+            this.itemCount -= qty;
+            return true;
+        }
+        return false;
     }
 }
+
