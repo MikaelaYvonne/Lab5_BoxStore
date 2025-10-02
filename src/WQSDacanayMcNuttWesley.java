@@ -6,15 +6,12 @@ public class WQSDacanayMcNuttWesley {
         Scanner scanner = new Scanner(System.in);
 
     // see 'hierarchyChart.txt' for structure of StoreItem parent / child classes.
-    StoreItem item1 = new StoreItem(1, 2.00, "Name1", "Frozen Food");
-    FoodItem item2 = new FoodItem(2, 3.99, "Name2", "Frozen Food","Pizza", false );
-
-    String test = scanner.nextLine();
+//    StoreItem item1 = new StoreItem(1, 2.00, "Name1", "Frozen Food");
+//    FoodItem item2 = new FoodItem(2, 3.99, "Name2", "Frozen Food","Pizza", false );
 
 
-    item1.printItem();
-    item2.printItem();
-    System.out.println(test);
+//    item1.printItem();
+//    item2.printItem();
 
     }
 }

@@ -9,8 +9,8 @@ public class StoreItem {
    // Properties / Attributes
         private int skuNumber;
         private double price;
-        private String name;
-        private String itemType;
+        private String itemName;
+        private int itemCount;
 
     // Constructor
 
@@ -67,7 +67,7 @@ public class StoreItem {
 
     /**
      *
-     * @param skuNumber
+     * @param skuNumber int
      */
     public void setSkuNumber(int skuNumber){
         this.skuNumber = skuNumber;
@@ -75,7 +75,7 @@ public class StoreItem {
 
     /**
      *
-     * @param price
+     * @param price double
      */
     public void setPrice(double price){
         this.price = price;
@@ -83,7 +83,7 @@ public class StoreItem {
 
     /**
      *
-     * @param itemName
+     * @param itemName String
      */
     public void setItemName(String itemName){
         this.itemName = itemName;
@@ -91,7 +91,7 @@ public class StoreItem {
 
     /**
      *
-     * @param itemCount
+     * @param itemCount int
      */
     public void setItemCount(int itemCount) { this.itemCount = itemCount; }
 

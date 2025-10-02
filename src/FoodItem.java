@@ -8,8 +8,8 @@
  *
  */
 
-public abstract class FoodItem extends StoreItem{
-
+public class FoodItem extends StoreItem{
+    private int FOOD_TAX;
     /**
      * Constructor for FoodItem class
      * creates food item with the specified properties
