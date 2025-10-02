@@ -1,20 +1,16 @@
 /**
- * @author  Mikaela Yvonne Dacanat; Gregory McNutt;
+ * @author  Mikaela Yvonne Dacanay; Gregory McNutt;
  *          Section 001-003
  *          Date 9/27/25
  *          Purpose: Create super class for the store items.
  */
 
-public abstract class StoreItem {
+public class StoreItem {
    // Properties / Attributes
-   private int skuNumber;
-   private double price;
-   private String itemName;
-   private int itemCount;
-
-    // Constants - tax rates
-    protected static final double FOOD_TAX = 0.03; // food
-    protected static final double GENERAL_TAX = 0.07; // everything else
+        private int skuNumber;
+        private double price;
+        private String name;
+        private String itemType;
 
     // Constructor
 
