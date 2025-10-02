@@ -7,6 +7,9 @@
 
 public abstract class StoreItem {
    // Properties / Attributes
+
+        public static double ITEMTAX = .05;
+
         private int skuNumber;
         private double price;
         private String itemName;
