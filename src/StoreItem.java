@@ -124,5 +124,30 @@ public abstract class StoreItem {
         }
         return false;
     }
+
+
+    /**
+     * String representation of the item details
+     * @return formatted string with item details
+     */
+    @Override
+    public String toString() {
+        return String.format("%-10s |   %-25s   |   $%9.2f  |   %8d",
+                this.skuNumber, this.itemName, this.price, this.itemCount);
+    }
+
+    /**
+     *  Method for subclasses to calculate sales tax
+     *
+     * @return the calculated tax amount for one unit of item
+     */
+    public abstract double calculateTax();
+
+    /**
+     * Method for subclasses to get return policy for specific item category when sold
+     *
+     * @return string containing the return policy
+     */
+    public abstract String getReturnPolicy();
 }
 
