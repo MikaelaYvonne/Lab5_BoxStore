@@ -7,13 +7,13 @@
 
 public abstract class StoreItem {
    // Properties / Attributes
+    protected static final double FOOD_TAX = 0.03; // food
+    protected static final double GENERAL_TAX = 0.07; // everything else
 
-        public static double ITEMTAX = .05;
-
-        private int skuNumber;
-        private double price;
-        private String itemName;
-        private int itemCount;
+    private int skuNumber;
+    private double price;
+    private String itemName;
+    private int itemCount;
 
     // Constructor
 
