@@ -1,7 +1,7 @@
 /**
  * Author:  Mikaela Yvonne Dacanay;
  *          CSC 331 - 003
- * Date:    October 1, 2025
+ * Date:    10/1/2025
  * Purpose: Represents food items in the store inventory.
  *          Food items have a lower tax rate and are non-refundable
  *
