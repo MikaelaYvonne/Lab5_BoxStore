@@ -9,8 +9,12 @@ public class WQSDacanayMcNuttWesley {
     StoreItem item1 = new StoreItem(1, 2.00, "Name1", "Frozen Food");
     FoodItem item2 = new FoodItem(2, 3.99, "Name2", "Frozen Food","Pizza", false );
 
+    String test = scanner.nextLine();
+
+
     item1.printItem();
     item2.printItem();
+    System.out.println(test);
 
     }
 }

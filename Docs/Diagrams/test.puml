@@ -1,0 +1,39 @@
+@startuml
+class StoreItem {
+- int skuNumber
+- double price
+- String name
+- String itemType
+~ <<Create>> StoreItem(int,double,String,String)
++ int getSkuNumber()
++ double getPrice()
++ String getName()
++ String getItemType()
++ void setSkuNumber(int)
++ void setPrice(double)
++ void setName(String)
++ void setItemType(String)
++ void printItem()
+}
+
+
+class FoodItem {
+- String foodCategory
+- boolean isShelfStable
+~ <<Create>> FoodItem(int,double,String,String,String,boolean)
++ String getFoodCategory()
++ boolean getIsShelfStable()
++ void setFoodCategory(String)
++ void setIsShelfStable(Boolean)
++ void printItem()
+}
+
+
+class WQSDacanayMcNuttWesley {
++ {static} void main(String[])
+}
+
+
+
+StoreItem <|-- FoodItem
+@enduml
