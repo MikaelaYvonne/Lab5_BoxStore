@@ -5,7 +5,7 @@
  *          Purpose: Create super class for the store items.
  */
 
-public class StoreItem {
+public abstract class StoreItem {
    // Properties / Attributes
         private int skuNumber;
         private double price;
