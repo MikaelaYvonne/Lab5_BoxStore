@@ -40,7 +40,7 @@ class FoodItem extends StoreItem{
 
     /**
      *
-     * @return isShelfStable
+     * @return boolean isShelfStable
      */
     public boolean getIsShelfStable(){
         return this.isShelfStable;
@@ -51,7 +51,7 @@ class FoodItem extends StoreItem{
 
     /**
      *
-     * @param foodCategory
+     * @param foodCategory String
      */
     public void setFoodCategory(String foodCategory){
         this.foodCategory = foodCategory;
@@ -59,7 +59,7 @@ class FoodItem extends StoreItem{
 
     /**
      *
-     * @param isShelfStable
+     * @param isShelfStable Boolean
      */
     public void setIsShelfStable(Boolean isShelfStable){
         this.isShelfStable = isShelfStable;
@@ -67,10 +67,7 @@ class FoodItem extends StoreItem{
 
 
     // Other Methods
-    /**
-     * @override
-     */
-    public void printItem(){
+    @Override public void printItem(){
         System.out.printf("Sku Number: %d, Price: $%.2f, Name: %s, Item Type: %s", this.getSkuNumber(), this.getPrice(), this.getName(), this.getItemType());
         System.out.printf("%nFood Category: %s, Shelf Stable: %b. %n",this.getItemType(), this.getIsShelfStable());
     }
