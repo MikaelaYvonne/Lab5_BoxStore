@@ -1,5 +1,3 @@
-import com.sun.jdi.event.ExceptionEvent;
-
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -38,7 +36,7 @@ public class CustomerMenus {
                     System.exit(1);
                     break;
                 case 1:
-                    showBuyMenu(scanner);
+                    showAddItemMenu(scanner);
                     break;
                 case 2:
                     showSellMenu(scanner);
@@ -49,7 +47,7 @@ public class CustomerMenus {
     }
 
 
-    public static void showBuyMenu(Scanner scanner){
+    public static void showAddItemMenu(Scanner scanner){
         int choice = 0;
 
         while (choice == 0){
@@ -71,6 +69,8 @@ public class CustomerMenus {
                 case 0:
                     showMainMenu(scanner);
                     break;
+                case 1:
+
                 /**
                  * Ok hear me out, what if we make a thing to grab the items from teh StoreItem array that we have
                  * so that way we can not have to show like 50 bazillion menu's. We just use the buyMenu and
