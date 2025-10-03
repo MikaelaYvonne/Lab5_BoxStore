@@ -47,7 +47,7 @@ public class CustomerMenus {
     }
 
 
-    public static void showAddItemMenu(Scanner scanner){
+    private static void showAddItemMenu(Scanner scanner){
         int choice = 0;
 
         while (choice == 0){
@@ -70,6 +70,7 @@ public class CustomerMenus {
                     showMainMenu(scanner);
                     break;
                 case 1:
+                    System.out.println();
 
                 /**
                  * Ok hear me out, what if we make a thing to grab the items from teh StoreItem array that we have
@@ -91,7 +92,7 @@ public class CustomerMenus {
         }
     }
 
-    public static void showSellMenu(Scanner scanner){
+    private static void showSellMenu(Scanner scanner){
         //TODO: add stuff here to make it work like the one above :)
     }
 
