@@ -9,7 +9,6 @@
  */
 
 public class FoodItem extends StoreItem{
-    public static double FOOD_TAX = .03;
     /**
      * Constructor for FoodItem class
      * creates food item with the specified properties
