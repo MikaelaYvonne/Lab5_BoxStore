@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,8 +10,8 @@ class CustomException extends Exception {
 
 public class CustomerMenus {
     public static int showMainMenu(Scanner scanner){
+        int[] choices = {0,1,2};
         int choice = 0;
-
         //show user menu
         while (choice == 0) {
             System.out.println("~~~~Welcome to The Wilmington Quick Shop~~~~");
@@ -20,19 +19,11 @@ public class CustomerMenus {
             System.out.println("1. Buy Item");
             System.out.println("2. Sell Item");
             System.out.println("0. Exit");
-            try{
-                choice = scanner.nextInt();
-                if (choice != 0 && choice != 1 && choice != 2){
-                    throw new CustomException("Invalid Choice, please input a value from the menu options.");
-                }
-            } catch (InputMismatchException e){ //catches it if the scanner.nextInt() returns an error.
-                System.out.println("Please enter a valid option.");
-                scanner.next();
-            } catch (CustomException e) { //custom exception if the user doesn't input 1, 2, or 0
-                System.out.println(e.getMessage());
-            }
+            choice = scanner.nextInt();
 
-            switch(choice){
+            int choiceValidated = choiceValidation(choice, choices);
+
+            switch(choiceValidated){
                 case 0:
                     System.exit(1);
                     break;
@@ -49,6 +40,7 @@ public class CustomerMenus {
 
 
     private static void showAddItemMenu(Scanner scanner){
+        int[] choices = {0,1,2,3,4};
         int choice = 0;
 
         while (choice == 0){
@@ -59,48 +51,67 @@ public class CustomerMenus {
             System.out.println("3. Electronics");
             System.out.println("4. Clothing");
             System.out.println("0. Go Back");
-
-            try{
-                choice = scanner.nextInt();
-            } catch (Exception e){
-                System.out.println("Please select an item on the menu");
-            }
-
-            switch (choice){
+            choice = scanner.nextInt();
+            int choiceValidated = choiceValidation(choice,choices);
+            switch (choiceValidated){
                 case 0:
                     showMainMenu(scanner);
                     break;
                 case 1:
                     addFoodItem(scanner);
                     break;
-
-                /**
-                 * Ok hear me out, what if we make a thing to grab the items from teh StoreItem array that we have
-                 * so that way we can not have to show like 50 bazillion menu's. We just use the buyMenu and
-                 * use it while working with the objects / data in the StoreItem classes so it works for everything.
-                 */
-//                case 1:
-                    //TODO: create a showBuyFoodMenu method to show options when buying food.
-//                    showBuyFoodMenu(scanner);
-//                    break;
-//                case 2:
-//                    showBuyHouseholdMenu(scanner);
-//                    break;
-//                case 3:
-//                    showBuyElectronicsMenu(scanner);
+                case 2:
 
 
             }
         }
     }
 
-    private static void addFoodItem(Scanner scanner, FoodItem[] foodList){
-        //need to create new food item, and add it to arrayList of foodItems
+    private static void addFoodItem(Scanner scanner){
+        //menu to add a specific food item
+        int[] choices = {0,1,2};
+        int choice = 0;
+
+        while (choice == 0){
+            System.out.println("What Kind of Food would you like to add?");
+            System.out.println("1. Shelf Stable");
+            System.out.println("2. Not Shelf Stable");
+            choice = scanner.nextInt();
+
+            int choiceValidated = choiceValidation(choice, choices);
+        }
+//        switch (choiceValidated){
+//            case 0;
+//        }
 
     }
 
     private static void showSellMenu(Scanner scanner){
         //TODO: add stuff here to make it work like the one above :)
     }
+
+
+
+    private static int choiceValidation(int choice, int[] intRange) {
+        try{
+            boolean found = false;
+            for (int i: intRange){
+                if (i == choice) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found){ //checks the list given of intRange array to see if the choice is within it.
+                //if it's not in the list, throw the custom exception we built at the top.
+                throw new CustomException("Invalid Choice, please input a value from the menu options.");
+                }
+        } catch (InputMismatchException e){ //catches it if the scanner.nextInt() returns an error.
+            System.out.println("Please enter a valid option.");
+        } catch (CustomException e) { //custom exception if the user doesn't input 1, 2, or 0
+            System.out.println(e.getMessage());
+        }
+        return choice;
+    }
+
 
 }

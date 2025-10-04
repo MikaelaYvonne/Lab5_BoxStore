@@ -5,29 +5,37 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class WQSDacanayMcNuttWesley {
+    public ArrayList<StoreItem> storeItems = new ArrayList<>();
+    public ArrayList<FoodItem> foodItems = new ArrayList<>();
+
+    public ArrayList<ShelfStable> shelfStables = new ArrayList<>();
+    public ArrayList<NotShelfStable> notShelfStables = new ArrayList<>();
+
+
+
     public static ArrayList<StoreItem> inventory = new ArrayList<StoreItem>();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean terminate = false;
 
             //initiate arrays to hold all items.
-        ArrayList<StoreItem> storeItems = new ArrayList<StoreItem>();
+        //ArrayList<StoreItem> storeItems = new ArrayList<>();
 
-        ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
-//      ArrayList<HouseHoldItem> houseHoldItems = new ArrayList<HouseHoldItem>();
-//      ArrayList<ElectronicsItem> electronicsItems = new ArrayList<ElectronicsItem>();
-//      ArrayList<ClothingItem> clothingItems = new ArrayList<ClothingItem>();
+        //ArrayList<FoodItem> foodItems = new ArrayList<>();
+//      ArrayList<HouseHoldItem> houseHoldItems = new ArrayList<>();
+//      ArrayList<ElectronicsItem> electronicsItems = new ArrayList<>();
+//      ArrayList<ClothingItem> clothingItems = new ArrayList<>();
 
-        ArrayList<ShelfStable> shelfStables = new ArrayList<ShelfStable>();
-        ArrayList<NotShelfStable> notShelfStables = new ArrayList<NotShelfStable>();
-//      ArrayList<Furniture> furnitureItems = new ArrayList<Furniture>();
-//      ArrayList<CleaningSupply> cleaningSupplyItems = new ArrayList<CleaningSupply>();
-//      ArrayList<Phone> phoneItems = new ArrayList<Phone>();
-//      ArrayList<Television> televisionItems = new ArrayList<Television>();
-//      ArrayList<Laptop> laptopItems = new ArrayList<Laptop>();
-//      ArrayList<Outerwear> outerwearItems = new ArrayList<Outerwear>();
-//      ArrayList<Shirt> shirtItems = new ArrayList<Shirt>();
-//      ArrayList<Shoes> shoeItems = new ArrayList<Shoes>();
+        //ArrayList<ShelfStable> shelfStables = new ArrayList<>();
+//        ArrayList<NotShelfStable> notShelfStables = new ArrayList<>();
+//      ArrayList<Furniture> furnitureItems = new ArrayList<>();
+//      ArrayList<CleaningSupply> cleaningSupplyItems = new ArrayList<>();
+//      ArrayList<Phone> phoneItems = new ArrayList<>();
+//      ArrayList<Television> televisionItems = new ArrayList<>();
+//      ArrayList<Laptop> laptopItems = new ArrayList<>();
+//      ArrayList<Outerwear> outerwearItems = new ArrayList<>();
+//      ArrayList<Shirt> shirtItems = new ArrayList<>();
+//      ArrayList<Shoes> shoeItems = new ArrayList<>();
 
 
 

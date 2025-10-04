@@ -4,7 +4,7 @@
  *          Date 10/01/25
  *          Purpose: Create ShelfStable child class from FoodItem
  */
-class ShelfStable extends FoodItem {
+public class ShelfStable extends FoodItem {
     /**
      * Constructor for ShelfStable class.
      *
@@ -13,7 +13,7 @@ class ShelfStable extends FoodItem {
      * @param price     price of the food item
      * @param itemCount quantity of the food item in stock
      */
-    ShelfStable(int skuNumber, String itemName, double price, int itemCount) {
+    public ShelfStable(int skuNumber, String itemName, double price, int itemCount) {
         super(skuNumber, itemName, price, itemCount);
     }
 

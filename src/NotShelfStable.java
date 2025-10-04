@@ -4,7 +4,7 @@
  *          Date 10/01/25
  *          Purpost: Create NotShelfStable child class from FoodItem
  */
-class NotShelfStable extends FoodItem {
+public class NotShelfStable extends FoodItem {
     /**
      * Constructor for NotShelfStable class
      *
