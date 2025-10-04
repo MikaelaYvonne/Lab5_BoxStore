@@ -1,5 +1,6 @@
 
 import java.awt.*;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,6 +9,26 @@ public class WQSDacanayMcNuttWesley {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean terminate = false;
+
+            //initiate arrays to hold all items.
+        ArrayList<StoreItem> storeItems = new ArrayList<StoreItem>();
+
+        ArrayList<FoodItem> foodItems = new ArrayList<FoodItem>();
+//      ArrayList<HouseHoldItem> houseHoldItems = new ArrayList<HouseHoldItem>();
+//      ArrayList<ElectronicsItem> electronicsItems = new ArrayList<ElectronicsItem>();
+//      ArrayList<ClothingItem> clothingItems = new ArrayList<ClothingItem>();
+
+        ArrayList<ShelfStable> shelfStables = new ArrayList<ShelfStable>();
+        ArrayList<NotShelfStable> notShelfStables = new ArrayList<NotShelfStable>();
+//      ArrayList<Furniture> furnitureItems = new ArrayList<Furniture>();
+//      ArrayList<CleaningSupply> cleaningSupplyItems = new ArrayList<CleaningSupply>();
+//      ArrayList<Phone> phoneItems = new ArrayList<Phone>();
+//      ArrayList<Television> televisionItems = new ArrayList<Television>();
+//      ArrayList<Laptop> laptopItems = new ArrayList<Laptop>();
+//      ArrayList<Outerwear> outerwearItems = new ArrayList<Outerwear>();
+//      ArrayList<Shirt> shirtItems = new ArrayList<Shirt>();
+//      ArrayList<Shoes> shoeItems = new ArrayList<Shoes>();
+
 
 
         // Testing the Arraylist to make sure it can store stuff.

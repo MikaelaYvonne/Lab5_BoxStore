@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -51,7 +52,7 @@ public class CustomerMenus {
         int choice = 0;
 
         while (choice == 0){
-            System.out.println("~~~~Time To Buy Stuff!~~~~");
+            System.out.println("~~~~Time To Add Items!~~~~");
             System.out.println("What type of item would you like to buy?");
             System.out.println("1. Food");
             System.out.println("2. Household");
@@ -70,7 +71,8 @@ public class CustomerMenus {
                     showMainMenu(scanner);
                     break;
                 case 1:
-                    System.out.println();
+                    addFoodItem(scanner);
+                    break;
 
                 /**
                  * Ok hear me out, what if we make a thing to grab the items from teh StoreItem array that we have
@@ -90,6 +92,11 @@ public class CustomerMenus {
 
             }
         }
+    }
+
+    private static void addFoodItem(Scanner scanner, FoodItem[] foodList){
+        //need to create new food item, and add it to arrayList of foodItems
+
     }
 
     private static void showSellMenu(Scanner scanner){
