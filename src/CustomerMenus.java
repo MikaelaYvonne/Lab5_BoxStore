@@ -11,83 +11,128 @@ class CustomException extends Exception {
 public class CustomerMenus {
     public static int showMainMenu(Scanner scanner){
         int[] choices = {0,1,2};
-        int choice = 0;
+        int mMChoice = 0;
         //show user menu
-        while (choice == 0) {
+        while (mMChoice == 0) {
             System.out.println("~~~~Welcome to The Wilmington Quick Shop~~~~");
             System.out.println("Please select an Option: ");
             System.out.println("1. Buy Item");
             System.out.println("2. Sell Item");
             System.out.println("0. Exit");
-            choice = scanner.nextInt();
+            mMChoice = scanner.nextInt();
 
-            int choiceValidated = choiceValidation(choice, choices);
+            int choiceValidated = choiceValidation(mMChoice, choices);
 
             switch(choiceValidated){
                 case 0:
                     System.exit(1);
                     break;
-                case 1:
-                    showAddItemMenu(scanner);
+                case 1, 2:
+                    showAddRemoveItemMenu(scanner, mMChoice);
                     break;
-                case 2:
-                    showSellMenu(scanner);
-                    break;
+                default:
+                    System.out.println("Hmm something broke, run the program again please bc the coders messed up :)");
             }
         }
-        return choice;
+        return mMChoice;
     }
 
 
-    private static void showAddItemMenu(Scanner scanner){
+    private static void showAddRemoveItemMenu(Scanner scanner, int mMChoice){
         int[] choices = {0,1,2,3,4};
-        int choice = 0;
+        int aRIChoice = 0;
 
-        while (choice == 0){
+        while (aRIChoice == 0){
             System.out.println("~~~~Time To Add Items!~~~~");
-            System.out.println("What type of item would you like to buy?");
+            if (mMChoice == 1) {
+                System.out.println("What type of item would you like to add?");
+            } else {
+                System.out.println("What type of item would you like to remove?");
+            }
             System.out.println("1. Food");
             System.out.println("2. Household");
             System.out.println("3. Electronics");
             System.out.println("4. Clothing");
             System.out.println("0. Go Back");
-            choice = scanner.nextInt();
-            int choiceValidated = choiceValidation(choice,choices);
+
+            aRIChoice = scanner.nextInt();
+            int choiceValidated = choiceValidation(aRIChoice,choices);
+
             switch (choiceValidated){
                 case 0:
                     showMainMenu(scanner);
                     break;
                 case 1:
-                    addFoodItem(scanner);
+                    addRemoveFoodItem(scanner, aRIChoice);
                     break;
                 case 2:
-
-
+                    addRemoveHouseholdItem(scanner, aRIChoice);
+                    break;
+                default:
+                    System.out.println("Hmm something broke, run the program again please bc the coders messed up :)");
             }
         }
     }
 
-    private static void addFoodItem(Scanner scanner){
+
+    private static void addRemoveFoodItem(Scanner scanner, int aRIChoice){
         //menu to add a specific food item
         int[] choices = {0,1,2};
-        int choice = 0;
+        int aRFIchoice = 0;
 
-        while (choice == 0){
+        while (aRFIchoice == 0){
             System.out.println("What Kind of Food would you like to add?");
             System.out.println("1. Shelf Stable");
             System.out.println("2. Not Shelf Stable");
-            choice = scanner.nextInt();
+            System.out.println("0. Back");
 
-            int choiceValidated = choiceValidation(choice, choices);
+            aRFIchoice = scanner.nextInt();
+
+            int choiceValidated = choiceValidation(aRFIchoice, choices);
+        }
+//        switch (choiceValidated){
+//          case 0;
+//
+//          default:
+//          System.out.println("Hmm something broke, run the program again please bc the coders messed up :)");
+
+//        }
+    }
+
+    private static void vegFruitAddRemove(Scanner scanner, int aRFIchoice){
+        int[] choices = {0,1,2};
+        int vFRChoice = 0;
+
+        while (vFRChoice == 0) {
+            System.out.println("Fruit or Vegetable?");
+            System.out.println("1. Fruit");
+            System.out.println("2. Vegetable");
+            System.out.println("0. Back");
+
+            vFRChoice = scanner.nextInt();
+
+            int choiceValidated = choiceValidation(vFRChoice, choices);
+
+        }
+    }
+
+    private static void addRemoveHouseholdItem(Scanner scanner, int aIChoice){
+        //menu to add a specific food item
+        int[] choices = {0,1,2};
+        int aRHHChoice = 0;
+
+        while (aRHHChoice == 0){
+            System.out.println("What Kind of Food would you like to add?");
+            System.out.println("1. Shelf Stable");
+            System.out.println("2. Not Shelf Stable");
+            aRHHChoice = scanner.nextInt();
+
+            int choiceValidated = choiceValidation(aRHHChoice, choices);
         }
 //        switch (choiceValidated){
 //            case 0;
 //        }
 
-    }
-
-    private static void showSellMenu(Scanner scanner){
-        //TODO: add stuff here to make it work like the one above :)
     }
 
 

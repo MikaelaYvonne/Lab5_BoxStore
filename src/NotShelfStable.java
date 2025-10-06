@@ -16,7 +16,6 @@ public class NotShelfStable extends FoodItem {
     NotShelfStable(int skuNumber, String itemName, double price, int itemCount){
         super(skuNumber, itemName, price, itemCount);
     }
-
 // Behaviors / Methods
 
     //Getters / Accessors
