@@ -10,6 +10,7 @@
 
 public class FoodItem extends StoreItem{
     private int FOOD_TAX;
+    private int kCal;
     /**
      * Constructor for FoodItem class
      * creates food item with the specified properties
@@ -19,9 +20,17 @@ public class FoodItem extends StoreItem{
      * @param price     price of the food item
      * @param itemCount quantity of the food item in stock
      */
-    public FoodItem(int skuNumber, String itemName, double price, int itemCount){
+    public FoodItem(int skuNumber, String itemName, double price, int itemCount, int kCal){
         super(skuNumber, itemName, price, itemCount);
+        this.kCal = kCal;
     }
+
+    /**
+     * Retrieves the calorie content of the food item.
+     *
+     * @return the calorie content in kilocalories (kCal) as an integer.
+     */
+    public int getkCal() { return kCal; }
 
     /**
      * Calculates food item sales tax
@@ -45,4 +54,18 @@ public class FoodItem extends StoreItem{
     public String getReturnPolicy() {
         return "Food items are non-refundable";
     }
+
+    /**
+     * Returns a string representation of the FoodItem, including its base class details
+     * and its calorie content.
+     *
+     * @return a string combining the formatted details of the super class along with
+     *         the calorie information of the FoodItem.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + ", Calories: " + kCal;
+    }
+
+
 }

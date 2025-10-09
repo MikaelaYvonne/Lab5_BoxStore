@@ -5,7 +5,7 @@
  *          Purpose: Create super class for the store items.
  */
 
-public class StoreItem {
+public abstract class StoreItem {
    // Properties / Attributes
         private int skuNumber;
         private double price;
@@ -138,6 +138,7 @@ public class StoreItem {
      * @return the calculated tax amount for one unit of item
      */
     public abstract double calculateTax();
+
 
     /**
      * Method for subclasses to get return policy for specific item category when sold
