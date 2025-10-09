@@ -12,6 +12,23 @@ public class ShelfStable extends FoodItem {
         this.expirationDate = expirationDate;
     }
 
+    /**
+     * Retrieves the expiration date of the shelf-stable food item.
+     *
+     * @return the expiration date as a String.
+     */
+    public String getExpirationDate() { return expirationDate; }
 
+
+    /**
+     * Returns a string representation of the ShelfStable item, combining details
+     * from its superclass and the specific expiration date of the shelf-stable item.
+     *
+     * @return a formatted string including superclass details and the expiration date.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + ", Expires: " + expirationDate;
+    }
 
 }
