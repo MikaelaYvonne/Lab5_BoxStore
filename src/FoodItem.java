@@ -9,7 +9,6 @@
  */
 
 public class FoodItem extends StoreItem{
-    private int FOOD_TAX;
     private int kCal;
     /**
      * Constructor for FoodItem class

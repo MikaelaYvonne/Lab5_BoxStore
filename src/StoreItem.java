@@ -12,6 +12,10 @@ public abstract class StoreItem {
         private String itemName;
         private int itemCount;
 
+
+    protected static final double FOOD_TAX= 0.02; // 2% for food
+    protected static final double GENERAL_TAX = 0.07; // 7% for everything else
+
     // Constructor
 
     /**
