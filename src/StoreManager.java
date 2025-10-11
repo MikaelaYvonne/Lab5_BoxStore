@@ -10,6 +10,13 @@ public class StoreManager {
     private final ArrayList<StoreItem> listOfAllItems;
     public StoreManager() {
         listOfAllItems = new ArrayList<StoreItem>();
+
+        //JUST FOR TESTING PURPOSES, REMOVE WHEN FINISHED.
+        StoreItem item = new Fruit(10, "apple", 1.99, 30, 230, true);
+        addItemToList(item);
+        StoreItem item2 = new Phone(100, "iPhone", 999.99, 20, "Apple", 20, "ATT", 64);
+        addItemToList(item2);
+        //END TESTING CODE
     }
 
     public ArrayList<StoreItem> getListOfAllItems(){

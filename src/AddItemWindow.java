@@ -8,7 +8,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.Objects;
 
 public class AddItemWindow{
     private final StoreManager storeManager;
@@ -63,7 +62,7 @@ public class AddItemWindow{
                 }
                 case "Cleaning Supplies" -> {
                     String [] optionalFields = {"Brand:", "Category:", "Toxic:"};
-                    addOptionalInputFields(optionalFields);
+                    addOptionalInputFields(optionalFields, 2);
                 }
                 case "Furniture" -> {
                     String[] optionalFields = {"Brand", "Category", "Dimensions"};
@@ -71,7 +70,7 @@ public class AddItemWindow{
                 }
                 case "Fruit" -> {
                     String [] optionalFields = {"Calories: ", "Is Ripe: "};
-                    addOptionalInputFields(optionalFields);
+                    addOptionalInputFields(optionalFields, 1);
                 }
                 case "Vegetable" -> {
                     String [] optionalFields = {"Calories: ", "Variety"};
@@ -87,7 +86,7 @@ public class AddItemWindow{
                 }
                 case "TV" -> {
                     String[] optionalFields = {"Brand: ", "Warranty Months: ", "Screen Size: ", "SmartTv: "};
-                    addOptionalInputFields(optionalFields);
+                    addOptionalInputFields(optionalFields, 3);
                 }
                 case "Phone" -> {
                     String[] optionalFields = {"Brand: ", "Warranty Months: ", "Carrier: ", "StorageGB: "};
@@ -175,16 +174,17 @@ public class AddItemWindow{
         optionalText4.setBounds(150, 325, 250, 25);
         optionalText4.setVisible(false);
 
-        optionalTF1 = new JComboBox<Boolean>();
+        Boolean[] tf = (new Boolean[]{true, false});
+        optionalTF1 = new JComboBox<>(tf);
         optionalTF1.setVisible(false);
         optionalTF1.setBounds(150, 205, 250, 25);
-        optionalTF2 = new JComboBox<Boolean>();
+        optionalTF2 = new JComboBox<Boolean>(tf);
         optionalTF2.setVisible(false);
         optionalTF2.setBounds(150, 245, 250, 25);
-        optionalTF3 = new JComboBox<Boolean>();
+        optionalTF3 = new JComboBox<Boolean>(tf);
         optionalTF3.setVisible(false);
         optionalTF3.setBounds(150, 285, 250, 25);
-        optionalTF4 = new JComboBox<Boolean>();
+        optionalTF4 = new JComboBox<Boolean>(tf);
         optionalTF4.setBounds(150, 325, 250, 25);
         optionalTF4.setVisible(false);
 
@@ -228,9 +228,17 @@ public class AddItemWindow{
         addItemFrame.add(optionalText3);
         addItemFrame.add(optionalText4);
 
+        addItemFrame.add(optionalTF1);
+        addItemFrame.add(optionalTF2);
+        addItemFrame.add(optionalTF3);
+        addItemFrame.add(optionalTF4);
 
         //main frame visible
         addItemFrame.setVisible(true);
+    }
+
+    private static boolean getSelectedTF(JComboBox<Boolean> comboBox){
+        return Boolean.TRUE.equals(comboBox.getSelectedItem());
     }
 
     public void setPlaceholderBehavior(JTextField field, String placeholder){
@@ -283,7 +291,7 @@ public class AddItemWindow{
 
         addItemFrame.revalidate();
     }
-
+    //adds the optional input fields for each class of item to be stored.
     public void addOptionalInputFields(String[] fields) {
         hideOptionalInputFields();
         //TODO: make this switch like the other one but include the optional boolean true/false boxes.
@@ -346,9 +354,28 @@ public class AddItemWindow{
                 addItemFrame.revalidate();
             }
         }
-
-
-
+    }
+    //this allows the true/false fields to show instead depending on what values need to be input.
+    public void addOptionalInputFields(String[] fields, int whichIndex){
+        addOptionalInputFields(fields);
+        switch (whichIndex) {
+            case 0 -> {
+                optionalText1.setVisible(false);
+                optionalTF1.setVisible(true);
+            }
+            case 1 -> {
+                optionalText2.setVisible(false);
+                optionalTF2.setVisible(true);
+            }
+            case 2 -> {
+                optionalText3.setVisible(false);
+                optionalTF3.setVisible(true);
+            }
+            case 3 -> {
+                optionalText4.setVisible(false);
+                optionalTF4.setVisible(true);
+            }
+        }
     }
 
     public void addItem(){
@@ -357,15 +384,20 @@ public class AddItemWindow{
         String price = itemPriceInput.getText();
         String type = (String) typeItems.getSelectedItem();
         String amount = itemCountInput.getText();
-        String optional1 = optionalText1.getText();
-        String optional2 = optionalText2.getText();
-        String optional3 = optionalText3.getText();
-        String optional4 = optionalText4.getText();
+//        String optional1 = optionalText1.getText();
+//        String optional2 = optionalText2.getText();
+//        String optional3 = optionalText3.getText();
+//        String optional4 = optionalText4.getText();
+//        Boolean tf1 = getSelectedTF(optionalTF1);
+//        Boolean tf2 = getSelectedTF(optionalTF2);
+//        Boolean tf3 = getSelectedTF(optionalTF3);
+//        Boolean tf4 = getSelectedTF(optionalTF4);
 
         try {
             int skuValid = Integer.parseInt(sku);
             double priceValid = Double.parseDouble(price);
             int amountValid = Integer.parseInt(amount);
+            int amountValidInt;
 
             switch (type){
                 case null -> {System.out.println("Something fucked up really bad");}
@@ -373,63 +405,132 @@ public class AddItemWindow{
                     JOptionPane.showMessageDialog(addItemFrame, "Select an item type.");
                 }
                 case "Cleaning Supplies" -> {
-                    try {
-                        boolean isToxic = Boolean.parseBoolean(optional3);
-                        StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValid, optional1, optional2, isToxic);
-                        addValidatedItem(item);
-                    } catch (NumberFormatException e){
-                        JOptionPane.showMessageDialog(addItemFrame, "Please enter True or False for the toxicity.");
-                    }
-
+                    boolean toxic = getSelectedTF(optionalTF3);
+                    String brand = optionalText1.getText();
+                    String category = optionalText2.getText();
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValidInt, brand, category, toxic);
+                    addValidatedItem(item);
                 }
-                case "Not Shelf Stable Food" -> {
-                    System.out.println("not shelf stable food");
-                }
-
                 case "Furniture" -> {
-                    System.out.println("furniture");
+                    String brand = optionalText1.getText();
+                    String category = optionalText2.getText();
+                    String dimensions = optionalText3.getText();
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    StoreItem item = new Furniture(skuValid, name, priceValid, amountValidInt, brand, category, dimensions);
+                    addValidatedItem(item);
                 }
-
-                case "Cleaning Product" -> {
-                    System.out.println("Cleaning product");
+                case "Fruit" -> {
+                    try {
+                        int calories = Integer.parseInt(optionalText1.getText());
+                        boolean isRipe = getSelectedTF(optionalTF2);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new Fruit(skuValid, name, priceValid, amountValidInt, calories, isRipe);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _){
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
+                    }
                 }
-
-                case "Phone" -> {
-                    System.out.println("Phone");
+                case "Vegetable" -> {
+                    try{
+                        int calories = Integer.parseInt(optionalText1.getText());
+                        String variety = optionalText2.getText();
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new Vegetable(skuValid, name, priceValid, amountValidInt, calories, variety);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _) {
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
+                    }
                 }
-
-                case "TV" -> {
-                    System.out.println("TV");
+                case "Shelf Stable Food" -> {
+                    try{
+                        int calories = Integer.parseInt(optionalText1.getText());
+                        String expDate = optionalText2.getText();
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValidInt, calories, expDate);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _){
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
+                    }
                 }
-
                 case "Laptop" -> {
-                    System.out.println("Laptop");
+                    try {
+                        String brand = optionalText1.getText();
+                        int warrantyMonths = Integer.parseInt(optionalText2.getText());
+                        double screenSize = Double.parseDouble(optionalText3.getText());
+                        int ramGB = Integer.parseInt(optionalText4.getText());
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new Laptop(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, ramGB);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _) {
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months, Screen Size" +
+                                "in inches, and a valid amount of RAM in gigabytes.");
+                    }
                 }
-
-                case "Outer Wear" -> {
-                    System.out.println("Outerwear");
+                case "TV" -> {
+                    try {
+                        String brand = optionalText1.getText();
+                        int warrantyMonths = Integer.parseInt(optionalText2.getText());
+                        double screenSize = Double.parseDouble(optionalText3.getText());
+                        boolean smartTv = getSelectedTF(optionalTF4);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new TV(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, smartTv);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _){
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months and Screen Size in inches.");
+                    }
                 }
-
+                case "Phone" -> {
+                    try {
+                        String brand = optionalText1.getText();
+                        int warrantyMonths = Integer.parseInt(optionalText2.getText());
+                        String carrier = optionalText3.getText();
+                        int storageGB = Integer.parseInt(optionalText4.getText());
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        StoreItem item = new Phone(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, carrier, storageGB);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException _) {
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months and Screen Size in inches.");
+                    }
+                }
                 case "Shirt" -> {
-                    System.out.println("shirt");
+                    String size = optionalText1.getText();
+                    String color = optionalText2.getText();
+                    String sleeveType = optionalText3.getText();
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    StoreItem item = new Shirt(skuValid, name, priceValid, amountValidInt, size, color, sleeveType);
+                    addValidatedItem(item);
                 }
-
+                case "Outerwear" -> {
+                    String size = optionalText1.getText();
+                    String color = optionalText2.getText();
+                    boolean isWaterproof = getSelectedTF(optionalTF3);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    StoreItem item = new Outerwear(skuValid, name, priceValid, amountValidInt, size, color, isWaterproof);
+                    addValidatedItem(item);
+                }
                 case "Shoes" -> {
-                    System.out.println("Shoes");
+                    String size = optionalText1.getText();
+                    String color = optionalText2.getText();
+                    String style = optionalText3.getText();
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    StoreItem item = new Shoe(skuValid, name, priceValid, amountValidInt, size, color, style);
+                    addValidatedItem(item);
                 }
                 default -> {System.out.println("Something fucked up");}
             }
 
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             JOptionPane.showMessageDialog(addItemFrame, "Please enter valid numbers for the SKU and Price");
         }
     }
 
-    public int checkAmountInStock(StoreManager manager, int amount, StoreItem item) {
+    public int checkAmountInStock(StoreManager manager, int amount, String skuNumber, String name) {
         int newCount = 0;
-        if( manager.getListOfAllItems().contains(item)){
-            int itemCount = item.getItemCount();
-            newCount += itemCount + amount;
+        for(StoreItem i : manager.getListOfAllItems()) {
+            if (skuNumber.equals(i.getSkuNumber()) && name.equalsIgnoreCase(i.getItemName())){
+                newCount += amount + i.getItemCount();
+            }
         }
         return newCount;
     }

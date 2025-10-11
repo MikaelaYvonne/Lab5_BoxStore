@@ -85,7 +85,7 @@ public class ShowItemWindow {
 
     public void showItemDetails(StoreItem item, JFrame parentFrame){
         JDialog infoBox = new JDialog(parentFrame, "Item Details", true);
-        infoBox.setSize(250,250);
+        infoBox.setSize(400,400);
         infoBox.setLocationRelativeTo(parentFrame);
         infoBox.setLayout(null);
 

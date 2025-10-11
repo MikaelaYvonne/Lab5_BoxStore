@@ -9,7 +9,7 @@
 public class Shoe extends ClothingItem {
     private final String style; // sneakers, boots, heels etc
 
-    public Shoe(int skuNumber, String itemName, double price, int itemCount, String itemType,
+    public Shoe(int skuNumber, String itemName, double price, int itemCount,
                 String size, String color, String style){
         super(skuNumber, itemName, price, itemCount, size, color);
         this.style = style;
