@@ -9,6 +9,8 @@
  */
 
 public class FoodItem extends StoreItem{
+
+    //properties
     private int kCal;
     /**
      * Constructor for FoodItem class
@@ -20,10 +22,16 @@ public class FoodItem extends StoreItem{
      * @param itemCount quantity of the food item in stock
      */
     public FoodItem(int skuNumber, String itemName, double price, int itemCount, int kCal){
+
+        // initializes the inherited properties from StoreItem
         super(skuNumber, itemName, price, itemCount);
+
+        // set food specific property
         this.kCal = kCal;
     }
 
+
+    //getters
     /**
      * Retrieves the calorie content of the food item.
      *
@@ -31,6 +39,8 @@ public class FoodItem extends StoreItem{
      */
     public int getkCal() { return kCal; }
 
+
+    // other methods
     /**
      * Calculates food item sales tax
      * Food items have lower sales tax compared to general merchandise
