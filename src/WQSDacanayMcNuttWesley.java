@@ -1,3 +1,27 @@
+/**
+ * Author:  Mikaela Yvonne Dacanay;
+ *          CSC 331 - 003
+ * Date:    October 1, 2025
+ * Purpose: This driver class serves as the main controller and entry point for the
+ *          Wilmington Quick Shop (WQS) inventory and sales management system.
+ *
+ *          Key Functionalities:
+ *          - Manages a polymorphic inventory system containing Food, Electronics,
+ *            Clothing, and Household items
+ *          - Provides a menu-driven interface for selling items and managing stock
+ *          - Implements a shopping cart system with checkout and tax calculation
+ *          - Demonstrates object-oriented programming principles including inheritance
+ *            and polymorphism through unified handling of diverse product types
+ *          - Processes sales transactions with order summaries, inventory updates,
+ *            and return policy information
+ *          - Pre-populates sample inventory data for system demonstration
+ *
+ *         This application showcases how polymorphism enables flexible management
+ *         of different item categories through a single ArrayList<StoreItem>
+ *         collection, with category-specific behavior invoked dynamically at runtime.
+ *
+ **/
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.InputMismatchException;
