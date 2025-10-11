@@ -7,7 +7,7 @@
 
 
 public class Furniture extends HouseholdItem {
-    private String dimensions;
+    private final String dimensions;
 
     public Furniture(int skuNumber, String itemName, double price, int itemCount,
                      String brand, String category, String dimensions) {

@@ -19,10 +19,18 @@ public class AddItemWindow{
     private final JTextField itemCountInput;
     private final JFrame addItemFrame;
 
-    private JTextField optionalText1;
-    private JTextField optionalText2;
-    private JTextField optionalText3;
-    private JTextField optionalText4;
+    private final JLabel optionalLabel1;
+    private final JLabel optionalLabel2;
+    private final JLabel optionalLabel3;
+    private final JLabel optionalLabel4;
+    private final JTextField optionalText1;
+    private final JTextField optionalText2;
+    private final JTextField optionalText3;
+    private final JTextField optionalText4;
+    private final JComboBox<Boolean> optionalTF1;
+    private final JComboBox<Boolean> optionalTF2;
+    private final JComboBox<Boolean> optionalTF3;
+    private final JComboBox<Boolean> optionalTF4;
 
     public AddItemWindow(JFrame parent, StoreManager manager){
         //utilize StoreManager class in order to add / view items.
@@ -31,148 +39,167 @@ public class AddItemWindow{
         //creating the main window to add items.
         addItemFrame = new JFrame("Add New Item");
         addItemFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        addItemFrame.setSize(400,300);
+        addItemFrame.setSize(400,525);
         addItemFrame.setLocationRelativeTo(parent);
         addItemFrame.setLayout(null);
         addItemFrame.setVisible(true);
 
         //Label and combo box for the item type
         JLabel typeLabel = new JLabel("Item Type: ");
-        typeLabel.setBounds(25,15,75, 15);
+        typeLabel.setBounds(25,15,100, 15);
 
-        String [] typesOfItems = {"Pick an Item Type","Household Item", "Food Item",
-                "Electronics", "Clothes"};
+        String [] typesOfItems = {"Pick an Item Type","Cleaning Supplies", "Furniture", "Fruit", "Vegetable",
+        "Shelf Stable Food", "Laptop", "TV", "Phone", "Shirt", "Outerwear", "Shoes"};
 
         typeItems = new JComboBox<>(typesOfItems);
         typeItems.setSelectedIndex(0);
-        typeItems.setBounds(120, 0, 250, 50);
+        typeItems.setBounds(150, 0, 250, 50);
         typeItems.setVisible(true);
-        typeItems.addActionListener(_ -> {
-            if (typeItems.getSelectedItem() == "Household Item"){
-                String [] optionalFields = {"Brand:", "Category:", "Toxic:"};
-                addOptionalInputFields(addItemFrame, optionalFields);
+        typeItems.addItemListener(e -> {
+            String selected = (String) e.getItem();
+            switch (selected) {
+                case "Pick an Item Type" -> {
+                    hideOptionalInputFields();
+                }
+                case "Cleaning Supplies" -> {
+                    String [] optionalFields = {"Brand:", "Category:", "Toxic:"};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Furniture" -> {
+                    String[] optionalFields = {"Brand", "Category", "Dimensions"};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Fruit" -> {
+                    String [] optionalFields = {"Calories: ", "Is Ripe: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Vegetable" -> {
+                    String [] optionalFields = {"Calories: ", "Variety"};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Shelf Stable Food" -> {
+                    String[] optionalFields = {"Calories: ", "Expiration Date:" };
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Laptop" -> {
+                    String[] optionalFields = {"Brand: ", "Warranty Months:", "Screen Size:", "GB of RAM: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "TV" -> {
+                    String[] optionalFields = {"Brand: ", "Warranty Months: ", "Screen Size: ", "SmartTv: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Phone" -> {
+                    String[] optionalFields = {"Brand: ", "Warranty Months: ", "Carrier: ", "StorageGB: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Shirt" -> {
+                    String[] optionalFields = {"Size: ", "Color: ", "Sleeve Type: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Outerwear" -> {
+                    String[] optionalFields = {"Size: ", "Color: ", "Waterproof: "};
+                    addOptionalInputFields(optionalFields);
+                }
+                case "Shoes" -> {
+                    String[] optionalFields = {"Size: ", "Color: ", "Style: "};
+                    addOptionalInputFields(optionalFields);
+                }
             }
         });
 
 
         //Label and text field for the Sku Number input
-        JLabel skuLabel = new JLabel("Sku Number:");
+        JLabel skuLabel = new JLabel("SKU Number:");
         skuLabel.setBounds(25, 50, 100, 15);
 
         skuInput = new JTextField("Enter Sku Number");
-        skuInput.setBounds(125, 45,250, 25);
+        skuInput.setBounds(150, 45,250, 25);
         skuInput.setForeground(Color.GRAY);
-        skuInput.addFocusListener(new FocusListener() {
-            //changes the text box when interacted with
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (skuInput.getText().equals("Enter Sku Number")){
-                    skuInput.setText("");
-                    skuInput.setForeground(Color.BLACK);
-                }
-            }
-            //changes text box once non-interacted with
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (skuInput.getText().isEmpty()) {
-                    skuInput.setForeground(Color.GRAY);
-                    skuInput.setText("Enter Sku Number");
-                }
-            }
-        });
+        setPlaceholderBehavior(skuInput, "Enter SKU Number");
 
         //label and input for item name
         JLabel nameLabel = new JLabel("Item Name:");
-        nameLabel.setBounds(25, 85, 100, 15);
+        nameLabel.setBounds(25, 90, 100, 15);
 
         itemNameInput = new JTextField("Enter Item Name");
-        itemNameInput.setBounds(125, 80,250, 25);
+        itemNameInput.setBounds(150, 85,250, 25);
         itemNameInput.setForeground(Color.GRAY);
-        itemNameInput.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (itemNameInput.getText().equals("Enter Item Name")){
-                    itemNameInput.setText("");
-                    itemNameInput.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (itemNameInput.getText().isEmpty()) {
-                    itemNameInput.setForeground(Color.GRAY);
-                    itemNameInput.setText("Enter Item Name");
-                }
-            }
-        });
+        setPlaceholderBehavior(itemNameInput, "Enter Item Name");
 
         //Label and Text input for price
         JLabel priceLabel = new JLabel("Item Price:");
-        priceLabel.setBounds(25, 120, 100, 15);
+        priceLabel.setBounds(25, 130, 100, 15);
 
         itemPriceInput = new JTextField("Enter Item Price");
-        itemPriceInput.setBounds(125, 115, 250, 25);
+        itemPriceInput.setBounds(150, 125, 250, 25);
         itemPriceInput.setForeground(Color.GRAY);
-        itemPriceInput.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (itemPriceInput.getText().equals("Enter Item Price")){
-                    itemPriceInput.setText("");
-                    itemPriceInput.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (itemPriceInput.getText().isEmpty()) {
-                    itemPriceInput.setForeground(Color.GRAY);
-                    itemPriceInput.setText("Enter Item Price");
-                }
-            }
-        });
+        setPlaceholderBehavior(itemPriceInput, "Enter Item Price");
 
         //Label and text input for item count
         JLabel itemCountLabel = new JLabel("Item Count: ");
-        itemCountLabel.setBounds(25, 130, 100, 15);
+        itemCountLabel.setBounds(25, 170, 100, 15);
+
         itemCountInput = new JTextField("Enter amount");
-        itemCountInput.setBounds(125, 115, 250, 25);
+        itemCountInput.setBounds(150, 165, 250, 25);
         itemCountInput.setForeground(Color.GRAY);
-        itemCountInput.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (itemCountInput.getText().equals("Enter Item Price")){
-                    itemCountInput.setText("");
-                    itemCountInput.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (itemCountInput.getText().isEmpty()) {
-                    itemCountInput.setForeground(Color.GRAY);
-                    itemCountInput.setText("Enter Item Price");
-                }
-            }
-        });
+        setPlaceholderBehavior(itemCountInput, "Enter amount");
 
 
         //Optional Input Fields
-        JLabel optionalLabel1 = new JLabel();
-        optionalLabel1.setBounds(25, 130, 100, 15);
+        optionalLabel1 = new JLabel("Optional1");
+        optionalLabel1.setBounds(25, 210, 100, 15);
+        optionalLabel1.setVisible(false);
         optionalText1 = new JTextField("Optional Field1");
-        optionalText1.setBounds(125, 115, 250, 25);
+        optionalText1.setBounds(150, 205, 250, 25);
+        optionalText1.setVisible(false);
 
-        JLabel optionalLabel2 = new JLabel();
+        optionalLabel2 = new JLabel("Optional2");
+        optionalLabel2.setBounds(25, 250, 100, 15);
+        optionalLabel2.setVisible(false);
+        optionalText2 = new JTextField("Optional Field 2");
+        optionalText2.setBounds(150, 245, 250, 25);
+        optionalText2.setVisible(false);
+
+        optionalLabel3 = new JLabel("Optional3");
+        optionalLabel3.setBounds(25, 290, 100, 15);
+        optionalLabel3.setVisible(false);
+        optionalText3 = new JTextField("Optional Field3");
+        optionalText3.setBounds(150, 285, 250, 25);
+        optionalText3.setVisible(false);
+
+        optionalLabel4 = new JLabel("Optional4");
+        optionalLabel4.setBounds(25, 330, 100, 15);
+        optionalLabel4.setVisible(false);
+        optionalText4 = new JTextField("Optional Field 4");
+        optionalText4.setBounds(150, 325, 250, 25);
+        optionalText4.setVisible(false);
+
+        optionalTF1 = new JComboBox<Boolean>();
+        optionalTF1.setVisible(false);
+        optionalTF1.setBounds(150, 205, 250, 25);
+        optionalTF2 = new JComboBox<Boolean>();
+        optionalTF2.setVisible(false);
+        optionalTF2.setBounds(150, 245, 250, 25);
+        optionalTF3 = new JComboBox<Boolean>();
+        optionalTF3.setVisible(false);
+        optionalTF3.setBounds(150, 285, 250, 25);
+        optionalTF4 = new JComboBox<Boolean>();
+        optionalTF4.setBounds(150, 325, 250, 25);
+        optionalTF4.setVisible(false);
 
 
 
         //Buttons
         JButton addButton = new JButton("Add");
-        addButton.setBounds(25, 160, 150,75);
+        addButton.setBounds(25, 400, 150,75);
         addButton.setVisible(true);
         addButton.addActionListener(e -> {
             addItem();
         });
 
         JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBounds( 225, 160, 150, 75);
+        cancelButton.setBounds( 225, 400, 150, 75);
         cancelButton.setVisible(true);
         cancelButton.addActionListener(e -> {
             addItemFrame.dispose();}
@@ -191,19 +218,132 @@ public class AddItemWindow{
         addItemFrame.add(itemCountInput);
         addItemFrame.add(addButton);
         addItemFrame.add(cancelButton);
+
+        addItemFrame.add(optionalLabel1);
+        addItemFrame.add(optionalLabel2);
+        addItemFrame.add(optionalLabel3);
+        addItemFrame.add(optionalLabel4);
+        addItemFrame.add(optionalText1);
+        addItemFrame.add(optionalText2);
+        addItemFrame.add(optionalText3);
+        addItemFrame.add(optionalText4);
+
+
         //main frame visible
         addItemFrame.setVisible(true);
     }
 
-    public void addOptionalInputFields(JFrame parent, String[] fields){
+    public void setPlaceholderBehavior(JTextField field, String placeholder){
+        field.setForeground(Color.GRAY);
+        field.setText(placeholder);
+        field.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)){
+                    field.setText("");
+                    field.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setForeground(Color.GRAY);
+                    field.setText(placeholder);
+                }
+            }
+        });
+    }
+
+    public void hideOptionalInputFields(){
+        optionalLabel1.setVisible(false);
+        optionalLabel1.setText("");
+        optionalText1.setVisible(false);
+        setPlaceholderBehavior(optionalText1, "");
+
+        optionalLabel2.setVisible(false);
+        optionalLabel2.setText("");
+        optionalText2.setVisible(false);
+        setPlaceholderBehavior(optionalText2, "");
+
+        optionalLabel3.setVisible(false);
+        optionalLabel3.setText("");
+        optionalText3.setVisible(false);
+        setPlaceholderBehavior(optionalText3, "");
+
+        optionalLabel4.setVisible(false);
+        optionalLabel4.setText("");
+        optionalText4.setVisible(false);
+        setPlaceholderBehavior(optionalText4, "");
+
+
+        optionalTF1.setVisible(false);
+        optionalTF2.setVisible(false);
+        optionalTF3.setVisible(false);
+        optionalTF4.setVisible(false);
+
+        addItemFrame.revalidate();
+    }
+
+    public void addOptionalInputFields(String[] fields) {
+        hideOptionalInputFields();
+        //TODO: make this switch like the other one but include the optional boolean true/false boxes.
         switch (fields.length){
-
             case 1 -> {
-
-
+                optionalLabel1.setVisible(true);
+                optionalLabel1.setText(fields[0]);
+                optionalText1.setVisible(true);
+                setPlaceholderBehavior(optionalText1, "Enter " + fields[0]);
+                addItemFrame.revalidate();
             }
             case 2 -> {
+                optionalLabel1.setVisible(true);
+                optionalLabel1.setText(fields[0]);
+                optionalText1.setVisible(true);
+                setPlaceholderBehavior(optionalText1, "Enter " + fields[0]);
+                optionalLabel2.setVisible(true);
+                optionalLabel2.setText(fields[1]);
+                optionalText2.setVisible(true);
+                setPlaceholderBehavior(optionalText2, "Enter " + fields[1]);
+                addItemFrame.revalidate();
+            }
+            case 3 -> {
+                optionalLabel1.setVisible(true);
+                optionalLabel1.setText(fields[0]);
+                optionalText1.setVisible(true);
+                setPlaceholderBehavior(optionalText1, "Enter " + fields[0]);
 
+                optionalLabel2.setVisible(true);
+                optionalLabel2.setText(fields[1]);
+                optionalText2.setVisible(true);
+                setPlaceholderBehavior(optionalText2, "Enter " + fields[1]);
+
+                optionalLabel3.setVisible(true);
+                optionalLabel3.setText(fields[2]);
+                optionalText3.setVisible(true);
+                setPlaceholderBehavior(optionalText3, "Enter " + fields[2]);
+                addItemFrame.revalidate();
+            }
+            case 4 -> {
+                optionalLabel1.setVisible(true);
+                optionalLabel1.setText(fields[0]);
+                optionalText1.setVisible(true);
+                setPlaceholderBehavior(optionalText1, "Enter " + fields[0]);
+
+                optionalLabel2.setVisible(true);
+                optionalLabel2.setText(fields[1]);
+                optionalText2.setVisible(true);
+                setPlaceholderBehavior(optionalText2, "Enter " + fields[1]);
+
+                optionalLabel3.setVisible(true);
+                optionalLabel3.setText(fields[2]);
+                optionalText3.setVisible(true);
+                setPlaceholderBehavior(optionalText3, "Enter " + fields[2]);
+
+                optionalLabel4.setVisible(true);
+                optionalLabel4.setText(fields[3]);
+                optionalText4.setVisible(true);
+                setPlaceholderBehavior(optionalText4, "Enter " + fields[3]);
+                addItemFrame.revalidate();
             }
         }
 
@@ -217,23 +357,30 @@ public class AddItemWindow{
         String price = itemPriceInput.getText();
         String type = (String) typeItems.getSelectedItem();
         String amount = itemCountInput.getText();
-
-        if (sku.equals("Enter Sku Number") || name.equals("Enter Item Name") || price.equals("Enter Item Price")
-                || Objects.equals(type, "Pick an Item Type")){
-            JOptionPane.showMessageDialog(addItemFrame, "Please fill in all fields before adding item.");
-        }
+        String optional1 = optionalText1.getText();
+        String optional2 = optionalText2.getText();
+        String optional3 = optionalText3.getText();
+        String optional4 = optionalText4.getText();
 
         try {
             int skuValid = Integer.parseInt(sku);
             double priceValid = Double.parseDouble(price);
             int amountValid = Integer.parseInt(amount);
-//            {"Pick an Item Type","Cleaning Supply", "Fruit", "Shelf Stable", "Vegetable",
-//                    "Laptop", "TV", "Phone", "Shirt", "Outerwear", "Shoe"};
 
             switch (type){
                 case null -> {System.out.println("Something fucked up really bad");}
-                case "Cleaning Supply" -> {
-                    StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValid, 10, "Ex Date");
+                case "Pick an Item Type" -> {
+                    JOptionPane.showMessageDialog(addItemFrame, "Select an item type.");
+                }
+                case "Cleaning Supplies" -> {
+                    try {
+                        boolean isToxic = Boolean.parseBoolean(optional3);
+                        StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValid, optional1, optional2, isToxic);
+                        addValidatedItem(item);
+                    } catch (NumberFormatException e){
+                        JOptionPane.showMessageDialog(addItemFrame, "Please enter True or False for the toxicity.");
+                    }
+
                 }
                 case "Not Shelf Stable Food" -> {
                     System.out.println("not shelf stable food");
@@ -289,14 +436,16 @@ public class AddItemWindow{
 
     public void addValidatedItem(StoreItem item){
         storeManager.addItemToList(item);
-        typeItems.setSelectedIndex(0);
-        itemNameInput.setText("Enter Item Name");
-        itemNameInput.setForeground(Color.GRAY);
-        itemPriceInput.setText("Enter Item Price");
-        itemPriceInput.setForeground(Color.GRAY);
-        skuInput.setText("Enter Sku Number");
-        skuInput.setForeground(Color.GRAY);
+        resetAllFields();
         System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
+    }
+
+    public void resetAllFields(){
+        typeItems.setSelectedIndex(0);
+        setPlaceholderBehavior(itemNameInput, "Enter Item Name");
+        setPlaceholderBehavior(itemPriceInput, "Enter Item Price");
+        setPlaceholderBehavior(skuInput, "Enter SKU Number");
+        setPlaceholderBehavior(itemCountInput, "Enter Amount");
     }
 
 

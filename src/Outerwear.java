@@ -9,7 +9,7 @@
 public class Outerwear extends ClothingItem{
     private final boolean isWaterproof; // I cant think of a different identifier lol
 
-    public Outerwear(int skuNumber, String itemName, double price, int itemCount, String itemType,
+    public Outerwear(int skuNumber, String itemName, double price, int itemCount,
                      String size, String color, boolean isWaterproof){
         super(skuNumber, itemName, price, itemCount, size, color);
         this.isWaterproof = isWaterproof;
