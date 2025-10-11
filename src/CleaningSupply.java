@@ -9,9 +9,9 @@
 public class CleaningSupply extends HouseholdItem {
     private final boolean isToxic;
 
-    public CleaningSupply(int skuNumber, String itemName, double price, int itemCount, String itemType,
+    public CleaningSupply(int skuNumber, String itemName, double price, int itemCount,
                           String brand, String category, boolean isToxic) {
-        super(skuNumber, itemName, price, itemCount, itemType, brand, category);
+        super(skuNumber, itemName, price, itemCount, brand, category);
         this.isToxic = isToxic;
     }
 

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Objects;
 
 public class AddItemWindow{
     private final StoreManager storeManager;
@@ -15,11 +16,19 @@ public class AddItemWindow{
     private final JTextField skuInput;
     private final JTextField itemNameInput;
     private final JTextField itemPriceInput;
+    private final JTextField itemCountInput;
     private final JFrame addItemFrame;
 
+    private JTextField optionalText1;
+    private JTextField optionalText2;
+    private JTextField optionalText3;
+    private JTextField optionalText4;
+
     public AddItemWindow(JFrame parent, StoreManager manager){
+        //utilize StoreManager class in order to add / view items.
         this.storeManager = manager;
 
+        //creating the main window to add items.
         addItemFrame = new JFrame("Add New Item");
         addItemFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addItemFrame.setSize(400,300);
@@ -27,18 +36,26 @@ public class AddItemWindow{
         addItemFrame.setLayout(null);
         addItemFrame.setVisible(true);
 
+        //Label and combo box for the item type
         JLabel typeLabel = new JLabel("Item Type: ");
         typeLabel.setBounds(25,15,75, 15);
 
-        String [] typesOfItems = {"Pick an Item Type","Shelf Stable Food", "Not Shelf Stable Food", "Furniture", "Cleaning Product",
-                "Phone", "TV", "Laptop", "Outer Wear", "Shirt", "Shoes"};
+        String [] typesOfItems = {"Pick an Item Type","Household Item", "Food Item",
+                "Electronics", "Clothes"};
 
         typeItems = new JComboBox<>(typesOfItems);
         typeItems.setSelectedIndex(0);
         typeItems.setBounds(120, 0, 250, 50);
         typeItems.setVisible(true);
+        typeItems.addActionListener(_ -> {
+            if (typeItems.getSelectedItem() == "Household Item"){
+                String [] optionalFields = {"Brand:", "Category:", "Toxic:"};
+                addOptionalInputFields(addItemFrame, optionalFields);
+            }
+        });
 
 
+        //Label and text field for the Sku Number input
         JLabel skuLabel = new JLabel("Sku Number:");
         skuLabel.setBounds(25, 50, 100, 15);
 
@@ -46,6 +63,7 @@ public class AddItemWindow{
         skuInput.setBounds(125, 45,250, 25);
         skuInput.setForeground(Color.GRAY);
         skuInput.addFocusListener(new FocusListener() {
+            //changes the text box when interacted with
             @Override
             public void focusGained(FocusEvent e) {
                 if (skuInput.getText().equals("Enter Sku Number")){
@@ -53,6 +71,7 @@ public class AddItemWindow{
                     skuInput.setForeground(Color.BLACK);
                 }
             }
+            //changes text box once non-interacted with
             @Override
             public void focusLost(FocusEvent e) {
                 if (skuInput.getText().isEmpty()) {
@@ -62,7 +81,7 @@ public class AddItemWindow{
             }
         });
 
-
+        //label and input for item name
         JLabel nameLabel = new JLabel("Item Name:");
         nameLabel.setBounds(25, 85, 100, 15);
 
@@ -86,7 +105,7 @@ public class AddItemWindow{
             }
         });
 
-
+        //Label and Text input for price
         JLabel priceLabel = new JLabel("Item Price:");
         priceLabel.setBounds(25, 120, 100, 15);
 
@@ -110,6 +129,41 @@ public class AddItemWindow{
             }
         });
 
+        //Label and text input for item count
+        JLabel itemCountLabel = new JLabel("Item Count: ");
+        itemCountLabel.setBounds(25, 130, 100, 15);
+        itemCountInput = new JTextField("Enter amount");
+        itemCountInput.setBounds(125, 115, 250, 25);
+        itemCountInput.setForeground(Color.GRAY);
+        itemCountInput.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (itemCountInput.getText().equals("Enter Item Price")){
+                    itemCountInput.setText("");
+                    itemCountInput.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (itemCountInput.getText().isEmpty()) {
+                    itemCountInput.setForeground(Color.GRAY);
+                    itemCountInput.setText("Enter Item Price");
+                }
+            }
+        });
+
+
+        //Optional Input Fields
+        JLabel optionalLabel1 = new JLabel();
+        optionalLabel1.setBounds(25, 130, 100, 15);
+        optionalText1 = new JTextField("Optional Field1");
+        optionalText1.setBounds(125, 115, 250, 25);
+
+        JLabel optionalLabel2 = new JLabel();
+
+
+
+        //Buttons
         JButton addButton = new JButton("Add");
         addButton.setBounds(25, 160, 150,75);
         addButton.setVisible(true);
@@ -124,7 +178,7 @@ public class AddItemWindow{
             addItemFrame.dispose();}
         );
 
-
+        //Adding everything to the main frame
         addItemFrame.add(typeLabel);
         addItemFrame.add(typeItems);
         addItemFrame.add(skuLabel);
@@ -133,34 +187,53 @@ public class AddItemWindow{
         addItemFrame.add(itemNameInput);
         addItemFrame.add(priceLabel);
         addItemFrame.add(itemPriceInput);
+        addItemFrame.add(itemCountLabel);
+        addItemFrame.add(itemCountInput);
         addItemFrame.add(addButton);
         addItemFrame.add(cancelButton);
-
+        //main frame visible
         addItemFrame.setVisible(true);
     }
 
+    public void addOptionalInputFields(JFrame parent, String[] fields){
+        switch (fields.length){
+
+            case 1 -> {
+
+
+            }
+            case 2 -> {
+
+            }
+        }
+
+
+
+    }
 
     public void addItem(){
-        String skuText = skuInput.getText();
+        String sku = skuInput.getText();
         String name = itemNameInput.getText();
-        String priceText = itemPriceInput.getText();
+        String price = itemPriceInput.getText();
         String type = (String) typeItems.getSelectedItem();
+        String amount = itemCountInput.getText();
 
-        if (skuText.equals("Enter Sku Number") || name.equals("Enter Item Name") || priceText.equals("Enter Item Price")
-                || type.equals("Pick an Item Type")){
+        if (sku.equals("Enter Sku Number") || name.equals("Enter Item Name") || price.equals("Enter Item Price")
+                || Objects.equals(type, "Pick an Item Type")){
             JOptionPane.showMessageDialog(addItemFrame, "Please fill in all fields before adding item.");
         }
 
         try {
-            int sku = Integer.parseInt(skuText);
-            double price = Double.parseDouble(priceText);
-            //Shelf Stable Food", "Not Shelf Stable Food", "Furniture", "Cleaning Product",
-            //                "Phone", "TV", "Laptop", "Outer Wear", "Shirt", "Shoes"}
+            int skuValid = Integer.parseInt(sku);
+            double priceValid = Double.parseDouble(price);
+            int amountValid = Integer.parseInt(amount);
+//            {"Pick an Item Type","Cleaning Supply", "Fruit", "Shelf Stable", "Vegetable",
+//                    "Laptop", "TV", "Phone", "Shirt", "Outerwear", "Shoe"};
+
             switch (type){
                 case null -> {System.out.println("Something fucked up really bad");}
-                case "Shelf Stable Food" -> {
-//                    StoreItem item = new FoodItem(sku, price, name, type, true);
-//                    addValidatedItem(item);
+                case "Cleaning Supply" -> {
+                    StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValid, 10, "Ex Date");
                 }
                 case "Not Shelf Stable Food" -> {
                     System.out.println("not shelf stable food");
@@ -203,6 +276,15 @@ public class AddItemWindow{
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(addItemFrame, "Please enter valid numbers for the SKU and Price");
         }
+    }
+
+    public int checkAmountInStock(StoreManager manager, int amount, StoreItem item) {
+        int newCount = 0;
+        if( manager.getListOfAllItems().contains(item)){
+            int itemCount = item.getItemCount();
+            newCount += itemCount + amount;
+        }
+        return newCount;
     }
 
     public void addValidatedItem(StoreItem item){

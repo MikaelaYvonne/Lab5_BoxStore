@@ -10,8 +10,8 @@ public class Laptop extends ElectronicsItem {
     private final double screenSize;
     private final int ramGB;
 
-    public Laptop(int skuNumber, String itemName, double price, int itemCount, String itemType, String brand, int warrantyMonths, double screenSize, int ramGB) {
-        super(skuNumber, itemName, price, itemCount, itemType, brand, warrantyMonths);
+    public Laptop(int skuNumber, String itemName, double price, int itemCount, String brand, int warrantyMonths, double screenSize, int ramGB) {
+        super(skuNumber, itemName, price, itemCount, brand, warrantyMonths);
         this.screenSize = screenSize;
         this.ramGB = ramGB;
     }

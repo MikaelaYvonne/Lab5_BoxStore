@@ -21,7 +21,7 @@ public class Fruit extends FoodItem {
      * @param isRipe    indicates whether the fruit item is ripe
      */
     public Fruit(int skuNumber, String itemName, double price, int itemCount, String itemType, int kCal, boolean isRipe) {
-        super(skuNumber, itemName, price, itemCount, itemType, kCal);
+        super(skuNumber, itemName, price, itemCount, kCal);
         this.isRipe = isRipe;
     }
 

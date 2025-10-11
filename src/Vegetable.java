@@ -20,7 +20,7 @@ public class Vegetable extends FoodItem{
      * @param variety   specific variety or type of the vegetable
      */
     public Vegetable(int skuNumber, String itemName, double price, int itemCount, String itemType, int calories, String variety) {
-        super(skuNumber, itemName, price, itemCount, itemType, calories);
+        super(skuNumber, itemName, price, itemCount, calories);
         this.variety = variety;
     }
 

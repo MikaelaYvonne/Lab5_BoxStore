@@ -11,7 +11,6 @@ public abstract class StoreItem {
         private double price;
         private String itemName;
         private int itemCount;
-        private String itemType;
 
 
     protected static final double FOOD_TAX= 0.02; // 2% for food
@@ -26,14 +25,12 @@ public abstract class StoreItem {
      * @param   price     price of the item
      * @param   itemName  name of the item
      * @param   itemCount quantity left of the stock item
-     * @param   itemType the type of item
      */
-    public StoreItem(int skuNumber, String itemName, double price, int itemCount, String itemType){
+    public StoreItem(int skuNumber, String itemName, double price, int itemCount){
         this.skuNumber = skuNumber;
         this.price = price;
         this.itemName = itemName;
         this.itemCount = itemCount;
-        this.itemType = itemType;
     }
 
 // Behaviors / Methods
@@ -111,14 +108,6 @@ public abstract class StoreItem {
         if (qty > 0) {
             this.itemCount += qty;
         }
-    }
-
-    public String getItemType(){
-        return this.itemType;
-    }
-
-    public void setItemType(String itemType){
-        this.itemType = itemType;
     }
 
 

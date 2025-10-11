@@ -10,9 +10,9 @@ public abstract class HouseholdItem extends StoreItem{
     private final String brand;
     private final String category; // kitchen stuff; decor; idk
 
-    public HouseholdItem(int skuNumber, String itemName, double price, int itemCount, String itemType,
+    public HouseholdItem(int skuNumber, String itemName, double price, int itemCount,
                          String brand, String category) {
-        super(skuNumber, itemName, price, itemCount, itemType);
+        super(skuNumber, itemName, price, itemCount);
         this.brand = brand;
         this.category = category;
     }

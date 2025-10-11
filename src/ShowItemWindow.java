@@ -77,7 +77,6 @@ public class ShowItemWindow {
             Object[] row = {
                     String.valueOf(item.getSkuNumber()),
                     item.getItemName(),
-                    item.getItemType()
             };
             tableModel.addRow(row);
         }
@@ -96,7 +95,7 @@ public class ShowItemWindow {
         JLabel nameLabel = new JLabel("Item Name: " + item.getItemName());
         nameLabel.setBounds(20,50,200,25);
 
-        JLabel typeLabel = new JLabel("Item Type: " + item.getItemType());
+        JLabel typeLabel = new JLabel("Item Type: ");
         typeLabel.setBounds(20,80,200,25);
 
         JLabel priceLabel = new JLabel("Price: $" + String.format("%.2f", item.getPrice()));

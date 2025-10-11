@@ -11,7 +11,7 @@ public class Shoe extends ClothingItem {
 
     public Shoe(int skuNumber, String itemName, double price, int itemCount, String itemType,
                 String size, String color, String style){
-        super(skuNumber, itemName, price, itemCount, itemType, size, color);
+        super(skuNumber, itemName, price, itemCount, size, color);
         this.style = style;
     }
 

@@ -7,8 +7,8 @@
 public class ShelfStable extends FoodItem {
     private final String expirationDate;
 
-    public ShelfStable(int skuNumber, String itemName, double price, int itemCount, String itemType, int kCal, String expirationDate) {
-        super(skuNumber, itemName, price, itemCount, itemType, kCal);
+    public ShelfStable(int skuNumber, String itemName, double price, int itemCount, int kCal, String expirationDate) {
+        super(skuNumber, itemName, price, itemCount, kCal);
         this.expirationDate = expirationDate;
     }
 

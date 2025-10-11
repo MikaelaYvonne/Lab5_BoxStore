@@ -10,9 +10,9 @@ public class Phone extends ElectronicsItem {
     private final String carrier;
     private final int storageGB;
 
-    public Phone(int skuNumber, String itemName, double price, int itemCount, String itemType,
+    public Phone(int skuNumber, String itemName, double price, int itemCount,
                  String brand, int warrantyMonths, String carrier, int storageGB) {
-        super(skuNumber, itemName, price, itemCount, itemType, brand, warrantyMonths);
+        super(skuNumber, itemName, price, itemCount, brand, warrantyMonths);
         this.carrier = carrier;
         this.storageGB = storageGB;
     }

@@ -11,7 +11,7 @@ public class Shirt extends ClothingItem {
 
     public Shirt(int skuNumber, String itemName, double price, int itemCount, String itemType,
                  String size, String color, String sleeveType){
-        super(skuNumber, itemName, price, itemCount, itemType, size, color);
+        super(skuNumber, itemName, price, itemCount, size, color);
         this.sleeveType = sleeveType;
     }
 

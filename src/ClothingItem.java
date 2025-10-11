@@ -11,8 +11,8 @@ public abstract class ClothingItem extends StoreItem {
     private final String color;
 
     public ClothingItem(int skuNumber, String itemName, double price,
-                        int itemCount, String itemType, String size, String color) {
-        super(skuNumber, itemName, price, itemCount, itemType);
+                        int itemCount, String size, String color) {
+        super(skuNumber, itemName, price, itemCount);
         this.size = size;
         this.color = color;
     }
