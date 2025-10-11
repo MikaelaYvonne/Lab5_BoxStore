@@ -198,7 +198,7 @@ public class AddItemWindow{
             addItem();
         });
 
-        JButton cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Close");
         cancelButton.setBounds( 225, 400, 150, 75);
         cancelButton.setVisible(true);
         cancelButton.addActionListener(e -> {

@@ -25,7 +25,7 @@ public class ShowItemWindow {
         showItems.setLayout(null);
 
 
-        String[] columnNames = {"SKU", "Item Name", "Category"};
+        String[] columnNames = {"SKU", "Item Name", "Amount In Stock"};
         tableModel = new DefaultTableModel(columnNames, 0){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -52,7 +52,7 @@ public class ShowItemWindow {
         });
 
         JButton removeButton = new JButton("Remove Selected Item");
-        removeButton.setBounds(150, 400, 200,70);
+        removeButton.setBounds(50, 400, 200,70);
         removeButton.addActionListener(_ -> {
             int selectedRow = itemTable.getSelectedRow();
             if (selectedRow != -1) {
@@ -64,6 +64,11 @@ public class ShowItemWindow {
             }
         });
 
+        JButton closeButton = new JButton("Close");
+        closeButton.setBounds(250, 400, 200, 70);
+        closeButton.addActionListener(_ ->{showItems.dispose();});
+
+        showItems.add(closeButton);
         showItems.add(scrollPane);
         showItems.add(removeButton);
         showItems.setVisible(true);
@@ -77,6 +82,7 @@ public class ShowItemWindow {
             Object[] row = {
                     String.valueOf(item.getSkuNumber()),
                     item.getItemName(),
+                    item.getItemCount()
             };
             tableModel.addRow(row);
         }
@@ -85,32 +91,27 @@ public class ShowItemWindow {
 
     public void showItemDetails(StoreItem item, JFrame parentFrame){
         JDialog infoBox = new JDialog(parentFrame, "Item Details", true);
-        infoBox.setSize(400,400);
+        infoBox.setSize(200,200);
         infoBox.setLocationRelativeTo(parentFrame);
         infoBox.setLayout(null);
 
-        JLabel skuLabel = new JLabel("Sku Number: " + item.getSkuNumber());
-        skuLabel.setBounds(20,20,200,25);
-
-        JLabel nameLabel = new JLabel("Item Name: " + item.getItemName());
-        nameLabel.setBounds(20,50,200,25);
-
-        JLabel typeLabel = new JLabel("Item Type: ");
-        typeLabel.setBounds(20,80,200,25);
-
-        JLabel priceLabel = new JLabel("Price: $" + String.format("%.2f", item.getPrice()));
-        priceLabel.setBounds(20,110,200,25);
+        JTextArea infoArea = new JTextArea();
+        infoArea.setBounds(0,0,200, 125);
+        infoArea.setEditable(false);
+        infoArea.setLineWrap(true);
+        infoArea.setWrapStyleWord(true);
+        if (item == null){
+            infoArea.setText("");
+        } else {
+            infoArea.setText(item.toString());
+        }
 
         JButton closeButton = new JButton("Close");
-        closeButton.setBounds(100, 150, 100, 50);
+        closeButton.setBounds(50, 125, 100, 45);
         closeButton.addActionListener(_ -> infoBox.dispose());
 
-        infoBox.add(skuLabel);
-        infoBox.add(nameLabel);
-        infoBox.add(typeLabel);
-        infoBox.add(priceLabel);
+        infoBox.add(infoArea);
         infoBox.add(closeButton);
-
         infoBox.setVisible(true);
     }
 }
