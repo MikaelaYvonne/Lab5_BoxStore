@@ -13,8 +13,8 @@ public abstract class ElectronicsItem extends StoreItem {
     private final String brand;
     private final int warrantyMonths;
 
-    public ElectronicsItem(int skuNumber, String itemName, double price, int itemCount,
-                           String brand, int warrantyMonths, String itemType) {
+    public ElectronicsItem(int skuNumber, String itemName, double price, int itemCount,  String itemType,
+                           String brand, int warrantyMonths) {
         super(skuNumber, itemName, price, itemCount, itemType);
         this.brand = brand;
         this.warrantyMonths = warrantyMonths;

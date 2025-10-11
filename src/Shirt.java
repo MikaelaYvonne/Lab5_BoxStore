@@ -7,11 +7,11 @@
 
 
 public class Shirt extends ClothingItem {
-    private String sleeveType;
+    private final String sleeveType;
 
-    public Shirt(int skuNumber, String itemName, double price, int itemCount,
+    public Shirt(int skuNumber, String itemName, double price, int itemCount, String itemType,
                  String size, String color, String sleeveType){
-        super(skuNumber, itemName, price, itemCount, size, color);
+        super(skuNumber, itemName, price, itemCount, itemType, size, color);
         this.sleeveType = sleeveType;
     }
 

@@ -1,3 +1,9 @@
+/**
+ * @author  Gregory McNutt
+ * @date    10-10-25
+ * @purpose Create a window to show all items contained in the Food Store.
+ */
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;

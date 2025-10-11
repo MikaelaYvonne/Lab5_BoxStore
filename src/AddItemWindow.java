@@ -1,3 +1,9 @@
+/**
+ * @author  Gregory McNutt
+ * @date    10-10-25
+ * @purpose Create a window with functionality to add items to the food store.
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;

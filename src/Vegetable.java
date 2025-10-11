@@ -6,7 +6,7 @@
  */
 
 public class Vegetable extends FoodItem{
-    private String variety;
+    private final String variety;
 
     /**
      * Constructor for the Vegetable class.
@@ -19,8 +19,8 @@ public class Vegetable extends FoodItem{
      * @param calories  calorie content of the vegetable item in kilocalories
      * @param variety   specific variety or type of the vegetable
      */
-    public Vegetable(int skuNumber, String itemName, double price, int itemCount, int calories, String variety) {
-        super(skuNumber, itemName, price, itemCount, calories);
+    public Vegetable(int skuNumber, String itemName, double price, int itemCount, String itemType, int calories, String variety) {
+        super(skuNumber, itemName, price, itemCount, itemType, calories);
         this.variety = variety;
     }
 

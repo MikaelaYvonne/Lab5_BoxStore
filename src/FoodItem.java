@@ -20,7 +20,7 @@ public class FoodItem extends StoreItem{
      * @param itemCount quantity of the food item in stock
      * @param itemType type of storeItem
      */
-    public FoodItem(int skuNumber, String itemName, double price, int itemCount, int kCal, String itemType){
+    public FoodItem(int skuNumber, String itemName, double price, int itemCount, String itemType, int kCal){
         super(skuNumber, itemName, price, itemCount, itemType);
         this.kCal = kCal;
     }

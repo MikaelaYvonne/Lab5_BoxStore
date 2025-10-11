@@ -22,10 +22,11 @@ public abstract class StoreItem {
     /**
      * Constructor for StoreItem class
      *
-     * @param skuNumber unique identifier of items
-     * @param price     price of the item
-     * @param itemName  name of the item
-     * @param itemCount quantity left of the stock item
+     * @param   skuNumber unique identifier of items
+     * @param   price     price of the item
+     * @param   itemName  name of the item
+     * @param   itemCount quantity left of the stock item
+     * @param   itemType the type of item
      */
     public StoreItem(int skuNumber, String itemName, double price, int itemCount, String itemType){
         this.skuNumber = skuNumber;

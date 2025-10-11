@@ -8,11 +8,11 @@
 
 public class TV extends ElectronicsItem {
 
-    private double screenSize;
-    private boolean isSmart;
+    private final double screenSize;
+    private final boolean isSmart;
 
-    public TV(int skuNumber, String itemName, double price, int itemCount, String brand, int warrantyMonths, double screenSize, boolean isSmart) {
-        super(skuNumber, itemName, price, itemCount, brand, warrantyMonths);
+    public TV(int skuNumber, String itemName, double price, int itemCount, String itemType, String brand, int warrantyMonths, double screenSize, boolean isSmart) {
+        super(skuNumber, itemName, price, itemCount, itemType, brand, warrantyMonths);
         this.screenSize = screenSize;
         this.isSmart = isSmart;
     }

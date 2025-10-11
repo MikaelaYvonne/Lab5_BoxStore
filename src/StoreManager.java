@@ -1,3 +1,9 @@
+/**
+ * @author  Gregory McNutt
+ * @date    10-10-25
+ * @purpose Create a class to manage the items contained in the store.
+ */
+
 import java.util.ArrayList;
 
 public class StoreManager {
