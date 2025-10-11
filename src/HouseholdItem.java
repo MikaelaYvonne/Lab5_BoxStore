@@ -7,12 +7,12 @@
 
 
 public abstract class HouseholdItem extends StoreItem{
-    private String brand;
-    private String category; // kitchen stuff; decor; idk
+    private final String brand;
+    private final String category; // kitchen stuff; decor; idk
 
-    public HouseholdItem(int skuNumber, String itemName, double price, int itemCount,
+    public HouseholdItem(int skuNumber, String itemName, double price, int itemCount, String itemType,
                          String brand, String category) {
-        super(skuNumber, itemName, price, itemCount);
+        super(skuNumber, itemName, price, itemCount, itemType);
         this.brand = brand;
         this.category = category;
     }

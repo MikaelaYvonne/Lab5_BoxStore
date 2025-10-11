@@ -5,7 +5,7 @@
  *          Purpose: Create ShelfStable child class from FoodItem
  */
 public class ShelfStable extends FoodItem {
-    private String expirationDate;
+    private final String expirationDate;
 
     public ShelfStable(int skuNumber, String itemName, double price, int itemCount, String itemType, int kCal, String expirationDate) {
         super(skuNumber, itemName, price, itemCount, itemType, kCal);
