@@ -1,7 +1,7 @@
 /**
- * Author:  Mikaela Yvonne Dacanay;
+ * Author:  Mikaela Yvonne Dacanay, Gregory McNutt;
  *          CSC 331 - 003
- * Date:    October 1, 2025
+ * Date:    October 1, 2025.
  * Purpose: Represents food items in the store inventory.
  *          Food items have a lower tax rate and are non-refundable
  *
@@ -9,7 +9,7 @@
  */
 
 public class FoodItem extends StoreItem{
-    private int kCal;
+    private final int kCal;
     /**
      * Constructor for FoodItem class
      * creates food item with the specified properties
@@ -18,9 +18,10 @@ public class FoodItem extends StoreItem{
      * @param itemName  name of the food item
      * @param price     price of the food item
      * @param itemCount quantity of the food item in stock
+     * @param itemType type of storeItem
      */
-    public FoodItem(int skuNumber, String itemName, double price, int itemCount, int kCal){
-        super(skuNumber, itemName, price, itemCount);
+    public FoodItem(int skuNumber, String itemName, double price, int itemCount, int kCal, String itemType){
+        super(skuNumber, itemName, price, itemCount, itemType);
         this.kCal = kCal;
     }
 
@@ -29,7 +30,7 @@ public class FoodItem extends StoreItem{
      *
      * @return the calorie content in kilocalories (kCal) as an integer.
      */
-    public int getkCal() { return kCal; }
+    public int getKCal() { return kCal; }
 
     /**
      * Calculates food item sales tax

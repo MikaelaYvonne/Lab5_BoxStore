@@ -6,7 +6,7 @@
  */
 
 public class Fruit extends FoodItem {
-    private boolean isRipe;
+    private final boolean isRipe;
 
 
     /**
