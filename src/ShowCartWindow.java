@@ -59,34 +59,36 @@ public class ShowCartWindow {
         cartWindow.setVisible(true);
 
     }
-
-    public void removeItemFromCart(StoreItem oldCartItem, int amount, int selectedRow) {
+    //TODO: Fix this to properly update the cart data when adding and removing the items / number of items.
+    public void removeItemFromCart(StoreItem itemInCart, int amount, int selectedRow) {
         if (amount <= 0) {
             JOptionPane.showMessageDialog(cartTable, "Please enter an amount greater than 0.");
             return;
         }
-        if (oldCartItem.getItemCount() < amount) {
+        if (itemInCart.getItemCount() < amount) {
             JOptionPane.showMessageDialog(cartTable, "You cannot remove more than what you have in your cart.");
         } else {
-            String sku = String.valueOf(oldCartItem.getSkuNumber());
-            StoreItem existingStoreItem = storeManager.getItemBySku(sku);
+            String sku = String.valueOf(itemInCart.getSkuNumber());
+            StoreItem itemLeavingCart = storeManager.getItemBySku(sku);
 
-            if (existingStoreItem != null) {
-                existingStoreItem.setItemCount(existingStoreItem.getItemCount() + amount);
+            if (itemLeavingCart != null) {
+                itemLeavingCart.setItemCount(itemLeavingCart.getItemCount() + amount);
             } else {
-                newStoreItem.setItemCount(amount);
-                storeManager.addItemToList(newStoreItem);
+                itemInCart.setItemCount(amount);
+                storeManager.addItemToList(itemInCart);
             }
 
-            if (oldCartItem.getItemCount() <= 0) {
-                storeManager.getItemsInCart().remove(oldCartItem);
+            if (itemInCart.getItemCount() <= 0) {
+                storeManager.getItemsInCart().remove(itemInCart);
                 cartModel.removeRow(selectedRow);
             } else {
-                cartModel.setValueAt(oldCartItem.getItemCount(), selectedRow, 2);
+                cartModel.setValueAt(itemInCart.getItemCount() - amount, selectedRow, 2);
             }
         }
     }
 
+
+    //TODO: Change loadCartData to not include duplicates when iterating through the arraylist.
     public void loadCartData(){
         ArrayList<StoreItem> items = storeManager.getItemsInCart();
         System.out.println("Items in cart: " + items.size());
@@ -101,7 +103,7 @@ public class ShowCartWindow {
     }
 
     public void setVisible(boolean visible){
-        cartWindow.setVisible(true);
+        cartWindow.setVisible(visible);
     }
 
     public void refreshCartDisplay(){

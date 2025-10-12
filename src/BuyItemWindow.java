@@ -107,7 +107,7 @@ public class BuyItemWindow {
 
 
 
-
+    //TODO: Test this more to make sure it actually works correctly.
     public void addItemToCart(StoreItem oldStoreItem, int amount, int selectedRow){
         if (amount <= 0) {
             JOptionPane.showMessageDialog(itemTable, "Please enter a valid amount greater than 0.");
@@ -116,25 +116,26 @@ public class BuyItemWindow {
         if (oldStoreItem.getItemCount() < amount){
             JOptionPane.showMessageDialog(itemTable, "You can't buy more than what is available.");
         } else {
-            String sku = String.valueOf(oldStoreItem.getSkuNumber());
-            StoreItem storeItem = storeManager.getItemBySku(sku);
+            String sku = String.valueOf(oldStoreItem.getSkuNumber()); //get the value of the SkuNumber of item passed to method
+            StoreItem storeItem = storeManager.getItemBySku(sku); //create new StoreItem based on the SKU of the passed item.
 
-            if (storeItem != null){
-                storeItem.setItemCount(storeItem.getItemCount() - amount);
-                StoreItem existingCartItem = storeManager.getCartItemBySku(sku);
-                if (existingCartItem!= null){
-                    existingCartItem.setItemCount(existingCartItem.getItemCount()+amount);
-                } else {
-                    StoreItem newCartItem = storeManager.copyItem(storeItem);
-                    newCartItem.setItemCount(amount);
-                    storeManager.addItemToCart(newCartItem);
+            if (storeItem != null){ //if the newly created item is already in the list
+                storeItem.setItemCount(storeItem.getItemCount() - amount); //subtract the amount from that item
+                StoreItem existingCartItem = storeManager.getCartItemBySku(sku); //and create a new item that will have the new value of the existing item.
+                if (existingCartItem!= null){ //if it successfully creates an item (Which mean it does not exist already)
+                    existingCartItem.setItemCount(existingCartItem.getItemCount()+amount); //add the amount to the cart item created.
+                } else { //it doesnt exist in the cart, so we need to
+                    StoreItem newCartItem = storeManager.copyItem(storeItem); //make a new item for the cart
+                    newCartItem.setItemCount(amount); //then set the new amount to the amount entered.
+                    storeManager.addItemToCart(newCartItem); //and finally add it to the cart array.
                 }
 
-                if (storeItem.getItemCount() <= 0){
-                    storeManager.getListOfAllItems().remove(storeItem);
-                    tableModel.removeRow(selectedRow);
-                } else {
-                    tableModel.setValueAt(oldStoreItem.getItemCount(), selectedRow, 2);
+                if (storeItem.getItemCount() <= 0){ //if the store item in the store list = 0
+                    storeManager.getListOfAllItems().remove(storeItem); //remove the item from the arraylist
+                    tableModel.removeRow(selectedRow); //and remove the row from the table.
+                } else { //if it does not equal 0, update the table row
+                    loadTableData();
+//                    tableModel.setValueAt(oldStoreItem.getItemCount(), selectedRow, 2);
                 }
             }
         }
@@ -142,6 +143,7 @@ public class BuyItemWindow {
 
 
 
+    //TODO: change loadTableData to not include duplicates when iterating through the arraylist.
     public void loadTableData(){
         ArrayList<StoreItem> items = storeManager.getListOfAllItems();
         System.out.println("Show Item Window - Number ofItems: " + items.size());
