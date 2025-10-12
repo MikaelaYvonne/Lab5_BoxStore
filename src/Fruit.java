@@ -25,7 +25,7 @@ public class Fruit extends FoodItem {
         this.isRipe = isRipe;
     }
 
-    public boolean isRipe() { return isRipe; }
+    public boolean getIsRipe() { return isRipe; }
 
     /**
      * Returns a string representation of the Fruit object, including its superclass details
@@ -38,4 +38,10 @@ public class Fruit extends FoodItem {
     public String toString() {
         return super.toString() + ", Ripe: " + isRipe;
     }
+
+    @Override
+    public StoreItem copy() {
+        return new Fruit(this.getSkuNumber(), this.getItemName(), this.getPrice(), this.getItemCount(), this.getKCal(), this.getIsRipe());
+    }
+
 }

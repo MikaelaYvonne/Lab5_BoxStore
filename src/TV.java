@@ -18,11 +18,16 @@ public class TV extends ElectronicsItem {
     }
 
     public double getScreenSize() { return screenSize; }
-    public boolean isSmart() { return isSmart; }
+    public boolean getIsSmart() { return isSmart; }
 
     @Override
     public String toString() {
         return super.toString() + ", Screen: " + screenSize + "\", Smart: " + isSmart;
+    }
+
+    @Override
+    public StoreItem copy(){
+        return new TV(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getBrand(), getWarrantyMonths(), getScreenSize(), getIsSmart());
     }
 }
 

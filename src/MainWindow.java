@@ -28,7 +28,7 @@ public class MainWindow implements ActionListener {
         addBtn.setActionCommand("add");
 
         //remove button
-        JButton viewBtn = new JButton("View Items");
+        JButton viewBtn = new JButton("Buy Items");
         viewBtn.setBounds(0,0,200,100);
         viewBtn.setFocusable(false);
         viewBtn.setActionCommand("view");
@@ -58,7 +58,7 @@ public class MainWindow implements ActionListener {
         new AddItemWindow(mainWindow, storeManager);
     }
     public void showItems(){
-        new ShowItemWindow(mainWindow, storeManager);
+        new BuyItemWindow(mainWindow, storeManager);
     }
 
 }

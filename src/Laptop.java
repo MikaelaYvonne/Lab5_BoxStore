@@ -23,4 +23,9 @@ public class Laptop extends ElectronicsItem {
     public String toString() {
         return super.toString() + ", Screen: " + screenSize + "\", RAM: " + ramGB + "GB";
     }
+
+    @Override
+    public StoreItem copy(){
+        return new Laptop(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getBrand(), getWarrantyMonths(), getScreenSize(), getRamGB());
+    }
 }

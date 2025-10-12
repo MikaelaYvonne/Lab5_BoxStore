@@ -384,14 +384,14 @@ public class AddItemWindow{
         String price = itemPriceInput.getText();
         String type = (String) typeItems.getSelectedItem();
         String amount = itemCountInput.getText();
-//        String optional1 = optionalText1.getText();
-//        String optional2 = optionalText2.getText();
-//        String optional3 = optionalText3.getText();
-//        String optional4 = optionalText4.getText();
-//        Boolean tf1 = getSelectedTF(optionalTF1);
-//        Boolean tf2 = getSelectedTF(optionalTF2);
-//        Boolean tf3 = getSelectedTF(optionalTF3);
-//        Boolean tf4 = getSelectedTF(optionalTF4);
+        String optional1 = optionalText1.getText();
+        String optional2 = optionalText2.getText();
+        String optional3 = optionalText3.getText();
+        String optional4 = optionalText4.getText();
+        Boolean tf1 = getSelectedTF(optionalTF1);
+        Boolean tf2 = getSelectedTF(optionalTF2);
+        Boolean tf3 = getSelectedTF(optionalTF3);
+        Boolean tf4 = getSelectedTF(optionalTF4);
 
         try {
             int skuValid = Integer.parseInt(sku);

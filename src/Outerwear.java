@@ -15,10 +15,15 @@ public class Outerwear extends ClothingItem{
         this.isWaterproof = isWaterproof;
     }
 
-    public boolean isWaterproof() { return isWaterproof; }
+    public boolean getIsWaterproof() { return isWaterproof; }
 
     @Override
     public String toString() {
         return super.toString() + ", Waterproof: " + isWaterproof;
+    }
+
+    @Override
+    public StoreItem copy(){
+        return new Outerwear(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getSize(), getColor(), getIsWaterproof());
     }
 }

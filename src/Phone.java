@@ -24,4 +24,9 @@ public class Phone extends ElectronicsItem {
     public String toString() {
         return super.toString() + ", Carrier: " + carrier + ", Storage: " + storageGB + "GB";
     }
+
+    @Override
+    public StoreItem copy(){
+        return new Phone(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getBrand(), getWarrantyMonths(), getCarrier(), getStorageGB());
+    }
 }

@@ -8,7 +8,7 @@
  *
  */
 
-public class FoodItem extends StoreItem{
+public abstract class FoodItem extends StoreItem{
     private final int kCal;
     /**
      * Constructor for FoodItem class
@@ -53,6 +53,7 @@ public class FoodItem extends StoreItem{
     public String getReturnPolicy() {
         return "Food items are non-refundable";
     }
+
 
     /**
      * Returns a string representation of the FoodItem, including its base class details

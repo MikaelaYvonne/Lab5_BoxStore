@@ -22,4 +22,9 @@ public class Shoe extends ClothingItem {
         return super.toString() + ", Style: " + style;
     }
 
+    @Override
+    public StoreItem copy(){
+        return new Shoe(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getSize(), getColor(), getStyle());
+    }
+
 }

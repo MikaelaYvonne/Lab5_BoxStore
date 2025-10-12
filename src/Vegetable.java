@@ -43,4 +43,9 @@ public class Vegetable extends FoodItem{
     public String toString() {
         return super.toString() + ", Variety: " + variety;
     }
+
+    @Override
+    public StoreItem copy(){
+        return new Vegetable(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getKCal(), getVariety());
+    }
 }

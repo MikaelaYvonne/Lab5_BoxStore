@@ -21,4 +21,9 @@ public class Furniture extends HouseholdItem {
     public String toString() {
         return super.toString() + ", Dimensions: " + dimensions;
     }
+
+    @Override
+    public StoreItem copy() {
+        return new Furniture(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getBrand(), getCategory(), getDimensions());
+    }
 }

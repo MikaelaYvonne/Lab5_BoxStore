@@ -34,5 +34,6 @@ public abstract class HouseholdItem extends StoreItem{
     public String toString() {
         return super.toString() + ", Brand: " + brand + ", Category: " + category;
     }
+
 }
 

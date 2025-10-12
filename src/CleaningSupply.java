@@ -15,10 +15,15 @@ public class CleaningSupply extends HouseholdItem {
         this.isToxic = isToxic;
     }
 
-    public boolean isToxic() { return isToxic; }
+    public boolean getIsToxic() { return isToxic; }
 
     @Override
     public String toString() {
         return super.toString() + ", Toxic: " + isToxic;
+    }
+
+    @Override
+    public StoreItem copy(){
+        return new CleaningSupply(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getBrand(), getCategory(), getIsToxic());
     }
 }

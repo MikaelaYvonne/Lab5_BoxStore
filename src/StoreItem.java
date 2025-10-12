@@ -150,5 +150,7 @@ public abstract class StoreItem {
      * @return string containing the return policy
      */
     public abstract String getReturnPolicy();
+
+    public abstract StoreItem copy();
 }
 

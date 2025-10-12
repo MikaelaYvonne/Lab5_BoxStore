@@ -22,4 +22,9 @@ public class Shirt extends ClothingItem {
         return super.toString() + ", Sleeves: " + sleeveType;
     }
 
+    @Override
+    public StoreItem copy(){
+        return new Shirt(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getSize(), getColor(), getSleeveType());
+    }
+
 }

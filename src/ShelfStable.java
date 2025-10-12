@@ -31,4 +31,8 @@ public class ShelfStable extends FoodItem {
         return super.toString() + ", Expires: " + expirationDate;
     }
 
+    @Override
+    public StoreItem copy(){
+        return new ShelfStable(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getKCal(), getExpirationDate());
+    }
 }
