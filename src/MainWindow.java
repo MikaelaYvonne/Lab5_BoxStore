@@ -50,14 +50,14 @@ public class MainWindow implements ActionListener {
         if ("add".equals(e.getActionCommand())){
             addItem();
         } else if ("view".equals(e.getActionCommand())) {
-            showItems();
+            buyItems();
         }
     }
 
     public void addItem(){
         new AddItemWindow(mainWindow, storeManager);
     }
-    public void showItems(){
+    public void buyItems(){
         new BuyItemWindow(mainWindow, storeManager);
     }
 

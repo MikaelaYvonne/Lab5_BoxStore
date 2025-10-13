@@ -86,7 +86,7 @@ public class BuyItemWindow {
         showCartButton.setBounds(10, 395, 175, 65);
         showCartButton.addActionListener(_ ->{
             if (cartWindow == null){
-                cartWindow = new ShowCartWindow(showItems, storeManager);
+                cartWindow = new ShowCartWindow(showItems, storeManager, this);
             } else {
                 cartWindow.refreshCartDisplay();
                 cartWindow.setVisible(true);
@@ -107,7 +107,6 @@ public class BuyItemWindow {
 
 
 
-    //TODO: Test this more to make sure it actually works correctly.
     public void addItemToCart(StoreItem oldStoreItem, int amount, int selectedRow){
         if (amount <= 0) {
             JOptionPane.showMessageDialog(itemTable, "Please enter a valid amount greater than 0.");
@@ -133,18 +132,16 @@ public class BuyItemWindow {
                 if (storeItem.getItemCount() <= 0){ //if the store item in the store list = 0
                     storeManager.getListOfAllItems().remove(storeItem); //remove the item from the arraylist
                     tableModel.removeRow(selectedRow); //and remove the row from the table.
-                } else { //if it does not equal 0, update the table row
-                    loadTableData();
-//                    tableModel.setValueAt(oldStoreItem.getItemCount(), selectedRow, 2);
                 }
             }
         }
+        loadTableData(); //the refetch the table data.
     }
 
 
 
-    //TODO: change loadTableData to not include duplicates when iterating through the arraylist.
     public void loadTableData(){
+        tableModel.setRowCount(0);
         ArrayList<StoreItem> items = storeManager.getListOfAllItems();
         System.out.println("Show Item Window - Number ofItems: " + items.size());
         for (StoreItem item : items) {

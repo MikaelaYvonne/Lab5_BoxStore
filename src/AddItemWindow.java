@@ -98,7 +98,7 @@ public class AddItemWindow{
                 }
                 case "Outerwear" -> {
                     String[] optionalFields = {"Size: ", "Color: ", "Waterproof: "};
-                    addOptionalInputFields(optionalFields);
+                    addOptionalInputFields(optionalFields, 2);
                 }
                 case "Shoes" -> {
                     String[] optionalFields = {"Size: ", "Color: ", "Style: "};
@@ -408,7 +408,7 @@ public class AddItemWindow{
                     boolean toxic = getSelectedTF(optionalTF3);
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                     StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValidInt, brand, category, toxic);
                     addValidatedItem(item);
                 }
@@ -416,7 +416,7 @@ public class AddItemWindow{
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
                     String dimensions = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                     StoreItem item = new Furniture(skuValid, name, priceValid, amountValidInt, brand, category, dimensions);
                     addValidatedItem(item);
                 }
@@ -424,7 +424,7 @@ public class AddItemWindow{
                     try {
                         int calories = Integer.parseInt(optionalText1.getText());
                         boolean isRipe = getSelectedTF(optionalTF2);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new Fruit(skuValid, name, priceValid, amountValidInt, calories, isRipe);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -435,7 +435,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String variety = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new Vegetable(skuValid, name, priceValid, amountValidInt, calories, variety);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -446,7 +446,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String expDate = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValidInt, calories, expDate);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -459,7 +459,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         int ramGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new Laptop(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, ramGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -473,7 +473,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         boolean smartTv = getSelectedTF(optionalTF4);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new TV(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, smartTv);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -486,7 +486,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         String carrier = optionalText3.getText();
                         int storageGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                         StoreItem item = new Phone(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, carrier, storageGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -497,7 +497,7 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String sleeveType = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                     StoreItem item = new Shirt(skuValid, name, priceValid, amountValidInt, size, color, sleeveType);
                     addValidatedItem(item);
                 }
@@ -505,7 +505,7 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     boolean isWaterproof = getSelectedTF(optionalTF3);
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                     StoreItem item = new Outerwear(skuValid, name, priceValid, amountValidInt, size, color, isWaterproof);
                     addValidatedItem(item);
                 }
@@ -513,7 +513,7 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String style = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, sku, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
                     StoreItem item = new Shoe(skuValid, name, priceValid, amountValidInt, size, color, style);
                     addValidatedItem(item);
                 }
@@ -525,18 +525,21 @@ public class AddItemWindow{
         }
     }
 
-    public int checkAmountInStock(StoreManager manager, int amount, String skuNumber, String name) {
+    //TODO: Change this to accurately check the number in stock. Right now its just always adding items with 0 amount, probably messed up here.
+    public int checkAmountInStock(StoreManager manager, int amount, int skuNumber, String name) {
         int newCount = 0;
         for(StoreItem i : manager.getListOfAllItems()) {
-            if (skuNumber.equals(i.getSkuNumber()) && name.equalsIgnoreCase(i.getItemName())){
+            if ((skuNumber == i.getSkuNumber())){
                 newCount += amount + i.getItemCount();
+                return newCount;
             }
         }
         return newCount;
     }
 
     public void addValidatedItem(StoreItem item){
-        storeManager.addItemToList(item);
+        storeManager.getListOfAllItems().add(item);
+//        storeManager.addItemToList(item);
         resetAllFields();
         System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
     }
