@@ -1,0 +1,12 @@
+@startuml ElectronicsItem
+skinparam classAttributeIconSize 0
+hide circle
+
+class ElectronicsItem {
+  -electronicsCategory : String
+--
+  ~ElectronicsItem(skuNumber: int, price: double, name: String, itemType: String, electronicsCategory: String)
+  +Get ElectronicCategory(): String
+  +setelectronicCategory(electronicsCategory: String): void
+  +printItem(): void
+}
