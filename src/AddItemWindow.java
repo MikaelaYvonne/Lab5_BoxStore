@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 public class AddItemWindow{
     private final StoreManager storeManager;
@@ -294,7 +295,6 @@ public class AddItemWindow{
     //adds the optional input fields for each class of item to be stored.
     public void addOptionalInputFields(String[] fields) {
         hideOptionalInputFields();
-        //TODO: make this switch like the other one but include the optional boolean true/false boxes.
         switch (fields.length){
             case 1 -> {
                 optionalLabel1.setVisible(true);
@@ -525,21 +525,18 @@ public class AddItemWindow{
         }
     }
 
-    //TODO: Change this to accurately check the number in stock. Right now its just always adding items with 0 amount, probably messed up here.
     public int checkAmountInStock(StoreManager manager, int amount, int skuNumber, String name) {
-        int newCount = 0;
-        for(StoreItem i : manager.getListOfAllItems()) {
-            if ((skuNumber == i.getSkuNumber())){
-                newCount += amount + i.getItemCount();
-                return newCount;
+        ArrayList<StoreItem> listItems = manager.getListOfAllItems();
+        for (StoreItem item : listItems) {
+            if (item.getSkuNumber()==skuNumber){
+                return item.getItemCount();
             }
         }
-        return newCount;
+        return amount;
     }
 
     public void addValidatedItem(StoreItem item){
         storeManager.getListOfAllItems().add(item);
-//        storeManager.addItemToList(item);
         resetAllFields();
         System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
     }
