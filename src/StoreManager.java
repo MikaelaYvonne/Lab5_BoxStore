@@ -43,6 +43,15 @@ public class StoreManager {
         return null;
     }
 
+    public StoreItem getItemBySku(int sku){
+        for (StoreItem item : getListOfAllItems()) {
+            if (item.getSkuNumber()== sku){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public StoreItem getCartItemBySku(String sku){
         for (StoreItem item : getItemsInCart()){
             if(String.valueOf(item.getSkuNumber()).equals(sku)){

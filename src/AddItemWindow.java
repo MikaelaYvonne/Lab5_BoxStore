@@ -5,11 +5,15 @@
  */
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
+/**
+ * Class to create a new window for Adding Items to the Store.
+ */
 public class AddItemWindow{
     private final StoreManager storeManager;
     private final JComboBox<String> typeItems;
@@ -32,6 +36,11 @@ public class AddItemWindow{
     private final JComboBox<Boolean> optionalTF3;
     private final JComboBox<Boolean> optionalTF4;
 
+    /**
+     * Method that Creates the main "AddItem" Window and all of its buttons / text fields.
+     * @param parent the parent frame the frame should spawn from.
+     * @param manager the store manager to use to modify items.
+     */
     public AddItemWindow(JFrame parent, StoreManager manager){
         //utilize StoreManager class in order to add / view items.
         this.storeManager = manager;
@@ -175,6 +184,7 @@ public class AddItemWindow{
         optionalText4.setBounds(150, 325, 250, 25);
         optionalText4.setVisible(false);
 
+        // true/false input fields that will only activate under certain type choices.
         Boolean[] tf = (new Boolean[]{true, false});
         optionalTF1 = new JComboBox<>(tf);
         optionalTF1.setVisible(false);
@@ -206,7 +216,7 @@ public class AddItemWindow{
             addItemFrame.dispose();}
         );
 
-        //Adding everything to the main frame
+        //Adding everything to the main JFrame window.
         addItemFrame.add(typeLabel);
         addItemFrame.add(typeItems);
         addItemFrame.add(skuLabel);
@@ -238,10 +248,20 @@ public class AddItemWindow{
         addItemFrame.setVisible(true);
     }
 
+    /**
+     * Function to get whatever value is within the True/False input fields.
+     * @param comboBox whatever combo box you are trying to get a value from.
+     * @return the boolean value true or false of the combo box.
+     */
     private static boolean getSelectedTF(JComboBox<Boolean> comboBox){
         return Boolean.TRUE.equals(comboBox.getSelectedItem());
     }
 
+    /**
+     * Method to grey out the input text field when you click away from it, but when you click in it it turns the text black.
+     * @param field which JTextField you would like to set the behavior for.
+     * @param placeholder String of whatever text you want within the text field before user inputs values.
+     */
     public void setPlaceholderBehavior(JTextField field, String placeholder){
         field.setForeground(Color.GRAY);
         field.setText(placeholder);
@@ -263,6 +283,9 @@ public class AddItemWindow{
         });
     }
 
+    /**
+     * Method that disables the visibility of ALL the optional input fields.
+     */
     public void hideOptionalInputFields(){
         optionalLabel1.setVisible(false);
         optionalLabel1.setText("");
@@ -292,9 +315,15 @@ public class AddItemWindow{
 
         addItemFrame.revalidate();
     }
-    //adds the optional input fields for each class of item to be stored.
+
+    /**
+     * Method that shows the optional fields that are specified in the optional fields.
+     * @param fields String List of fields that need to be added.
+     */
     public void addOptionalInputFields(String[] fields) {
         hideOptionalInputFields();
+        //Each case corresponds to the length of the "fields" String list.
+        //So, depending on how many fields you need, that's how many optional fields are shown.
         switch (fields.length){
             case 1 -> {
                 optionalLabel1.setVisible(true);
@@ -355,7 +384,13 @@ public class AddItemWindow{
             }
         }
     }
-    //this allows the true/false fields to show instead depending on what values need to be input.
+
+    /**
+     * A method overload for the addOptionalInputFields() to use when you need true/false input boxes instead of normal
+     * text boxes.
+     * @param fields String list of fields that need to be added.
+     * @param whichIndex the index location of which field needs to be a true/false combobox.
+     */
     public void addOptionalInputFields(String[] fields, int whichIndex){
         addOptionalInputFields(fields);
         switch (whichIndex) {
@@ -378,6 +413,11 @@ public class AddItemWindow{
         }
     }
 
+    /**
+     * Method to activate when the "Add Item" button is clicked.
+     * Creates appropriate object based on user selected and user input data from text and true/false fields.
+     * Adds the item after validation to the list in StoreManager class.
+     */
     public void addItem(){
         String sku = skuInput.getText();
         String name = itemNameInput.getText();
@@ -408,7 +448,7 @@ public class AddItemWindow{
                     boolean toxic = getSelectedTF(optionalTF3);
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                     StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValidInt, brand, category, toxic);
                     addValidatedItem(item);
                 }
@@ -416,7 +456,7 @@ public class AddItemWindow{
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
                     String dimensions = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                     StoreItem item = new Furniture(skuValid, name, priceValid, amountValidInt, brand, category, dimensions);
                     addValidatedItem(item);
                 }
@@ -424,7 +464,7 @@ public class AddItemWindow{
                     try {
                         int calories = Integer.parseInt(optionalText1.getText());
                         boolean isRipe = getSelectedTF(optionalTF2);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new Fruit(skuValid, name, priceValid, amountValidInt, calories, isRipe);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -435,7 +475,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String variety = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new Vegetable(skuValid, name, priceValid, amountValidInt, calories, variety);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -446,7 +486,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String expDate = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValidInt, calories, expDate);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -459,7 +499,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         int ramGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new Laptop(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, ramGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -473,7 +513,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         boolean smartTv = getSelectedTF(optionalTF4);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new TV(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, smartTv);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
@@ -486,7 +526,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         String carrier = optionalText3.getText();
                         int storageGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                         StoreItem item = new Phone(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, carrier, storageGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
@@ -497,7 +537,7 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String sleeveType = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                     StoreItem item = new Shirt(skuValid, name, priceValid, amountValidInt, size, color, sleeveType);
                     addValidatedItem(item);
                 }
@@ -505,7 +545,7 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     boolean isWaterproof = getSelectedTF(optionalTF3);
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                     StoreItem item = new Outerwear(skuValid, name, priceValid, amountValidInt, size, color, isWaterproof);
                     addValidatedItem(item);
                 }
@@ -513,11 +553,11 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String style = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid, name);
+                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
                     StoreItem item = new Shoe(skuValid, name, priceValid, amountValidInt, size, color, style);
                     addValidatedItem(item);
                 }
-                default -> {System.out.println("Something fucked up");}
+                default -> {System.out.println("Something fucked up. It shouldn't ever make it here.");}
             }
 
         } catch (NumberFormatException _) {
@@ -525,11 +565,20 @@ public class AddItemWindow{
         }
     }
 
-    public int checkAmountInStock(StoreManager manager, int amount, int skuNumber, String name) {
-        ArrayList<StoreItem> listItems = manager.getListOfAllItems();
-        for (StoreItem item : listItems) {
+    /**
+     * Checks the amount of items currently in stock within the StoreManager class.
+     * @param manager StoreManager of whichever manager you want to check objects in.
+     * @param amount int amount of items that are to be added to the inventory if it already exists.
+     * @param skuNumber int the SKU Number of the object that is being created. Used to check the existing list of items.
+     * @return amount of items that are to be added to the created object if an object does not already exist.
+     */
+    public int checkAmountInStock(StoreManager manager, int amount, int skuNumber) {
+        //TODO: I think this is broken, i need to update the cart to not duplicate the items.
+        int currentAmount;
+        for (StoreItem item : manager.getListOfAllItems()) {
             if (item.getSkuNumber()==skuNumber){
-                return item.getItemCount();
+                currentAmount = manager.getItemBySku(skuNumber).getItemCount();
+                return currentAmount + amount;
             }
         }
         return amount;
