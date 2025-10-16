@@ -1,5 +1,5 @@
 /**
- * @author  Gregory McNutt
+ * @author  Gregory McNutt, Mikaela Yvonne Dacanay
  * @date    10-10-25
  * @purpose Create a window with functionality to add items to the food store.
  */
@@ -10,8 +10,35 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 /**
- * Class to create a new window for Adding Items to the Store.
+ * A Swing-based window that allows users to create and add StoreItem objects to the inventory.
+ * <p>
+ * The window presents a set of base inputs (SKU, Name, Price, Count) and a dynamic set of optional
+ * fields that change based on the selected item type. Optional inputs can be either text fields or
+ * boolean selectors (true/false) depending on the selected type.
+ * </p>
+ *
+ * <h2>Threading</h2>
+ * All interactions with this window must occur on the Swing Event Dispatch Thread (EDT).
+ * Construct and show this class using SwingUtilities.invokeLater if needed.
+ *
+ * <h2>Validation and UX</h2>
+ * - The SKU, Price, and Count fields are validated numerically when adding an item.
+ * - For item-type-specific fields, numeric parsing is performed where applicable; users are
+ *   notified via dialog if parsing fails.
+ * - Duplicate SKU values are blocked; users are notified via dialog.
+ *
+ * <h2>State Management</h2>
+ * - Placeholder text is used for all text inputs. Placeholders are gray and cleared on focus;
+ *   empty fields revert to placeholders on focus loss.
+ * - Changing the item type resets the optional fields to the appropriate configuration.
+ *
+ * <h2>Visibility</h2>
+ * - Optional fields are hidden by default and are revealed to match the selected item type.
+ *
+ * @see JOptionPane
+ * @see JFrame
  */
+
 public class AddItemWindow{
     private final StoreManager storeManager;
     private final JComboBox<String> typeItems;
@@ -256,10 +283,21 @@ public class AddItemWindow{
     }
 
     /**
-     * Method to grey out the input text field when you click away from it, but when you click in it - it turns the text black.
-     * @param field which JTextField you would like to set the behavior for.
-     * @param placeholder String of whatever text you want within the text field before user inputs values.
+     * Sets placeholder behavior on a text field: shows gray placeholder text when empty or unfocused,
+     * and clears it with black text on focus.
+     * <p>
+     * Behavior:
+     * - On focus gained: if current text equals the placeholder, clears it and sets foreground to black.
+     * - On focus lost: if empty, restores the gray placeholder.
+     * </p>
+     *
+     * @param field the JTextField to configure.
+     * @param placeholder text to display when the field is empty.
+     *
+     * @implNote If you subsequently programmatically set the text to a non-empty value,
+     *           it will remain as the user's input (no automatic placeholder restoration).
      */
+
     public void setPlaceholderBehavior(JTextField field, String placeholder){
         field.setForeground(Color.GRAY);
         field.setText(placeholder);
@@ -282,8 +320,13 @@ public class AddItemWindow{
     }
 
     /**
-     * Method that disables the visibility of ALL the optional input fields.
+     * Hides all optional input fields (labels, text fields, and boolean combo boxes) and clears their labels.
+     * <p>
+     * This also reinitializes placeholder behavior for the optional text fields with empty placeholders
+     * to ensure they appear blank and inactive until reconfigured by addOptionalInputFields.
+     * </p>
      */
+
     public void hideOptionalInputFields(){
         optionalLabel1.setVisible(false);
         optionalLabel1.setText("");
@@ -315,9 +358,19 @@ public class AddItemWindow{
     }
 
     /**
-     * Method that shows the optional fields that are specified in the optional fields.
-     * @param fields String List of fields that need to be added.
+     * Configures and shows optional text fields corresponding to the provided labels.
+     * <p>
+     * The number of visible optional fields is determined by the length of the fields array:
+     * - 1..4 labels are supported and will be shown in order.
+     * - Each visible text field is assigned a placeholder: "Enter " + fields[i]
+     * </p>
+     *
+     * @param fields an array of field labels to display; its length (1–4) determines the number of fields shown.
+     *
+     * @implNote Any previously visible boolean (true/false) inputs are hidden by hideOptionalInputFields()
+     *           before these fields are shown. Use the overloaded method to replace a specific index with a boolean selector.
      */
+
     public void addOptionalInputFields(String[] fields) {
         hideOptionalInputFields();
         //Each case corresponds to the length of the "fields" String list.
@@ -384,11 +437,19 @@ public class AddItemWindow{
     }
 
     /**
-     * A method overload for the addOptionalInputFields() to use when you need true/false input boxes instead of normal
-     * text boxes.
-     * @param fields String list of fields that need to be added.
-     * @param whichIndex the index location of which field needs to be a true/false combobox.
+     * Overload of addOptionalInputFields to configure one of the optional positions as a boolean (true/false) selector.
+     * <p>
+     * After showing the text fields via addOptionalInputFields(String[]), this method hides the text field at
+     * the provided index and shows the corresponding JComboBox<Boolean> at the same position.
+     * </p>
+     *
+     * @param fields labels for the optional fields; length 1–4.
+     * @param whichIndex zero-based index (0..3) indicating which optional field should be a boolean selector.
+     *
+     * @implNote If whichIndex is outside the bounds of fields.length, the switch below will simply not match any case,
+     *           and no boolean selector will be shown.
      */
+
     public void addOptionalInputFields(String[] fields, int whichIndex){
         addOptionalInputFields(fields);
         switch (whichIndex) {
@@ -412,10 +473,26 @@ public class AddItemWindow{
     }
 
     /**
-     * Method to activate when the "Add Item" button is clicked.
-     * Creates appropriate object based on user selected and user input data from text and true/false fields.
-     * Adds the item after validation to the list in StoreManager class.
+     * Handles the Add button action. Parses, validates, and constructs the appropriate StoreItem
+     * based on current inputs, then attempts to add it to the inventory via StoreManager.
+     * <p>
+     * Validation:
+     * - SKU must be an integer.
+     * - Price must be a double.
+     * - Count must be an integer.
+     * - Certain item types require additional numeric values (e.g., calories, warranty months,
+     *   screen size, storage). Parsing errors show user-friendly dialogs and abort the add.
+     * - The selected item type must not be "Pick an Item Type".
+     * - Duplicate SKUs are rejected with a dialog.
+     * </p>
+     *
+     * <p>
+     * Side effects:
+     * - On success, fields are reset to their placeholders and the type resets to the initial selection.
+     * - On failure, a dialog explains the issue and the form remains for correction.
+     * </p>
      */
+
     public void addItem(){
         String sku = skuInput.getText();
         String name = itemNameInput.getText();
@@ -556,9 +633,14 @@ public class AddItemWindow{
     }
 
     /**
-     * Method to add an item to the store, then clear out the placeholders.
-     * @param item StoreItem of which will be added to the list of all items.
+     * Attempts to add a fully constructed StoreItem to the inventory and resets the form on success.
+     *
+     * @param item the StoreItem to add.
+     *
+     * @implNote If the SKU already exists (duplicate), the item is not added and a dialog is displayed.
+     *           On successful add, all input fields are reset to their placeholders and the type resets to default.
      */
+
     public void addValidatedItem(StoreItem item){
         Boolean isDupe = storeManager.duplicateSkuChecker(item.getSkuNumber());
         if (!isDupe){
@@ -571,7 +653,13 @@ public class AddItemWindow{
     }
 
     /**
-     * Resets all base JTextFields that the user needs to input data into.
+     * Resets base inputs and selection to their default placeholder states and hides all optional inputs.
+     * <p>
+     * This sets:
+     * - Type selector back to the default option.
+     * - Placeholders for Name, Price, SKU, and Count.
+     * - All optional labels/fields/booleans hidden via hideOptionalInputFields (indirectly through type reset).
+     * </p>
      */
     public void resetAllFields(){
         typeItems.setSelectedIndex(0);
