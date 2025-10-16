@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ShowCartWindow {
@@ -8,6 +9,10 @@ public class ShowCartWindow {
     private final JTable cartTable;
     private final JFrame cartWindow;
     private final BuyItemWindow buyItemWindow;
+    private final JLabel totalPriceNumber;
+    private final JLabel salesTaxNumber;
+    private final JLabel priceWSalesTaxNum;
+    private final DecimalFormat decimalFormat;
 
     /**
      * Shows the main cart window so the user can view what they have stored in the cart at that time.
@@ -39,11 +44,12 @@ public class ShowCartWindow {
         //create the table for the data to be output
         cartTable = new JTable(cartModel);
         JScrollPane scrollPane = new JScrollPane(cartTable);
-        scrollPane.setBounds(0,0, 300,200);
+        scrollPane.setBounds(0,0, 300,195);
 
         //create the button to remove an item from the cart.
         JButton removeButton = new JButton("Remove Item");
-        removeButton.setBounds(15, 210, 100,50);
+        removeButton.setBounds(15, 195, 100,40);
+        removeButton.setFocusable(false);
         removeButton.addActionListener(_ ->{
             int selectedRow = cartTable.getSelectedRow();
             if (selectedRow != -1){
@@ -60,11 +66,76 @@ public class ShowCartWindow {
             }
         });
 
+        decimalFormat = new DecimalFormat("0.00");
+        JLabel totalPriceLabel = new JLabel();
+        totalPriceLabel.setText("Item's Cost: $");
+        totalPriceLabel.setBounds(125, 200, 100, 20);
+        totalPriceLabel.setVisible(true);
 
-        //Add the subframes to the cart's window.
+        totalPriceNumber = new JLabel();
+        double totalPrice = getTotalPrice(manager);
+        totalPriceNumber.setText(decimalFormat.format(totalPrice));
+        totalPriceNumber.setBounds(215, 200, 150, 20);
+        totalPriceNumber.setVisible(true);
+
+        JLabel salesTaxLabel = new JLabel("Sales Tax: $");
+        salesTaxLabel.setBounds(125, 225, 100, 20);
+        salesTaxLabel.setVisible(true);
+
+        salesTaxNumber = new JLabel();
+        double totalTax = getSalesTax(manager);
+        totalPriceNumber.setText(decimalFormat.format(totalTax));
+        salesTaxNumber.setBounds(215, 225, 150, 20);
+        salesTaxNumber.setVisible(true);
+
+        JLabel priceWSalesTaxLabel = new JLabel();
+        priceWSalesTaxLabel.setText("Total Price: $");
+        priceWSalesTaxLabel.setBounds(125, 250, 100, 20);
+        priceWSalesTaxLabel.setVisible(true);
+
+        priceWSalesTaxNum = new JLabel();
+        priceWSalesTaxNum.setBounds(215, 250, 150, 20);
+        double overallPrice = getItemTaxPrice(manager);
+        priceWSalesTaxNum.setText(decimalFormat.format(overallPrice));
+        priceWSalesTaxNum.setVisible(true);
+
+
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.setBounds(15, 230, 100,40);
+        checkoutButton.setFocusable(false);
+        checkoutButton.addActionListener( _ ->{
+            if (cartTable.getRowCount() != 0){
+                checkout(storeManager);
+            } else {
+                JOptionPane.showMessageDialog(cartWindow, "You need items in your cart to check out.");
+            }
+        });
+
+        //TODO: Add a "total" label at the bottom of the cart so the customer can view the total amount they need to pay.
+        //TODO: update the price field to include 2 decimal places.
+
+        //Add the subframes, labels, and buttons to the cart's window.
+        cartWindow.add(totalPriceLabel);
+        cartWindow.add(totalPriceNumber);
+        cartWindow.add(salesTaxLabel);
+        cartWindow.add(salesTaxNumber);
+        cartWindow.add(priceWSalesTaxLabel);
+        cartWindow.add(priceWSalesTaxNum);
+        cartWindow.add(checkoutButton);
         cartWindow.add(removeButton);
         cartWindow.add(scrollPane);
         cartWindow.setVisible(true);
+    }
+
+    /**
+     * removes all items from cart and cart list indicating the customer has checked out.
+     * @param manager StoreManager to use for item handling.
+     */
+    public void checkout(StoreManager manager){
+        ArrayList<StoreItem> items = manager.getItemsInCart();
+        items.removeAll(manager.getItemsInCart());
+        JOptionPane.showMessageDialog(cartWindow,"Success! Enjoy your items!");
+        cartModel.setRowCount(0);
     }
 
     /**
@@ -110,16 +181,31 @@ public class ShowCartWindow {
      */
     public void loadCartData(){
         cartModel.setRowCount(0);
+        String itemPriceFormatted;
+        double totalPrice = getTotalPrice(storeManager);
+        double totalSalesTax = getSalesTax(storeManager);
+        double overallPrice = getItemTaxPrice(storeManager);
         ArrayList<StoreItem> items = storeManager.getItemsInCart();
         System.out.println("Items in cart: " + items.size());
         for (StoreItem item : items){
+            itemPriceFormatted = String.valueOf(item.getPrice());
+            if (decimalFormat != null){
+                itemPriceFormatted = decimalFormat.format(item.getPrice());
+            }
             Object[] row = {
                     String.valueOf(item.getItemName()),
-                    String.valueOf(item.getPrice()),
+                    itemPriceFormatted,
                     String.valueOf(item.getItemCount())
             };
             cartModel.addRow(row);
             buyItemWindow.loadTableData();
+        }
+        if (totalPriceNumber != null && salesTaxNumber!= null && priceWSalesTaxNum != null) {
+            if (decimalFormat != null) {
+                totalPriceNumber.setText(decimalFormat.format(totalPrice));
+                salesTaxNumber.setText(decimalFormat.format(totalSalesTax));
+                priceWSalesTaxNum.setText(decimalFormat.format(overallPrice));
+            }
         }
     }
 
@@ -138,4 +224,37 @@ public class ShowCartWindow {
         cartModel.setRowCount(0);
         loadCartData();
     }
+
+    /**
+     * Method to get the total prices of all the items in the cart.
+     * @param manager StoreManager to use for item handling
+     * @return Double total price of the items in the cart.
+     */
+    public double getTotalPrice(StoreManager manager){
+        double totalPrice = 0;
+        for (StoreItem item : manager.getItemsInCart()){
+            totalPrice += item.getPrice() * item.getItemCount();
+        }
+        return totalPrice;
+    }
+
+    /**
+     * Method to get sales tax of the current total in the cart.
+     * @param manager StoreManager to handle items
+     * @return Double total sales tax to be taken.
+     */
+    public double getSalesTax(StoreManager manager){
+        double totalTax = 0;
+        for (int i = 0; i < manager.getItemsInCart().size(); i++){
+            StoreItem item = manager.getItemsInCart().get(i);
+            totalTax += item.calculateTax() * item.getItemCount();
+        }
+        return totalTax;
+    }
+
+    public double getItemTaxPrice(StoreManager manager){
+        return getTotalPrice(manager) + getSalesTax(manager);
+    }
+
+    //last line before end
 }

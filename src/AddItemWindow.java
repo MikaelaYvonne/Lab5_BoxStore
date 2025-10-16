@@ -436,6 +436,10 @@ public class AddItemWindow{
             double priceValid = Double.parseDouble(price);
             int amountValid = Integer.parseInt(amount);
 
+            /*This switch statement grabs what the user picks from the "type" combo box and gathers everything else the user inputs
+            then validates it to make sure its applicable to the object type and then adds it to the store list to later be shown
+            by the table. It wont allow items with the same SKU to be added.
+            */
             switch (type){
                 case null -> {System.out.println("Something fucked up really bad");} //it should never return null.
                 case "Pick an Item Type" -> {
@@ -558,7 +562,7 @@ public class AddItemWindow{
     public void addValidatedItem(StoreItem item){
         Boolean isDupe = storeManager.duplicateSkuChecker(item.getSkuNumber());
         if (!isDupe){
-            storeManager.getListOfAllItems().add(item);
+            storeManager.addItemToList(item);
             resetAllFields();
             System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
         } else {
@@ -567,7 +571,7 @@ public class AddItemWindow{
     }
 
     /**
-     * Resets all base text fields that the user needs to input data into.
+     * Resets all base JTextFields that the user needs to input data into.
      */
     public void resetAllFields(){
         typeItems.setSelectedIndex(0);
