@@ -22,6 +22,17 @@ public class StoreManager {
         //END TESTING CODE
     }
 
+    public Boolean duplicateSkuChecker(int skuNumber){
+        for (StoreItem item : listOfAllItems){
+            if (item.getSkuNumber() == skuNumber){
+                System.out.println("Duplicate item found: " + item.getItemName());
+                return true;
+            }
+        }
+        System.out.println("No duplicates found.");
+        return false;
+    }
+
     public StoreItem copyItem(StoreItem original){
         return original.copy();
     }

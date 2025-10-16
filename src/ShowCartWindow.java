@@ -9,6 +9,12 @@ public class ShowCartWindow {
     private final JFrame cartWindow;
     private final BuyItemWindow buyItemWindow;
 
+    /**
+     * Shows the main cart window so the user can view what they have stored in the cart at that time.
+     * @param parent JFrame of which you would like the window to spawn from.
+     * @param manager StoreManager which store manager of list items you would like to use with the cart window.
+     * @param buyItemWindow BuyItemWindow defines which BuyItemWindow to use when adding/removing when you update the tables.
+     */
     public ShowCartWindow(JFrame parent, StoreManager manager, BuyItemWindow buyItemWindow) {
         this.storeManager = manager;
         this.buyItemWindow = buyItemWindow;
@@ -27,16 +33,18 @@ public class ShowCartWindow {
                 return false;
             }
         };
-
+        //get the cart's data from the list of cartItems.
         loadCartData();
 
+        //create the table for the data to be output
         cartTable = new JTable(cartModel);
         JScrollPane scrollPane = new JScrollPane(cartTable);
         scrollPane.setBounds(0,0, 300,200);
 
-        JButton removeFromCart = new JButton("Remove Item");
-        removeFromCart.setBounds(15, 210, 100,50);
-        removeFromCart.addActionListener(_ ->{
+        //create the button to remove an item from the cart.
+        JButton removeButton = new JButton("Remove Item");
+        removeButton.setBounds(15, 210, 100,50);
+        removeButton.addActionListener(_ ->{
             int selectedRow = cartTable.getSelectedRow();
             if (selectedRow != -1){
                 try {
@@ -53,16 +61,18 @@ public class ShowCartWindow {
         });
 
 
-
-
-
-
-        cartWindow.add(removeFromCart);
+        //Add the subframes to the cart's window.
+        cartWindow.add(removeButton);
         cartWindow.add(scrollPane);
         cartWindow.setVisible(true);
-
     }
-    //TODO: Fix this to properly update the cart data when adding and removing the items / number of items.
+
+    /**
+     * Method to remove and item from the cart. Happens when you click the remove button.
+     * @param itemInCart StoreItem which object you want to interact with when removing from the cart.
+     * @param amount Int of the amount to be removed.
+     * @param selectedRow Int which row on the table that is going to be modified when you remove the item from the table.
+     */
     public void removeItemFromCart(StoreItem itemInCart, int amount, int selectedRow) {
         if (amount <= 0) {
             JOptionPane.showMessageDialog(cartTable, "Please enter an amount greater than 0.");
@@ -77,7 +87,7 @@ public class ShowCartWindow {
 
             if (itemToAdd != null) { //if the item doesn't return null (item already exists in store list)(returns the item)
                 itemToAdd.setItemCount(itemToAdd.getItemCount() + amount); //so we add the amount to that item.
-            } else { //item returns null (item doesnt exist already in store list)
+            } else { //item returns null (item doesn't exist already in store list)
                 StoreItem newItemToAdd = storeManager.copyItem(itemInCart); //create a new item that will be added to the list.
                 newItemToAdd.setItemCount(amount); //set the amount to the new amount being added to the store item list.
                 storeManager.getListOfAllItems().add(newItemToAdd); //add the new item to the store list.
@@ -90,14 +100,14 @@ public class ShowCartWindow {
                 cartModel.removeRow(selectedRow); //remove it from the table.
             }
 
-
-
         }
         loadCartData(); //then re-fetch the cart data.
         buyItemWindow.loadTableData();
     }
 
-
+    /**
+     * Method to fetch the data from the StoreManager used in the ShowCartWindow and update the cart's table to reflect it.
+     */
     public void loadCartData(){
         cartModel.setRowCount(0);
         ArrayList<StoreItem> items = storeManager.getItemsInCart();
@@ -113,10 +123,17 @@ public class ShowCartWindow {
         }
     }
 
+    /**
+     * A method to show or hide the active cart window. Needs this because you cannot instantiate a new cart object else you'll have incorrect data.
+     * @param visible Boolean true or false to show or hide the window.
+     */
     public void setVisible(boolean visible){
         cartWindow.setVisible(visible);
     }
 
+    /**
+     * Method to refresh the cart's display whenever you modify an item. Clears the current row out then reloads cart data.
+     */
     public void refreshCartDisplay(){
         cartModel.setRowCount(0);
         loadCartData();

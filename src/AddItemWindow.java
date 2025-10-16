@@ -5,11 +5,9 @@
  */
 
 import javax.swing.*;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.ArrayList;
 
 /**
  * Class to create a new window for Adding Items to the Store.
@@ -56,7 +54,7 @@ public class AddItemWindow{
         //Label and combo box for the item type
         JLabel typeLabel = new JLabel("Item Type: ");
         typeLabel.setBounds(25,15,100, 15);
-
+        //create the "headers" for each selectable item in the combo box.
         String [] typesOfItems = {"Pick an Item Type","Cleaning Supplies", "Furniture", "Fruit", "Vegetable",
         "Shelf Stable Food", "Laptop", "TV", "Phone", "Shirt", "Outerwear", "Shoes"};
 
@@ -258,7 +256,7 @@ public class AddItemWindow{
     }
 
     /**
-     * Method to grey out the input text field when you click away from it, but when you click in it it turns the text black.
+     * Method to grey out the input text field when you click away from it, but when you click in it - it turns the text black.
      * @param field which JTextField you would like to set the behavior for.
      * @param placeholder String of whatever text you want within the text field before user inputs values.
      */
@@ -437,10 +435,9 @@ public class AddItemWindow{
             int skuValid = Integer.parseInt(sku);
             double priceValid = Double.parseDouble(price);
             int amountValid = Integer.parseInt(amount);
-            int amountValidInt;
 
             switch (type){
-                case null -> {System.out.println("Something fucked up really bad");}
+                case null -> {System.out.println("Something fucked up really bad");} //it should never return null.
                 case "Pick an Item Type" -> {
                     JOptionPane.showMessageDialog(addItemFrame, "Select an item type.");
                 }
@@ -448,24 +445,21 @@ public class AddItemWindow{
                     boolean toxic = getSelectedTF(optionalTF3);
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                    StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValidInt, brand, category, toxic);
+                    StoreItem item = new CleaningSupply(skuValid, name, priceValid, amountValid, brand, category, toxic);
                     addValidatedItem(item);
                 }
                 case "Furniture" -> {
                     String brand = optionalText1.getText();
                     String category = optionalText2.getText();
                     String dimensions = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                    StoreItem item = new Furniture(skuValid, name, priceValid, amountValidInt, brand, category, dimensions);
+                    StoreItem item = new Furniture(skuValid, name, priceValid, amountValid, brand, category, dimensions);
                     addValidatedItem(item);
                 }
                 case "Fruit" -> {
                     try {
                         int calories = Integer.parseInt(optionalText1.getText());
                         boolean isRipe = getSelectedTF(optionalTF2);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new Fruit(skuValid, name, priceValid, amountValidInt, calories, isRipe);
+                        StoreItem item = new Fruit(skuValid, name, priceValid, amountValid, calories, isRipe);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
@@ -475,8 +469,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String variety = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new Vegetable(skuValid, name, priceValid, amountValidInt, calories, variety);
+                        StoreItem item = new Vegetable(skuValid, name, priceValid, amountValid, calories, variety);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
@@ -486,8 +479,7 @@ public class AddItemWindow{
                     try{
                         int calories = Integer.parseInt(optionalText1.getText());
                         String expDate = optionalText2.getText();
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValidInt, calories, expDate);
+                        StoreItem item = new ShelfStable(skuValid, name, priceValid, amountValid, calories, expDate);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid calorie number.");
@@ -499,8 +491,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         int ramGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new Laptop(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, ramGB);
+                        StoreItem item = new Laptop(skuValid, name, priceValid, amountValid, brand, warrantyMonths, screenSize, ramGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months, Screen Size" +
@@ -513,8 +504,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         double screenSize = Double.parseDouble(optionalText3.getText());
                         boolean smartTv = getSelectedTF(optionalTF4);
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new TV(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, screenSize, smartTv);
+                        StoreItem item = new TV(skuValid, name, priceValid, amountValid, brand, warrantyMonths, screenSize, smartTv);
                         addValidatedItem(item);
                     } catch (NumberFormatException _){
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months and Screen Size in inches.");
@@ -526,8 +516,7 @@ public class AddItemWindow{
                         int warrantyMonths = Integer.parseInt(optionalText2.getText());
                         String carrier = optionalText3.getText();
                         int storageGB = Integer.parseInt(optionalText4.getText());
-                        amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                        StoreItem item = new Phone(skuValid, name, priceValid, amountValidInt, brand, warrantyMonths, carrier, storageGB);
+                        StoreItem item = new Phone(skuValid, name, priceValid, amountValid, brand, warrantyMonths, carrier, storageGB);
                         addValidatedItem(item);
                     } catch (NumberFormatException _) {
                         JOptionPane.showMessageDialog(addItemFrame, "Please enter a valid number of Warranty Months and Screen Size in inches.");
@@ -537,24 +526,21 @@ public class AddItemWindow{
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String sleeveType = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                    StoreItem item = new Shirt(skuValid, name, priceValid, amountValidInt, size, color, sleeveType);
+                    StoreItem item = new Shirt(skuValid, name, priceValid, amountValid, size, color, sleeveType);
                     addValidatedItem(item);
                 }
                 case "Outerwear" -> {
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     boolean isWaterproof = getSelectedTF(optionalTF3);
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                    StoreItem item = new Outerwear(skuValid, name, priceValid, amountValidInt, size, color, isWaterproof);
+                    StoreItem item = new Outerwear(skuValid, name, priceValid, amountValid, size, color, isWaterproof);
                     addValidatedItem(item);
                 }
                 case "Shoes" -> {
                     String size = optionalText1.getText();
                     String color = optionalText2.getText();
                     String style = optionalText3.getText();
-                    amountValidInt = checkAmountInStock(storeManager, amountValid, skuValid);
-                    StoreItem item = new Shoe(skuValid, name, priceValid, amountValidInt, size, color, style);
+                    StoreItem item = new Shoe(skuValid, name, priceValid, amountValid, size, color, style);
                     addValidatedItem(item);
                 }
                 default -> {System.out.println("Something fucked up. It shouldn't ever make it here.");}
@@ -566,30 +552,23 @@ public class AddItemWindow{
     }
 
     /**
-     * Checks the amount of items currently in stock within the StoreManager class.
-     * @param manager StoreManager of whichever manager you want to check objects in.
-     * @param amount int amount of items that are to be added to the inventory if it already exists.
-     * @param skuNumber int the SKU Number of the object that is being created. Used to check the existing list of items.
-     * @return amount of items that are to be added to the created object if an object does not already exist.
+     * Method to add an item to the store, then clear out the placeholders.
+     * @param item StoreItem of which will be added to the list of all items.
      */
-    public int checkAmountInStock(StoreManager manager, int amount, int skuNumber) {
-        //TODO: I think this is broken, i need to update the cart to not duplicate the items.
-        int currentAmount;
-        for (StoreItem item : manager.getListOfAllItems()) {
-            if (item.getSkuNumber()==skuNumber){
-                currentAmount = manager.getItemBySku(skuNumber).getItemCount();
-                return currentAmount + amount;
-            }
-        }
-        return amount;
-    }
-
     public void addValidatedItem(StoreItem item){
-        storeManager.getListOfAllItems().add(item);
-        resetAllFields();
-        System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
+        Boolean isDupe = storeManager.duplicateSkuChecker(item.getSkuNumber());
+        if (!isDupe){
+            storeManager.getListOfAllItems().add(item);
+            resetAllFields();
+            System.out.println("Item Added!: List Size: " + storeManager.getListOfAllItems().size());
+        } else {
+            JOptionPane.showMessageDialog(addItemFrame,"That SKU number is already in use.");
+        }
     }
 
+    /**
+     * Resets all base text fields that the user needs to input data into.
+     */
     public void resetAllFields(){
         typeItems.setSelectedIndex(0);
         setPlaceholderBehavior(itemNameInput, "Enter Item Name");
