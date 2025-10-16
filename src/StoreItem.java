@@ -7,10 +7,13 @@
 
 public abstract class StoreItem {
    // Properties / Attributes
-        private int skuNumber;
-        private double price;
-        private String itemName;
-        private int itemCount;
+    protected static final double FOOD_TAX = 0.03; // food
+    protected static final double GENERAL_TAX = 0.07; // everything else
+
+    private int skuNumber;
+    private double price;
+    private String itemName;
+    private int itemCount;
 
 
     protected static final double FOOD_TAX= 0.02; // 2% for food
@@ -109,7 +112,6 @@ public abstract class StoreItem {
             this.itemCount += qty;
         }
     }
-
 
     /**
      * sells an item and removes/subtracts it from item's inventory count
