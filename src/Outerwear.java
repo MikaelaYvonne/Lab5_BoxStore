@@ -1,0 +1,29 @@
+/**
+ * @author  Mikaela Yvonne Dacanay
+ *          Section 001-003
+ *          Date 10/01/25
+ *          Purpose:
+ */
+
+
+public class Outerwear extends ClothingItem{
+    private final boolean isWaterproof; // I cant think of a different identifier lol
+
+    public Outerwear(int skuNumber, String itemName, double price, int itemCount,
+                     String size, String color, boolean isWaterproof){
+        super(skuNumber, itemName, price, itemCount, size, color);
+        this.isWaterproof = isWaterproof;
+    }
+
+    public boolean getIsWaterproof() { return isWaterproof; }
+
+    @Override
+    public String toString() {
+        return super.toString() + ", Waterproof: " + isWaterproof;
+    }
+
+    @Override
+    public StoreItem copy(){
+        return new Outerwear(getSkuNumber(), getItemName(), getPrice(), getItemCount(), getSize(), getColor(), getIsWaterproof());
+    }
+}

@@ -12,15 +12,19 @@ public abstract class StoreItem {
         private String itemName;
         private int itemCount;
 
+
+    protected static final double FOOD_TAX= 0.02; // 2% for food
+    protected static final double GENERAL_TAX = 0.07; // 7% for everything else
+
     // Constructor
 
     /**
      * Constructor for StoreItem class
      *
-     * @param skuNumber unique identifier of items
-     * @param price     price of the item
-     * @param itemName  name of the item
-     * @param itemCount quantity left of the stock item
+     * @param   skuNumber unique identifier of items
+     * @param   price     price of the item
+     * @param   itemName  name of the item
+     * @param   itemCount quantity left of the stock item
      */
     public StoreItem(int skuNumber, String itemName, double price, int itemCount){
         this.skuNumber = skuNumber;
@@ -139,11 +143,14 @@ public abstract class StoreItem {
      */
     public abstract double calculateTax();
 
+
     /**
      * Method for subclasses to get return policy for specific item category when sold
      *
      * @return string containing the return policy
      */
     public abstract String getReturnPolicy();
+
+    public abstract StoreItem copy();
 }
 
