@@ -1,5 +1,5 @@
 /**
- * Author:  Mikaela Yvonne Dacanay;
+ * Author:  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          CSC 331 - 003
  * Date:    October 1, 2025
  * Purpose: Represents electronics items in the store inventory.
@@ -12,8 +12,8 @@
 public abstract class ElectronicsItem extends StoreItem {
 
     //properties
-    private String brand;
-    private int warrantyMonths; // Electronic items tend to have different warranties from manuf
+    private final String brand;
+    private final int warrantyMonths; // Electronic items tend to have different warranties from manuf
 
     /**
      * Constructs an ElectronicsItem with the specified attributes.

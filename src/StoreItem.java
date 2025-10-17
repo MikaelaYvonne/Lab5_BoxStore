@@ -1,5 +1,5 @@
 /**
- * @author  Mikaela Yvonne Dacanay; Gregory McNutt;
+ * @author  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          Section 001-003
  *          Date 9/27/25
  *          Purpose: Create super class for the store items.

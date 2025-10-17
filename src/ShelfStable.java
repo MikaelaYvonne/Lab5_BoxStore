@@ -1,5 +1,5 @@
 /**
- * @author  Mikaela Yvonne Dacanay
+ * @author  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          Section 001-003
  *          Date 10/01/25
  *          Purpose: Represents shelf-stable food items in a store inventory system,

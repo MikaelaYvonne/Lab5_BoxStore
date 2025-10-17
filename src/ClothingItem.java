@@ -1,5 +1,5 @@
 /**
- * @author  Mikaela Yvonne Dacanay
+ * @author  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          Section 001-003
  *          Date 10/01/25
  *          Purpose:Represents clothing items in the store inventory system.
@@ -11,8 +11,8 @@
 public abstract class ClothingItem extends StoreItem {
 
     // properties
-    private String size; // clothing size
-    private String color; // color of the clothing
+    private final String size; // clothing size
+    private final String color; // color of the clothing
 
     /**
      * Constructs a ClothingItem object with the specified parameters.
