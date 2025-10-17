@@ -21,10 +21,10 @@ public abstract class StoreItem {
     /**
      * Constructor for StoreItem class
      *
-     * @param skuNumber unique identifier of items
-     * @param price     price of the item
-     * @param itemName  name of the item
-     * @param itemCount quantity left of the stock item
+     * @param   skuNumber unique identifier of items
+     * @param   price     price of the item
+     * @param   itemName  name of the item
+     * @param   itemCount quantity left of the stock item
      */
     public StoreItem(int skuNumber, String itemName, double price, int itemCount){
         this.skuNumber = skuNumber;
@@ -150,5 +150,6 @@ public abstract class StoreItem {
      * @return string containing the return policy
      */
     public abstract String getReturnPolicy();
+
 }
 

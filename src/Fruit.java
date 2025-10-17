@@ -10,7 +10,7 @@
 public class Fruit extends FoodItem {
 
     //properties / attributes
-    private boolean isRipe;
+    private final boolean isRipe;
 
     //Constructor
     /**
@@ -55,4 +55,6 @@ public class Fruit extends FoodItem {
     public String toString() {
         return super.toString() + ", Ripe: " + isRipe;
     }
+
+
 }

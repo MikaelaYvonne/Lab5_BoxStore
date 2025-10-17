@@ -89,5 +89,6 @@ public abstract class ElectronicsItem extends StoreItem {
     public String toString() {
         return super.toString() + ", Brand: " + brand + ", Warranty: " + warrantyMonths + " months";
     }
+
 }
 

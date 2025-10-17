@@ -8,7 +8,7 @@
  *
  */
 
-public class FoodItem extends StoreItem{
+public abstract class FoodItem extends StoreItem{
 
     //properties
     private int kCal;
