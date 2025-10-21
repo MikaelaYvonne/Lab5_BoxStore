@@ -1,0 +1,11 @@
+class ClothingItem {
+        <<abstract>>
+        -size: String
+        -color: String
+        +ClothingItem(int, String, double, int, String, String)
+        +getSize(): String
+        +getColor(): String
+        +calculateTax(): double
+        +getReturnPolicy(): String
+        +toString(): String
+    }

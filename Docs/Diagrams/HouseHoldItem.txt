@@ -1,0 +1,11 @@
+   class HouseholdItem {
+        <<abstract>>
+        -brand: String
+        -category: String
+        +HouseholdItem(int, String, double, int, String, String)
+        +getBrand(): String
+        +getCategory(): String
+        +calculateTax(): double
+        +getReturnPolicy(): String
+        +toString(): String
+    }
