@@ -1,5 +1,5 @@
 /**
- * Author:  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
+ * Author:  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley;
  *          CSC 331 - 003
  * Date:    October 1, 2025
  * Purpose: This driver class serves as the main controller and entry point for the
@@ -31,25 +31,22 @@ import java.util.Set;
 /**
  * Driver class for the Wilmington Quick Shop (WQS) inventory and sales system.
  * This program demonstrates inheritance and polymorphism to manage various store items.
- *
- * NOTE: Replace LastName1, LastName2, LastName3 with your group members' last names.
  */
 public class WQSDacanayMcNuttWesley {
 
     // The main inventory list. POLYMORPHISM allows us to store all item types here.
-    private static final ArrayList<StoreItem> inventory = new ArrayList<>();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static ArrayList<StoreItem> inventory = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("==================================================");
+        System.out.println("   Welcome to Wilmington Quick Shop (WQS)");
+        System.out.println("==================================================");
         populateInitialInventory();
 
         boolean running = true;
         while (running) {
-            System.out.println("\n--- Wilmington Quick Shop Main Menu ---");
-            System.out.println("1. Sell an Item");
-            System.out.println("2. Add Item to Inventory");
-            System.out.println("3. Exit");
-            System.out.print("Please choose an option: ");
+            displayMainMenu();
 
             try {
                 int choice = scanner.nextInt();
@@ -64,13 +61,15 @@ public class WQSDacanayMcNuttWesley {
                         break;
                     case 3:
                         running = false;
+                        System.out.println("\n==================================================");
                         System.out.println("Thank you for using the WQS system. Goodbye!");
+                        System.out.println("==================================================");
                         break;
                     default:
-                        System.out.println("Invalid option. Please try again.");
+                        System.out.println("\n Invalid option. Please select 1, 2, or 3.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
+                System.out.println("\n Invalid input. Please enter a number.");
                 scanner.nextLine(); // Clear the bad input
             }
         }
@@ -78,34 +77,72 @@ public class WQSDacanayMcNuttWesley {
     }
 
     /**
+     * Displays the main menu in a clean, formatted style.
+     */
+    private static void displayMainMenu() {
+        System.out.println("\n==================================================");
+        System.out.println("              MAIN MENU");
+        System.out.println("==================================================");
+        System.out.println("  1. Sell an Item");
+        System.out.println("  2. Add Item to Inventory");
+        System.out.println("  3. Exit");
+        System.out.println("==================================================");
+        System.out.print("Please choose an option [1-3]: ");
+    }
+
+    /**
      * Handles the entire process of selling items to a customer.
      */
     private static void sellItemProcess() {
         ArrayList<StoreItem> shoppingCart = new ArrayList<>();
-        boolean isShopping = true;
+        boolean continueShopping = true;
 
-        while(isShopping) {
-            System.out.println("\n--- Customer Shopping ---");
+        System.out.println("\n==================================================");
+        System.out.println("           CUSTOMER SHOPPING MODE");
+        System.out.println("==================================================");
+
+        while (continueShopping) {
             int categoryChoice = selectCategory();
-            if (categoryChoice == 5) { // Exit option
-                isShopping = false;
+
+            if (categoryChoice == 5) {
+                if (shoppingCart.isEmpty()) {
+                    System.out.println("\nReturning to main menu...");
+                    return;
+                }
+                continueShopping = false;
+                continue;
+            }
+
+            if (categoryChoice < 1 || categoryChoice > 4) {
+                System.out.println("\n Invalid category. Please try again.");
                 continue;
             }
 
             displayCategoryItemsForSale(categoryChoice);
 
-            System.out.print("Enter the ID of the item to add to cart (or 'done' to checkout): ");
-            String input = scanner.nextLine();
+            System.out.print("\nEnter the item ID to add to cart (or 'done' to proceed to checkout): ");
+            String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("done")) {
-                isShopping = false;
+                continueShopping = false;
             } else {
                 StoreItem selectedItem = findItemById(input);
                 if (selectedItem != null && selectedItem.getItemCount() > 0) {
                     shoppingCart.add(selectedItem);
-                    System.out.println("'" + selectedItem.getItemName() + "' added to cart.");
+                    System.out.println("\nSUCCESS '" + selectedItem.getItemName() + "' added to cart.");
+                    System.out.println("          Cart now contains " + shoppingCart.size() + " item(s).");
+                } else if (selectedItem != null && selectedItem.getItemCount() == 0) {
+                    System.out.println("\n Item is out of stock.");
                 } else {
-                    System.out.println("Item not found or out of stock.");
+                    System.out.println("\n Item ID not found.");
+                }
+            }
+
+            if (continueShopping && !shoppingCart.isEmpty()) {
+                System.out.print("\nWould you like to continue shopping? (yes/no): ");
+                String continueChoice = scanner.nextLine().trim();
+                if (continueChoice.equalsIgnoreCase("no")) {
+                    continueShopping = false;
                 }
             }
         }
@@ -113,7 +150,7 @@ public class WQSDacanayMcNuttWesley {
         if (!shoppingCart.isEmpty()) {
             checkout(shoppingCart);
         } else {
-            System.out.println("No items in cart. Returning to main menu.");
+            System.out.println("\n[INFO] No items in cart. Returning to main menu.");
         }
     }
 
@@ -122,23 +159,46 @@ public class WQSDacanayMcNuttWesley {
      * @param cart The list of items the customer wishes to buy.
      */
     private static void checkout(ArrayList<StoreItem> cart) {
-        System.out.println("\n--- Order Summary ---");
+        System.out.println("\n==================================================");
+        System.out.println("              ORDER SUMMARY");
+        System.out.println("==================================================");
+
         double subtotal = 0.0;
         double totalTax = 0.0;
 
         // Group items by type for display
-        System.out.println("Food Items:");
-        cart.stream().filter(item -> item instanceof FoodItem).forEach(item -> System.out.println("  - " + item.getItemName() + ": $" + String.format("%.2f", item.getPrice())));
+        boolean hasFood = cart.stream().anyMatch(item -> item instanceof FoodItem);
+        boolean hasElectronics = cart.stream().anyMatch(item -> item instanceof ElectronicsItem);
+        boolean hasClothing = cart.stream().anyMatch(item -> item instanceof ClothingItem);
+        boolean hasHousehold = cart.stream().anyMatch(item -> item instanceof HouseholdItem);
 
-        System.out.println("Electronics Items:");
-        cart.stream().filter(item -> item instanceof ElectronicsItem).forEach(item -> System.out.println("  - " + item.getItemName() + ": $" + String.format("%.2f", item.getPrice())));
+        if (hasFood) {
+            System.out.println("\nFood Items:");
+            cart.stream()
+                    .filter(item -> item instanceof FoodItem)
+                    .forEach(item -> System.out.printf("  - %-30s $%8.2f%n", item.getItemName(), item.getPrice()));
+        }
 
-        System.out.println("Clothing Items:");
-        cart.stream().filter(item -> item instanceof ClothingItem).forEach(item -> System.out.println("  - " + item.getItemName() + ": $" + String.format("%.2f", item.getPrice())));
+        if (hasElectronics) {
+            System.out.println("\nElectronics Items:");
+            cart.stream()
+                    .filter(item -> item instanceof ElectronicsItem)
+                    .forEach(item -> System.out.printf("  - %-30s $%8.2f%n", item.getItemName(), item.getPrice()));
+        }
 
-        System.out.println("Household Items:");
-        cart.stream().filter(item -> item instanceof HouseholdItem).forEach(item -> System.out.println("  - " + item.getItemName() + ": $" + String.format("%.2f", item.getPrice())));
+        if (hasClothing) {
+            System.out.println("\nClothing Items:");
+            cart.stream()
+                    .filter(item -> item instanceof ClothingItem)
+                    .forEach(item -> System.out.printf("  - %-30s $%8.2f%n", item.getItemName(), item.getPrice()));
+        }
 
+        if (hasHousehold) {
+            System.out.println("\nHousehold Items:");
+            cart.stream()
+                    .filter(item -> item instanceof HouseholdItem)
+                    .forEach(item -> System.out.printf("  - %-30s $%8.2f%n", item.getItemName(), item.getPrice()));
+        }
 
         for (StoreItem item : cart) {
             subtotal += item.getPrice();
@@ -148,12 +208,15 @@ public class WQSDacanayMcNuttWesley {
         }
 
         double total = subtotal + totalTax;
-        System.out.println("---------------------");
-        System.out.printf("Subtotal: $%.2f%n", subtotal);
-        System.out.printf("Tax:      $%.2f%n", totalTax);
-        System.out.printf("Total:    $%.2f%n", total);
-        System.out.print("Confirm checkout? (yes/no): ");
-        String confirm = scanner.nextLine();
+        System.out.println("\n==================================================");
+        System.out.printf("Subtotal:                            $%10.2f%n", subtotal);
+        System.out.printf("Tax:                                 $%10.2f%n", totalTax);
+        System.out.println("--------------------------------------------------");
+        System.out.printf("Total:                               $%10.2f%n", total);
+        System.out.println("==================================================");
+
+        System.out.print("\nConfirm checkout? (yes/no): ");
+        String confirm = scanner.nextLine().trim();
 
         if (confirm.equalsIgnoreCase("yes")) {
             Set<String> policies = new HashSet<>();
@@ -163,15 +226,24 @@ public class WQSDacanayMcNuttWesley {
                 // The correct getReturnPolicy() is retrieved for each item's category.
                 policies.add(item.getReturnPolicy());
             }
-            System.out.println("\n--- Purchase Complete ---");
-            System.out.println("Updated inventory for sold items:");
-            cart.forEach(item -> System.out.println(" - " + findItemById(String.valueOf(item.getSkuNumber())).toString()));
 
-            System.out.println("\n--- Return Policies for Your Purchase ---");
-            policies.forEach(System.out::println);
+            System.out.println("\n==================================================");
+            System.out.println("           PURCHASE COMPLETE");
+            System.out.println("==================================================");
+            System.out.println("\nUpdated Inventory for Sold Items:");
+            cart.forEach(item -> {
+                StoreItem updated = findItemById(String.valueOf(item.getSkuNumber()));
+                System.out.printf("  - %-30s (Stock: %d)%n", updated.getItemName(), updated.getItemCount());
+            });
+
+            System.out.println("\n==================================================");
+            System.out.println("         RETURN POLICIES FOR YOUR PURCHASE");
+            System.out.println("==================================================");
+            policies.forEach(policy -> System.out.println("  • " + policy));
+            System.out.println("==================================================");
 
         } else {
-            System.out.println("Checkout cancelled.");
+            System.out.println("\n[INFO] Checkout cancelled. Returning to main menu.");
         }
     }
 
@@ -179,33 +251,61 @@ public class WQSDacanayMcNuttWesley {
      * Handles the process of adding new or existing items to the inventory.
      */
     private static void addItemProcess() {
-        System.out.println("\n--- Add to Inventory ---");
-        int categoryChoice = selectCategory();
-        if (categoryChoice == 5) return;
+        System.out.println("\n==================================================");
+        System.out.println("           ADD TO INVENTORY");
+        System.out.println("==================================================");
 
-        displayCategoryItems(categoryChoice);
-        System.out.print("Enter item ID to add stock, or 'new' to create a new item: ");
-        String input = scanner.nextLine();
+        boolean continueAdding = true;
 
-        if (input.equalsIgnoreCase("new")) {
-            System.out.println("New item creation is not implemented in this demo.");
-            // In a full app, you would ask for all details and create a new object.
-        } else {
-            StoreItem item = findItemById(input);
-            if (item != null) {
-                System.out.print("How many to add? ");
-                try {
-                    int quantity = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-                    item.addInventory(quantity);
-                    System.out.println("Inventory updated:");
-                    System.out.println(item.toString());
-                } catch (InputMismatchException e) {
-                    System.out.println("Invalid quantity.");
-                    scanner.nextLine();
-                }
+        while (continueAdding) {
+            int categoryChoice = selectCategory();
+
+            if (categoryChoice == 5) {
+                System.out.println("\nReturning to main menu...");
+                return;
+            }
+
+            if (categoryChoice < 1 || categoryChoice > 4) {
+                System.out.println("\n[ERROR] Invalid category. Please try again.");
+                continue;
+            }
+
+            displayCategoryItems(categoryChoice);
+
+            System.out.print("\nEnter item ID to add stock, or 'new' to create a new item: ");
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("new")) {
+                System.out.println("\n[INFO] New item creation is not implemented in this demo.");
             } else {
-                System.out.println("Item ID not found.");
+                StoreItem item = findItemById(input);
+                if (item != null) {
+                    System.out.print("How many units to add? ");
+                    try {
+                        int quantity = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        if (quantity <= 0) {
+                            System.out.println("\n[ERROR] Quantity must be positive.");
+                        } else {
+                            item.addInventory(quantity);
+                            System.out.println("\n[SUCCESS] Inventory updated!");
+                            System.out.printf("  - %-30s (New Stock: %d)%n", item.getItemName(), item.getItemCount());
+                        }
+                    } catch (InputMismatchException e) {
+                        System.out.println("\n[ERROR] Invalid quantity. Please enter a number.");
+                        scanner.nextLine();
+                    }
+                } else {
+                    System.out.println("\n[ERROR] Item ID not found.");
+                }
+            }
+
+            System.out.print("\nWould you like to add more items? (yes/no): ");
+            String continueChoice = scanner.nextLine().trim();
+            if (continueChoice.equalsIgnoreCase("no")) {
+                continueAdding = false;
+                System.out.println("\nReturning to main menu...");
             }
         }
     }
@@ -215,13 +315,16 @@ public class WQSDacanayMcNuttWesley {
      * @return The integer choice representing the category.
      */
     private static int selectCategory() {
+        System.out.println("\n--------------------------------------------------");
         System.out.println("Select a category:");
-        System.out.println("1. Food");
-        System.out.println("2. Electronics");
-        System.out.println("3. Clothing");
-        System.out.println("4. Household");
-        System.out.println("5. Back to Main Menu");
-        System.out.print("Choice: ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("  1. Food");
+        System.out.println("  2. Electronics");
+        System.out.println("  3. Clothing");
+        System.out.println("  4. Household");
+        System.out.println("  5. Back");
+        System.out.println("--------------------------------------------------");
+        System.out.print("Choice [1-5]: ");
         try {
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -237,25 +340,55 @@ public class WQSDacanayMcNuttWesley {
      * @param categoryChoice The chosen category.
      */
     private static void displayCategoryItemsForSale(int categoryChoice) {
-        System.out.println("\n--- Available Items ---");
-        System.out.printf("%-5s | %-25s | %-10s | %-15s | %-10s | %s%n", "ID", "Name", "Price", "Brand", "In Stock", "Description");
-        System.out.println("------------------------------------------------------------------------------------------------------");
+        System.out.println("\n==================================================");
+        System.out.println("           AVAILABLE ITEMS");
+        System.out.println("==================================================");
+        System.out.printf("%-6s | %-25s | %-10s | %-15s | %-8s | %s%n",
+                "ID", "Name", "Price", "Brand", "Stock", "Details");
+        System.out.println("------------------------------------------------------------------------------------------------------------------");
+
+        long itemCount = inventory.stream()
+                .filter(item -> isItemInCategory(item, categoryChoice))
+                .filter(item -> item.getItemCount() > 0)
+                .count();
+
+        if (itemCount == 0) {
+            System.out.println("  No items available in this category.");
+            System.out.println("==================================================");
+            return;
+        }
 
         inventory.stream()
                 .filter(item -> isItemInCategory(item, categoryChoice))
                 .filter(item -> item.getItemCount() > 0)
                 .forEach(item -> {
                     String brand = "-";
-                    String description = "";
-                    if (item instanceof ElectronicsItem) brand = ((ElectronicsItem) item).getBrand();
-                    if (item instanceof HouseholdItem) brand = ((HouseholdItem) item).getBrand();
-                    if (item instanceof Laptop) description = "Screen: " + ((Laptop) item).getScreenSize() + "\", RAM: " + ((Laptop) item).getRamGB() + "GB";
-                    if (item instanceof Phone) description = "Storage: " + ((Phone) item).getStorageGB() + "GB";
-                    if (item instanceof Shirt) description = "Size: " + ((ClothingItem)item).getSize() + ", Color: " + ((ClothingItem)item).getColor();
+                    String details = "";
 
-                    System.out.printf("%-5s | %-25s | $%-9.2f | %-15s | %-10d | %s%n",
-                            item.getSkuNumber(), item.getItemName(), item.getPrice(), brand, item.getItemCount(), description);
+                    if (item instanceof ElectronicsItem) {
+                        brand = ((ElectronicsItem) item).getBrand();
+                    }
+                    if (item instanceof HouseholdItem) {
+                        brand = ((HouseholdItem) item).getBrand();
+                    }
+                    if (item instanceof Laptop) {
+                        details = ((Laptop) item).getScreenSize() + "\" | " + ((Laptop) item).getRamGB() + "GB RAM";
+                    }
+                    if (item instanceof Phone) {
+                        details = ((Phone) item).getStorageGB() + "GB Storage";
+                    }
+                    if (item instanceof Shirt) {
+                        details = "Size " + ((ClothingItem)item).getSize() + " | " + ((ClothingItem)item).getColor();
+                    }
+                    if (item instanceof ClothingItem && !(item instanceof Shirt)) {
+                        details = "Size " + ((ClothingItem)item).getSize() + " | " + ((ClothingItem)item).getColor();
+                    }
+
+                    System.out.printf("%-6s | %-25s | $%-9.2f | %-15s | %-8d | %s%n",
+                            item.getSkuNumber(), item.getItemName(), item.getPrice(),
+                            brand, item.getItemCount(), details);
                 });
+        System.out.println("==================================================");
     }
 
     /**
@@ -263,10 +396,26 @@ public class WQSDacanayMcNuttWesley {
      * @param categoryChoice The integer representing the category.
      */
     private static void displayCategoryItems(int categoryChoice) {
-        System.out.println("\n--- Current Inventory ---");
+        System.out.println("\n--------------------------------------------------");
+        System.out.println("Current Inventory:");
+        System.out.println("--------------------------------------------------");
+
+        long itemCount = inventory.stream()
+                .filter(item -> isItemInCategory(item, categoryChoice))
+                .count();
+
+        if (itemCount == 0) {
+            System.out.println("  No items in this category.");
+            return;
+        }
+
         inventory.stream()
                 .filter(item -> isItemInCategory(item, categoryChoice))
-                .forEach(item -> System.out.println(item.toString()));
+                .forEach(item -> {
+                    System.out.printf("  ID: %-6s | %-25s | Stock: %-4d | $%.2f%n",
+                            item.getSkuNumber(), item.getItemName(), item.getItemCount(), item.getPrice());
+                });
+        System.out.println("--------------------------------------------------");
     }
 
     /**
@@ -315,13 +464,14 @@ public class WQSDacanayMcNuttWesley {
 
         // Clothing
         inventory.add(new Outerwear(5425, "Rain Jacket", 89.99, 30, "L", "Navy", true));
-        inventory.add(new Shoe(5425, "Running Sneakers", 119.95, 40, "10", "Red", "Sneaker"));
+        inventory.add(new Shoe(5426, "Running Sneakers", 119.95, 40, "10", "Red", "Sneaker"));
         inventory.add(new Shirt(2454, "V-Neck T-Shirt", 24.50, 100, "M", "White", "Short"));
 
         // Household
         inventory.add(new CleaningSupply(24525, "All-Purpose Cleaner", 4.99, 75, "CleanCo", "false", false));
-        inventory.add(new Furniture(2452, "Oak Coffee Table", 249.00, 10, "oakey", "HomeStyle","24\"H x 48\"W x 24\"D"));
+        inventory.add(new Furniture(2452, "Oak Coffee Table", 249.00, 10, "HomeStyle", "Oak", "24\"H x 48\"W x 24\"D"));
 
-        System.out.println("Initial inventory has been populated.");
+        System.out.println("\n[SUCCESS] Initial inventory has been populated.");
+        System.out.println("          Total items: " + inventory.size());
     }
 }
