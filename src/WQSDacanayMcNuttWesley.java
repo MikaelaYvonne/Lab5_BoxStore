@@ -4,8 +4,8 @@
  * Date:    October 1, 2025
  * Purpose: This driver class serves as the main controller and entry point for the
  *          Wilmington Quick Shop (WQS) inventory and sales management system.
- *
- *          Key Functionalities:
+
+ *         Key Functionalities:
  *          - Manages a polymorphic inventory system containing Food, Electronics,
  *            Clothing, and Household items
  *          - Provides a menu-driven interface for selling items and managing stock
@@ -15,7 +15,7 @@
  *          - Processes sales transactions with order summaries, inventory updates,
  *            and return policy information
  *          - Pre-populates sample inventory data for system demonstration
- *
+
  *         This application showcases how polymorphism enables flexible management
  *         of different item categories through a single ArrayList<StoreItem>
  *         collection, with category-specific behavior invoked dynamically at runtime.
@@ -35,8 +35,8 @@ import java.util.Set;
 public class WQSDacanayMcNuttWesley {
 
     // The main inventory list. POLYMORPHISM allows us to store all item types here.
-    private static ArrayList<StoreItem> inventory = new ArrayList<>();
-    private static Scanner scanner = new Scanner(System.in);
+    public final static ArrayList<StoreItem> inventory = new ArrayList<>();
+    private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("==================================================");
@@ -218,7 +218,7 @@ public class WQSDacanayMcNuttWesley {
         System.out.print("\nConfirm checkout? (yes/no): ");
         String confirm = scanner.nextLine().trim();
 
-        if (confirm.equalsIgnoreCase("yes")) {
+        if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
             Set<String> policies = new HashSet<>();
             for (StoreItem item : cart) {
                 item.sellInventory(1); // Decrease stock by 1
@@ -276,6 +276,8 @@ public class WQSDacanayMcNuttWesley {
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("new")) {
+                //TODO: Create function to create new item and add to list.
+                CreateNewItem item = new CreateNewItem(inventory);
                 System.out.println("\n[INFO] New item creation is not implemented in this demo.");
             } else {
                 StoreItem item = findItemById(input);
@@ -303,7 +305,7 @@ public class WQSDacanayMcNuttWesley {
 
             System.out.print("\nWould you like to add more items? (yes/no): ");
             String continueChoice = scanner.nextLine().trim();
-            if (continueChoice.equalsIgnoreCase("no")) {
+            if (continueChoice.equalsIgnoreCase("no") || continueChoice.equalsIgnoreCase("n")) {
                 continueAdding = false;
                 System.out.println("\nReturning to main menu...");
             }
@@ -314,7 +316,7 @@ public class WQSDacanayMcNuttWesley {
      * Prompts the user to select an item category.
      * @return The integer choice representing the category.
      */
-    private static int selectCategory() {
+    public static int selectCategory() {
         System.out.println("\n--------------------------------------------------");
         System.out.println("Select a category:");
         System.out.println("--------------------------------------------------");
