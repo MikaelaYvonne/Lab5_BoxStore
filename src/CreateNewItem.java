@@ -1,3 +1,11 @@
+/**
+ * Author: Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley;
+ * CSC 331 - 003
+ * Date:October 1, 2025
+ * Purpose: Handles the creation of new store items. The class creates new
+ * items to the inventory by collecting the information from the user based on the item
+ * type selected.
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -20,6 +28,7 @@ public class CreateNewItem {
                 break;
             }
             case 1 : {
+                //Case handles the creation of Food Items: Fruit, Vegetable, ShelfStable
                 System.out.println("Adding new Food Item");
                 System.out.println("Please Enter the Type Of Food Item: ");
                 String[] categoryItems = new String[]{"Fruit", "Vegetable", "ShelfStable Food"};
@@ -63,6 +72,7 @@ public class CreateNewItem {
                 break;
             }
             case 2 : {
+                //Handles the creation of Electronics Items: Laptop, TV, Phone
                 System.out.println("Adding new Electronics Item");
                 getBaseItemInformation(itemData, sc);
                 System.out.println("Please Enter the Type Of Food Item: ");
@@ -76,6 +86,87 @@ public class CreateNewItem {
                 brand = sc.nextLine().trim();
             }
             case 3: {
+                // Handles the creation of Outerwear: Shirt, Shoe, Outerwear
+                System.out.println("Adding new Clothing Item?");
+                System.out.println("Please enter the type of Clothing Item?");
+                String[] categoryItems = new String[]{"Shirt", "Shoe", "Outerwear"};
+                showItemsInCategory(categoryItems); //displays available clothing types
+
+                //Gets the users selection for type of clothing
+                int typeChoice = sc.nextInt();
+
+                //variables for color and size
+                String size;
+                String color;
+
+                System.out.println("Please Enter the Clothing Item Details:");
+
+                //collects inventory ifo ( Sku, name, price, quantity)
+                getBaseItemInformation(itemData, sc);
+
+                //prompts for the size and color
+                System.out.println("Enter the Size");
+
+                sc.nextLine();
+                size = sc.nextLine().trim();
+
+                System.out.println("Enter the Color:");
+                color = sc.nextLine().trim();
+
+
+                // Process the specific type of clothing item selected
+                switch (typeChoice){
+                    // SHIRT - requires: sleeveLength (String - "Short" or "Long")
+                    case 1 -> {
+                        System.out.println("Enter the Sleeve Length (Short/Long): ");
+                        String sleeveLength = sc.nextLine().trim();
+
+                        // Create new Shirt object with collected information
+                        // Parameters: SKU, name, price, quantity, size, color, sleeveLength
+                        newItem = new Shirt((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), size, color, sleeveLength);
+
+                        // Add the new shirt to the inventory
+                        inventory.add(newItem);
+                    }
+
+                    // SHOE - requires: shoeType (String - "Sneaker", "Boot", "Sandal", etc.)
+                    case 2 -> {
+                        System.out.println("Enter the Shoe Type (Sneaker/Boot/Sandal/etc.): ");
+                        String shoeType = sc.nextLine().trim();
+
+                        // Create new Shoe object with collected information
+                        // Parameters: SKU, name, price, quantity, size, color, shoeType
+                        newItem = new Shoe((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), size, color, shoeType);
+
+                        // Add the new shoe to the inventory
+                        inventory.add(newItem);
+                    }
+
+
+                    case 3 -> {
+                        System.out.println("Is the item waterproof? (Yes/No)");
+                        String waterproofInput = sc.nextLine().trim();
+
+                        // Convert user's yes/no response to boolean
+                        boolean isWaterproof = waterproofInput.equalsIgnoreCase("yes") || waterproofInput.equalsIgnoreCase("y");
+
+                        // Create new Outerwear object with collected information
+                        // Parameters: SKU, name, price, quantity, size, color, isWaterproof
+                        newItem = new Outerwear((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), size, color, isWaterproof);
+
+                        // Add the new outerwear to the inventory
+                        inventory.add(newItem);
+                    }
+                }
+
+                // Confirm successful addition to inventory
+                System.out.println("New custom item: " + newItem.toString() + " added!");
+                break;
+
+
 
             }
             case 4: {
