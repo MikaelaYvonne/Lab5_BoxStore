@@ -1,5 +1,5 @@
 /**
- * Author:  Mikaela Yvonne Dacanay;
+ * Author:  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          CSC 331 - 003
  * Date:    October 1, 2025
  * Purpose: Represents food items in the store inventory.
@@ -11,7 +11,7 @@
 public abstract class FoodItem extends StoreItem{
 
     //properties
-    private int kCal;
+    private final int kCal;
     /**
      * Constructor for FoodItem class
      * creates food item with the specified properties

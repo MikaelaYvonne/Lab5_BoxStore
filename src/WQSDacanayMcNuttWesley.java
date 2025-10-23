@@ -1,5 +1,5 @@
 /**
- * Author:  Mikaela Yvonne Dacanay;
+ * Author:  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          CSC 331 - 003
  * Date:    October 1, 2025
  * Purpose: This driver class serves as the main controller and entry point for the
@@ -37,8 +37,8 @@ import java.util.Set;
 public class WQSDacanayMcNuttWesley {
 
     // The main inventory list. POLYMORPHISM allows us to store all item types here.
-    private static ArrayList<StoreItem> inventory = new ArrayList<>();
-    private static Scanner scanner = new Scanner(System.in);
+    private static final ArrayList<StoreItem> inventory = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         populateInitialInventory();
