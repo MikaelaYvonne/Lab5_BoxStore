@@ -1,66 +1,55 @@
 /**
- * @author  Gregory McNutt
+ * @author  Mikaela Yvonne Dacanay, Gregory McNutt, Thomas Wesley
  *          Section 001-003
  *          Date 10/01/25
- *          Purpose: Create ShelfStable child class from FoodItem
+ *          Purpose: Represents shelf-stable food items in a store inventory system,
+ *                   extending the food item category with an expiration date property
  */
-class ShelfStable extends FoodItem {
-    int shelfNumber;
-    String isleCategory;
+public class ShelfStable extends FoodItem {
+
+    // properties/ attributes
+    private String expirationDate;
+
+    // constructor
 
     /**
-     * Constructor for StoreItem class
+     * Constructor for the ShelfStable class.
+     * Creates a shelf-stable food item with the specified properties,
+     * including its expiration date.
      *
-     * @param skuNumber int - super
-     * @param price double - super
-     * @param name String - super
-     * @param itemType String - super
-     * @param foodCategory String - super
-     * @param isShelfStable boolean - super
+     * @param skuNumber       unique identifier of the shelf-stable food item
+     * @param itemName        name of the shelf-stable food item
+     * @param price           price of the shelf-stable food item
+     * @param itemCount       quantity of the shelf-stable food item in stock
+     * @param kCal            calorie content of the shelf-stable food item in kilocalories
+     * @param expirationDate  expiration date of the shelf-stable food item
      */
-    ShelfStable(int skuNumber, double price, String name, String itemType, String foodCategory, boolean isShelfStable, int shelfNumber, String isleCategory) {
-        super(skuNumber, price, name, itemType, foodCategory, isShelfStable);
-        this.shelfNumber = shelfNumber;
-        this.isleCategory = isleCategory;
+    public ShelfStable(int skuNumber, String itemName, double price, int itemCount, int kCal,
+                       String expirationDate) {
+        // initializes the inherited properties from FoodItem
+        super(skuNumber, itemName, price, itemCount, kCal);
+        this.expirationDate = expirationDate;
     }
 
-// Behaviors / Methods
-
-    //Getters / Accessors
-
+    // getters
     /**
+     * Retrieves the expiration date of the shelf-stable food item.
      *
-     * @return shelfNumber
+     * @return the expiration date as a String.
      */
-    public int getShelfNumber(){
-        return this.shelfNumber;
-    }
+    public String getExpirationDate() { return expirationDate; }
 
+
+    // other methods
     /**
+     * Returns a string representation of the ShelfStable item, combining details
+     * from its superclass and the specific expiration date of the shelf-stable item.
      *
-     * @return isleCategory
+     * @return a formatted string including superclass details and the expiration date.
      */
-    public String getIsleCategory(){
-        return this.isleCategory;
+    @Override
+    public String toString() {
+        return super.toString() + ", Expires: " + expirationDate;
     }
 
-    // Setters / Modifiers
-
-    /**
-     *
-     * @param shelfNumber int
-     */
-    public void setShelfNumber(int shelfNumber){
-        this.shelfNumber = shelfNumber;
-    }
-
-    /**
-     *
-     * @param isleCategory String
-     */
-    public void setIsleCategory(String isleCategory){
-        this.isleCategory = isleCategory;
-    }
-
-    //TODO: add override method to this class
 }

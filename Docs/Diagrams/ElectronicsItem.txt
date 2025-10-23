@@ -1,0 +1,11 @@
+class ElectronicsItem {
+        <<abstract>>
+        -brand: String
+        -warrantyMonths: int
+        +ElectronicsItem(int, String, double, int, String, int)
+        +getBrand(): String
+        +getWarrantyMonths(): int
+        +calculateTax(): double
+        +getReturnPolicy(): String
+        +toString(): String
+    }
