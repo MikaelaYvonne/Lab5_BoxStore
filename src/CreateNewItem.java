@@ -19,6 +19,7 @@ public class CreateNewItem {
             case 5 : {
                 break;
             }
+            //food item
             case 1 : {
                 System.out.println("Adding new Food Item");
                 System.out.println("Please Enter the Type Of Food Item: ");
@@ -62,18 +63,60 @@ public class CreateNewItem {
                 System.out.println("New custom item: " + newItem.toString() + " added!");
                 break;
             }
+            //electronics item
             case 2 : {
                 System.out.println("Adding new Electronics Item");
-                getBaseItemInformation(itemData, sc);
                 System.out.println("Please Enter the Type Of Food Item: ");
-                String[] categoryItems = new String[]{"Fruit", "Vegetable", "ShelfStable Food"};
+                String[] categoryItems = new String[]{"Laptop", "TV", "Phone"};
                 showItemsInCategory(categoryItems);
                 int typeChoice = sc.nextInt();
                 String brand;
                 int warrantyMonths;
                 System.out.println("Please Enter the item details of the Electronics Item: ");
-                System.out.println("Enter the Calories: ");
+                getBaseItemInformation(itemData, sc);
+                System.out.println("Enter the Brand: ");
                 brand = sc.nextLine().trim();
+                System.out.println("Enter the amount of warranty months: ");
+                warrantyMonths = sc.nextInt();
+                switch (typeChoice) {
+                    //laptop
+                    case 1 -> {
+                        System.out.println("Enter the screen size: ");
+                        double screenSize = sc.nextDouble();
+                        System.out.println("Enter the amount of RAM: ");
+                        int ram = sc.nextInt();
+                        newItem = new Laptop((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), brand, warrantyMonths,
+                                screenSize, ram);
+                        inventory.add(newItem);
+                    }
+                    //tv
+                    case 2 -> {
+                        System.out.println("Enter the screen size: ");
+                        double screenSize = sc.nextDouble();
+                        System.out.println("Is it a smart TV? (Yes/No)");
+                        String isSmart = sc.next();
+                        boolean newSmart = false;
+                        if (isSmart.equalsIgnoreCase("yes") || isSmart.equalsIgnoreCase("y")){
+                            newSmart = true;}
+                        newItem = new TV((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), brand, warrantyMonths,
+                                screenSize, newSmart);
+                        inventory.add(newItem);
+                    }
+                    //phone
+                    case 3 -> {
+                        System.out.println("Enter the carrier name: ");
+                        String carrier = sc.next();
+                        System.out.println("Enter the amount of storage gigabytes: ");
+                        int storage = sc.nextInt();
+                        newItem = new Phone((int) itemData.get(0), itemData.get(1).toString(),
+                                (double) itemData.get(2), (int) itemData.get(3), brand, warrantyMonths,
+                                carrier, storage);
+                        inventory.add(newItem);
+                    }
+                }
+                break;
             }
             case 3: {
 
