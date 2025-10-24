@@ -213,18 +213,81 @@ public class CreateNewItem {
 
             }
             case 4: {
+                //Handles creation of Household items: Furniture, Cleaning, Supply
+                System.out.println("Adding new Household Item");
+                System.out.println("Please enter the type of Household Item:");
+
+                String[] categoryItems = new String[]{"Furniture","Cleaning Supply"};
+                showItemsInCategory(categoryItems);//shows the available category types
+
+                int typeChoice = sc.nextInt();//gets the users selection
+
+                String brand = "";
+                String categoryType;
+
+                System.out.println("Please enter the item details of the Household Item");
+
+
+                //collect the item info (SKU,name, price, quantity)
+                getBaseItemInformation(itemData, sc);
+
+                System.out.println("Enter the Category:");//category prompt for household items
+                categoryType = sc.nextLine().trim();
+
+                // Processes the types of household items selected
+
+                switch(typeChoice){
+                    //furniture dimensions
+                    case 1 ->{
+                    System.out.println("Enter the dimensions (ex., 24\"H x 48\"W x 24\"D):");
+                    String dimensions = sc.nextLine().trim();
+
+                    //create the furniture object will all collected data
+                    newItem = new Furniture((int) itemData.get(0), itemData.get(1).toString(),
+                            (double) itemData.get(2), (int) itemData.get(3), brand, categoryType, dimensions);
+
+                    //add to inventory
+                    inventory.add(newItem);
+                    }
+                    //cleaning supplies have a scent and are/arenot eco friendly
+                    case 2 ->{
+                    System.out.println("Enter the Scent");
+                    String scent = sc.nextLine().trim();
+
+                    System.out.println("Is it eco friendly? (yes/no):");
+                    String ecoInput = sc.nextLine().trim();
+
+                    //converts the response to a boolean
+                    boolean isEcoFriendly = ecoInput.equalsIgnoreCase("yes") || ecoInput.equalsIgnoreCase("y");
+
+
+                    //create the cleaning object with all parameters
+                    newItem = new CleaningSupply((int) itemData.get(0), itemData.get(1).toString(),
+                              (double) itemData.get(2), (int) itemData.get(3), brand, scent, isEcoFriendly);
+
+                    //add the new item
+                        inventory.add(newItem);
+
+                    }
+                }
+                //confirm the item was added
+                System.out.println("New item:" + newItem.toString() + "added!");
+                break;
+
+
+
 
             }
         }
     }
 
     private void getBaseItemInformation(ArrayList<Object> itemData, Scanner scanner){
-        /***
-         *                              1. Food");
-         *         System.out.println("  2. Electronics");
-         *         System.out.println("  3. Clothing");
-         *         System.out.println("  4. Household");
-         *         System.out.println("  5. Back");
+        /*
+                  1. Food
+                  2. Electronics
+                  3. Clothing
+                  4. Household
+                  5. Back
          */
 
         System.out.println("Please enter the new item's SKU Number: ");
