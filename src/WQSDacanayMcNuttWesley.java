@@ -4,8 +4,8 @@
  * Date:    October 1, 2025
  * Purpose: This driver class serves as the main controller and entry point for the
  *          Wilmington Quick Shop (WQS) inventory and sales management system.
-
- *         Key Functionalities:
+ *
+ *          Key Functionalities:
  *          - Manages a polymorphic inventory system containing Food, Electronics,
  *            Clothing, and Household items
  *          - Provides a menu-driven interface for selling items and managing stock
@@ -15,7 +15,7 @@
  *          - Processes sales transactions with order summaries, inventory updates,
  *            and return policy information
  *          - Pre-populates sample inventory data for system demonstration
-
+ *
  *         This application showcases how polymorphism enables flexible management
  *         of different item categories through a single ArrayList<StoreItem>
  *         collection, with category-specific behavior invoked dynamically at runtime.
@@ -35,8 +35,8 @@ import java.util.Set;
 public class WQSDacanayMcNuttWesley {
 
     // The main inventory list. POLYMORPHISM allows us to store all item types here.
-    public final static ArrayList<StoreItem> inventory = new ArrayList<>();
-    private final static Scanner scanner = new Scanner(System.in);
+    private static ArrayList<StoreItem> inventory = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.println("==================================================");
@@ -150,7 +150,7 @@ public class WQSDacanayMcNuttWesley {
         if (!shoppingCart.isEmpty()) {
             checkout(shoppingCart);
         } else {
-            System.out.println("\n[INFO] No items in cart. Returning to main menu.");
+            System.out.println("\n No items in cart. Returning to main menu.");
         }
     }
 
@@ -218,7 +218,7 @@ public class WQSDacanayMcNuttWesley {
         System.out.print("\nConfirm checkout? (yes/no): ");
         String confirm = scanner.nextLine().trim();
 
-        if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
+        if (confirm.equalsIgnoreCase("yes")) {
             Set<String> policies = new HashSet<>();
             for (StoreItem item : cart) {
                 item.sellInventory(1); // Decrease stock by 1
@@ -243,7 +243,7 @@ public class WQSDacanayMcNuttWesley {
             System.out.println("==================================================");
 
         } else {
-            System.out.println("\n[INFO] Checkout cancelled. Returning to main menu.");
+            System.out.println("\n Checkout cancelled. Returning to main menu.");
         }
     }
 
@@ -266,7 +266,7 @@ public class WQSDacanayMcNuttWesley {
             }
 
             if (categoryChoice < 1 || categoryChoice > 4) {
-                System.out.println("\n[ERROR] Invalid category. Please try again.");
+                System.out.println("\n Invalid category. Please try again.");
                 continue;
             }
 
@@ -276,9 +276,7 @@ public class WQSDacanayMcNuttWesley {
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("new")) {
-                //TODO: Create function to create new item and add to list.
-                CreateNewItem item = new CreateNewItem(inventory);
-                System.out.println("\n[INFO] New item creation is not implemented in this demo.");
+                System.out.println("\n New item creation is not implemented in this demo.");
             } else {
                 StoreItem item = findItemById(input);
                 if (item != null) {
@@ -288,24 +286,24 @@ public class WQSDacanayMcNuttWesley {
                         scanner.nextLine(); // Consume newline
 
                         if (quantity <= 0) {
-                            System.out.println("\n[ERROR] Quantity must be positive.");
+                            System.out.println("\n Quantity must be positive.");
                         } else {
                             item.addInventory(quantity);
-                            System.out.println("\n[SUCCESS] Inventory updated!");
+                            System.out.println("\n Inventory updated!");
                             System.out.printf("  - %-30s (New Stock: %d)%n", item.getItemName(), item.getItemCount());
                         }
                     } catch (InputMismatchException e) {
-                        System.out.println("\n[ERROR] Invalid quantity. Please enter a number.");
+                        System.out.println("\n Invalid quantity. Please enter a number.");
                         scanner.nextLine();
                     }
                 } else {
-                    System.out.println("\n[ERROR] Item ID not found.");
+                    System.out.println("\n Item ID not found.");
                 }
             }
 
             System.out.print("\nWould you like to add more items? (yes/no): ");
             String continueChoice = scanner.nextLine().trim();
-            if (continueChoice.equalsIgnoreCase("no") || continueChoice.equalsIgnoreCase("n")) {
+            if (continueChoice.equalsIgnoreCase("no")) {
                 continueAdding = false;
                 System.out.println("\nReturning to main menu...");
             }
