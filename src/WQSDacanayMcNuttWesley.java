@@ -276,7 +276,9 @@ public class WQSDacanayMcNuttWesley {
             String input = scanner.nextLine().trim();
 
             if (input.equalsIgnoreCase("new")) {
-                System.out.println("\n New item creation is not implemented in this demo.");
+                new CreateNewItem(inventory);
+
+                //System.out.println("\n New item creation is not implemented in this demo.");
             } else {
                 StoreItem item = findItemById(input);
                 if (item != null) {
@@ -471,7 +473,7 @@ public class WQSDacanayMcNuttWesley {
         inventory.add(new CleaningSupply(24525, "All-Purpose Cleaner", 4.99, 75, "CleanCo", "false", false));
         inventory.add(new Furniture(2452, "Oak Coffee Table", 249.00, 10, "HomeStyle", "Oak", "24\"H x 48\"W x 24\"D"));
 
-        System.out.println("\n[SUCCESS] Initial inventory has been populated.");
+        System.out.println("\n Initial inventory has been populated.");
         System.out.println("          Total items: " + inventory.size());
     }
 }
